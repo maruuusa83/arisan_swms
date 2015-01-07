@@ -20,6 +20,7 @@
 
 #include "./common.h"
 #include "./Task.h"
+#include "./CmcAdapter.h"
 
 #include <vector>
 
@@ -31,6 +32,7 @@ class InterfaceApp
 {
 public:
 	class IFACallbackListener;
+	class IFAContext;
 
 	InterfaceApp(const IFACallbackListener &listener,
 			     const CmcAdapter &cmc);
@@ -50,12 +52,27 @@ public:
 class InterfaceApp::IFACallbackListener
 {
 public:
-	virtual void onTask(const WorkerContext &context,
-			            const Task &task);
+	virtual void onFinJob(const IFAContext &context,
+						  const JOB_ID &job_id);
+	virtual void onFinTask(const IFAContext &context,
+						   const JOB_ID &job_id,
+						   const TASK_ID &task_id);
 
-	virtual void onRecvMsg(const WorkerContext &context,
-			               const BYTE *msg,
-						   const unsigned int &msg_size);
+	virtual void onNewWorker(const IFAContext &context,
+							 const WORKER_ID &worker_id);
+	virtual void onDelWorker(const IFAContext &context,
+							 const WORKER_ID &worker_id);
+
+	virtual void onUsrMsg(const IFAContext &context,
+						  const WORKER_ID &worker_id,
+						  const BYTE *msg,
+						  const unsigned int &size);
+};
+
+class InterfaceApp::IFAContext
+{
+public:
+	InterfaceApp *interfaceApp = nullptr;
 };
 
 
