@@ -15,33 +15,33 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#include "InterfaceApp.h"
+#include "InterfaceAppAPI.h"
 
 namespace marusa {
 namespace swms {
 
 
-/***** InterfaceApp *****/
-InterfaceApp::InterfaceApp(const IFACallbackListener &listener,
+/***** InterfaceAppAPI *****/
+InterfaceAppAPI::InterfaceAppAPI(const IFACallbackListener &listener,
 						   const CmcAdapter &cmc)
 {
 	//TODO:Implement this function.
 }
 
-JOB_ID InterfaceApp::sendTasks(const std::vector<Task> &tasks)
+JOB_ID InterfaceAppAPI::sendTasks(const std::vector<Task> &tasks)
 {
 	//TODO:Implement this function.
 	return (0);
 }
 
-int InterfaceApp::getTasksByJobId(const JOB_ID &job_id,
+int InterfaceAppAPI::getTasksByJobId(const JOB_ID &job_id,
 								  std::vector<Task> &tasks)
 {
 	//TODO:Implement this function.
 	return (0);
 }
 
-int InterfaceApp::getTaskByTaskId(const JOB_ID &job_id,
+int InterfaceAppAPI::getTaskByTaskId(const JOB_ID &job_id,
 								  const TASK_ID &task_id,
 								  Task *&task)
 {
@@ -49,7 +49,7 @@ int InterfaceApp::getTaskByTaskId(const JOB_ID &job_id,
 	return (0);
 }
 
-int InterfaceApp::sendUsrMsg(const WORKER_ID &to,
+int InterfaceAppAPI::sendUsrMsg(const WORKER_ID &to,
 							 BYTE *msg,
 							 const unsigned int &msg_size)
 {
@@ -58,33 +58,33 @@ int InterfaceApp::sendUsrMsg(const WORKER_ID &to,
 }
 
 
-/***** InterfaceApp::IFACallbackListener *****/
-void InterfaceApp::IFACallbackListener::onFinJob(const IFAContext &context,
+/***** InterfaceAppAPI::IFACallbackListener *****/
+void InterfaceAppAPI::IFACallbackListener::onFinJob(const IFAContext &context,
 							const JOB_ID &job_id)
 {
 	//nothing to do
 }
 
-void InterfaceApp::IFACallbackListener::onFinTask(const IFAContext &context,
+void InterfaceAppAPI::IFACallbackListener::onFinTask(const IFAContext &context,
 											      const JOB_ID &job_id,
 											      const TASK_ID &task_id)
 {
 	//nothing to do
 }
 
-void InterfaceApp::IFACallbackListener::onNewWorker(const IFAContext &context,
+void InterfaceAppAPI::IFACallbackListener::onNewWorker(const IFAContext &context,
 				 									const WORKER_ID &worker_id)
 {
 	//nothing to do
 }
 
-void InterfaceApp::IFACallbackListener::onDelWorker(const IFAContext &context,
+void InterfaceAppAPI::IFACallbackListener::onDelWorker(const IFAContext &context,
 													const WORKER_ID &worker_id)
 {
 	//nothing to do
 }
 
-void InterfaceApp::IFACallbackListener::onUsrMsg(const IFAContext &context,
+void InterfaceAppAPI::IFACallbackListener::onUsrMsg(const IFAContext &context,
 											     const WORKER_ID &worker_id,
 											     const BYTE *msg,
 											     const unsigned int &size)
