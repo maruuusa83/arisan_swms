@@ -15,8 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#ifndef ___INTERFACEAPP_H___
-#define ___INTERFACEAPP_H___
+#ifndef ___INTERFACEAPPAPI_H___
+#define ___INTERFACEAPPAPI_H___
 
 #include "./common.h"
 #include "./Task.h"
@@ -28,14 +28,14 @@ namespace marusa {
 namespace swms {
 
 
-class InterfaceApp
+class InterfaceAppAPI
 {
 public:
 	class IFACallbackListener;
 	class IFAContext;
 
-	InterfaceApp(const IFACallbackListener &listener,
-			     const CmcAdapter &cmc);
+	InterfaceAppAPI(const IFACallbackListener &listener,
+			        const CmcAdapter &cmc);
 
 	JOB_ID sendTasks(const std::vector<Task> &tasks);
 	int getTasksByJobId(const JOB_ID &job_id,
@@ -49,7 +49,7 @@ public:
 				   const unsigned int &msg_size);
 };
 
-class InterfaceApp::IFACallbackListener
+class InterfaceAppAPI::IFACallbackListener
 {
 public:
 	virtual void onFinJob(const IFAContext &context,
@@ -69,10 +69,12 @@ public:
 						  const unsigned int &size);
 };
 
-class InterfaceApp::IFAContext
+class InterfaceAppAPI::IFAContext
 {
 public:
-	InterfaceApp *interfaceApp = nullptr;
+	IFAContext(const InterfaceAppAPI &interfaceAppAPI);
+
+	InterfaceAppAPI *interfaceAppAPI = nullptr;
 };
 
 
