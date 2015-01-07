@@ -15,39 +15,47 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#ifndef ___INTERFACEAPP_H___
-#define ___INTERFACEAPP_H___
-
-#include "./common.h"
-
-#include <vector>
+#include "InterfaceApp.h"
 
 namespace marusa {
 namespace swms {
 
 
-class InterfaceApp
+InterfaceApp::InterfaceApp(const IFACallbackListener &listener,
+						   const CmcAdapter &cmc)
 {
-public:
-	class IFACallbackListener;
+	//TODO:Implement this function.
+}
 
-	InterfaceApp(const IFACallbackListener &listener,
-			     const CmcAdapter &cmc);
+JOB_ID InterfaceApp::sendTasks(const std::vector<Task> &tasks)
+{
+	//TODO:Implement this function.
+	return (0);
+}
 
-	JOB_ID sendTasks(const std::vector<Task> &tasks);
-	int getTasksByJobId(const JOB_ID &job_id
-						std::vector<Task> &tasks);
-	int getTaskByTaskId(const JOB_ID &job_id,
-			            const TASK_ID &task_id
-						Task *&task);
+int InterfaceApp::getTasksByJobId(const JOB_ID &job_id)
+{
+	//TODO:Implement this function.
+	return (0);
+}
 
-	int sendUsrMsg(const WORKER_ID &to,
-			       BYTE *msg,
-				const unsigned int &msg_size);
-};
+int InterfaceApp::getTaskByTaskId(const JOB_ID &job_id,
+								  const TASK_ID &task_id)
+{
+	//TODO:Implement this function.
+	return (0);
+}
+
+int InterfaceApp::sendUsrMsg(const WORKER_ID &to,
+							 BYTE *msg,
+							 const unsigned int &msg_size)
+{
+	//TODO:Implement this function.
+	return (0);
+}
 
 
 } /* swms */
 } /* marusa */
 
-#endif /* ___INTERFACEAPP_H___ */
+
