@@ -50,7 +50,7 @@ private:
 	CmcCallbackListener *listener;
 };
 
-class CmcAdapter::CmcCallbaclListener
+class CmcAdapter::CmcCallbackListener
 {
 public:
 	void onMessage(const HOST_ID &hostid,
