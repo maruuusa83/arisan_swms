@@ -15,56 +15,58 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#ifndef ___CMCADAPTER_H___
-#define ___CMCADAPTER_H___
+#ifndef ___TASKPROCESSOR_H___
+#define ___TASKPROCESSOR_H___
 
 #include "./common.h"
+#include "./Task.h"
+#include "./Result.h"
+#include "./CmcAdapter.h"
 
 namespace marusa {
 namespace swms {
 
-class CmcAdapter
+
+class TaskProcessorAPI
 {
 public:
-	class CmcCallbackListener;
-		
-	/***    Common    ***/
-	CmcAdapter(CmcCallbackListener *listener);
-		
-	virtual int sendMessage(const HOST_ID &host_id,
-							const BYTE *msg);
-			
-			
-	/***  For Worker  ***/
-	virtual HOST_ID connToStigma();
-				
-	/*** For Stigmagy ***/
-	virtual int startListen();
+	class TPCallbackListener;
+	class TPContext;
 
-	
-	/*** Special host ID ***/
-	static const HOST_ID HOST_ID_STIGMAGY  = 0x00000000;
-	static const HOST_ID HOST_ID_BROADCAST = 0xFFFFFFFF;
+	TaskProcessorAPI(const TPCallbackListener &listener,
+					 const CmcAdapter &cmc);
 
-private:
-	CmcCallbackListener *listener;
+	int startWorker();
+
+	int sendTaskFin(const Result &resut);
+
+	int sendUsrMsg(const WORKER_ID &to,
+			       BYTE *msg,
+				   const unsigned int &msg_size);
 };
 
-class CmcAdapter::CmcCallbackListener
+class TaskProcessorAPI::TPCallbackListener
 {
 public:
-	void onMessage(const HOST_ID &hostid,
-				   const BYTE *msg);
+	virtual void onTask(const TPContext &context,
+						const Task &task);
 
-	void onNewWorker(const HOST_ID &host_id);
+	virtual void onUsrMsg(const TPContext &context,
+						  const BYTE *msg,
+						  const unsigned int &size);
+};
 
-	void onDisconnWorker(const HOST_ID &host_id);
+class TaskProcessorAPI::TPContext
+{
+public:
+	TPContext(const TaskProcessorAPI &taskProcessorAPI);
+
+	TaskProcessorAPI *taskProcessorAPI = nullptr;
 };
 
 
 } /* swms */
 } /* marusa */
 
-#endif /* ___CMCADAPTER_H___ */
-
+#endif /* ___TASKPROCESSOR_H___ */
 

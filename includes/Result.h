@@ -15,56 +15,43 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#ifndef ___CMCADAPTER_H___
-#define ___CMCADAPTER_H___
+#ifndef ___RESULT_H___
+#define ___RESULT_H___
 
 #include "./common.h"
 
 namespace marusa {
 namespace swms {
 
-class CmcAdapter
+
+class Result
 {
 public:
-	class CmcCallbackListener;
-		
-	/***    Common    ***/
-	CmcAdapter(CmcCallbackListener *listener);
-		
-	virtual int sendMessage(const HOST_ID &host_id,
-							const BYTE *msg);
-			
-			
-	/***  For Worker  ***/
-	virtual HOST_ID connToStigma();
-				
-	/*** For Stigmagy ***/
-	virtual int startListen();
+	Result();
+	Result(const JOB_ID &job_id,
+		   const TASK_ID &task_id,
+		   const BYTE *data,
+		   const unsigned int &data_size);
 
-	
-	/*** Special host ID ***/
-	static const HOST_ID HOST_ID_STIGMAGY  = 0x00000000;
-	static const HOST_ID HOST_ID_BROADCAST = 0xFFFFFFFF;
+	void setJobId(const JOB_ID &job_id);
+	void setTaskId(const TASK_ID &task_id);
+	void setData(const BYTE *data,
+				 const unsigned int &data_size);
+
+	BYTE *getAsByteArray();
 
 private:
-	CmcCallbackListener *listener;
-};
+	JOB_ID  job_id  = 0;
+	TASK_ID task_id = 0;
 
-class CmcAdapter::CmcCallbackListener
-{
-public:
-	void onMessage(const HOST_ID &hostid,
-				   const BYTE *msg);
-
-	void onNewWorker(const HOST_ID &host_id);
-
-	void onDisconnWorker(const HOST_ID &host_id);
+	BYTE *data = nullptr;
+	unsigned int data_size = 0;
 };
 
 
 } /* swms */
 } /* marusa */
 
-#endif /* ___CMCADAPTER_H___ */
+#endif /* ___TASK_H___ */
 
 

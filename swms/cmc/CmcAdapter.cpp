@@ -15,56 +15,56 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#ifndef ___CMCADAPTER_H___
-#define ___CMCADAPTER_H___
-
-#include "./common.h"
+#include "CmcAdapter.h"
 
 namespace marusa {
 namespace swms {
 
-class CmcAdapter
+
+CmcAdapter::CmcAdapter(CmcCallbackListener *listener)
 {
-public:
-	class CmcCallbackListener;
-		
-	/***    Common    ***/
-	CmcAdapter(CmcCallbackListener *listener);
-		
-	virtual int sendMessage(const HOST_ID &host_id,
-							const BYTE *msg);
-			
-			
-	/***  For Worker  ***/
-	virtual HOST_ID connToStigma();
-				
-	/*** For Stigmagy ***/
-	virtual int startListen();
+	//nothing to do.
+}
 
 	
-	/*** Special host ID ***/
-	static const HOST_ID HOST_ID_STIGMAGY  = 0x00000000;
-	static const HOST_ID HOST_ID_BROADCAST = 0xFFFFFFFF;
-
-private:
-	CmcCallbackListener *listener;
-};
-
-class CmcAdapter::CmcCallbackListener
+int CmcAdapter::sendMessage(const HOST_ID &host_id,
+							const BYTE *msg)
 {
-public:
-	void onMessage(const HOST_ID &hostid,
-				   const BYTE *msg);
+	//TODO: implement this function
+	return (0);
+}
+		
+HOST_ID CmcAdapter::connToStigma()
+{
+	//TODO: implement this function
+	return (0);
+}
+			
+int CmcAdapter::startListen()
+{
+	//TODO: implement this function
+	return (0);
+}
 
-	void onNewWorker(const HOST_ID &host_id);
+void CmcAdapter::CmcCallbackListener::onMessage(const HOST_ID &hostid,
+											    const BYTE *msg)
+{
+	//nothing to do.
+}
 
-	void onDisconnWorker(const HOST_ID &host_id);
-};
+void CmcAdapter::CmcCallbackListener::onNewWorker(const HOST_ID &host_id)
+{
+	//nothing to do.
+}
+
+
+void CmcAdapter::CmcCallbackListener::onDisconnWorker(const HOST_ID &host_id)
+{
+	//nothing to do.
+}
+
 
 
 } /* swms */
 } /* marusa */
-
-#endif /* ___CMCADAPTER_H___ */
-
 
