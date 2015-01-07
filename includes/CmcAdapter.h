@@ -50,6 +50,17 @@ private:
 	CmcCallbackListener *listener;
 };
 
+class CmcAdapter::CmcCallbaclListener
+{
+public:
+	void onMessage(const HOST_ID &hostid,
+				   const BYTE *msg);
+
+	void onNewWorker(const HOST_ID &host_id);
+
+	void onDisconnWorker(const HOST_ID &host_id);
+};
+
 
 } /* swms */
 } /* marusa */
