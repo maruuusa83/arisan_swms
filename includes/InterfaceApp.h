@@ -44,6 +44,6 @@ public:
 
 
 } /* swms */
-} /* swms */
+} /* marusa */
 
 #endif /* ___INTERFACEAPP_H___ */
