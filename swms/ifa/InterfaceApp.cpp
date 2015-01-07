@@ -21,6 +21,7 @@ namespace marusa {
 namespace swms {
 
 
+/***** InterfaceApp *****/
 InterfaceApp::InterfaceApp(const IFACallbackListener &listener,
 						   const CmcAdapter &cmc)
 {
@@ -52,6 +53,21 @@ int InterfaceApp::sendUsrMsg(const WORKER_ID &to,
 {
 	//TODO:Implement this function.
 	return (0);
+}
+
+
+/***** InterfaceApp::IFACallbackListener *****/
+void InterfaceApp::IFACallbackListener::onTask(const WorkerContext &context,
+											   const Task &task)
+{
+	//TODO:Implement this function.
+}
+
+void InterfaceApp::IFACallbackListener::onRecvMsg(const WorkerContext &context,
+			                                      const BYTE *msg,
+						                          const unsigned int &msg_size)
+{
+	//TODO:Implement this function.
 }
 
 
