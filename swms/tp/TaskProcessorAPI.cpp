@@ -29,11 +29,13 @@ TaskProcessorAPI::TaskProcessorAPI(const TPCallbackListener &listener,
 int TaskProcessorAPI::startWorker()
 {
 	//TODO: implement this function
+	return (0);
 }
 
 int TaskProcessorAPI::sendTaskFin(const Result &resut)
 {
 	//TODO: implement this function
+	return (0);
 }
 
 int TaskProcessorAPI::sendUsrMsg(const WORKER_ID &to,
@@ -41,22 +43,23 @@ int TaskProcessorAPI::sendUsrMsg(const WORKER_ID &to,
 								 const unsigned int &msg_size)
 {
 	//TODO: implement this function
+	return (0);
 }
 
-void TaskProcessorAPI::TPCallbackListeneronTask(const TPContext &context,
+void TaskProcessorAPI::TPCallbackListener::onTask(const TPContext &context,
 												const Task &task)
 {
 	//TODO: implement this function
 }
 
-void TaskProcessorAPI::TPCallbackListeneronUsrMsg(const IFAContext &context,
+void TaskProcessorAPI::TPCallbackListener::onUsrMsg(const TPContext &context,
 												  const BYTE *msg,
 												  const unsigned int &size)
 {
 	//TODO: implement this function
 }
 
-TaskProcessorAPI::TPContext(const TaskProcessorAPI &taskProcessorAPI)
+TaskProcessorAPI::TPContext::TPContext(const TaskProcessorAPI &taskProcessorAPI)
 {
 	//TODO: implement this function
 }

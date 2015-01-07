@@ -15,58 +15,43 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#ifndef ___TASKPROCESSOR_H___
-#define ___TASKPROCESSOR_H___
+#ifndef ___RESULT_H___
+#define ___RESULT_H___
 
 #include "./common.h"
-#include "./Task.h"
-#include "./Result.h"
-#include "./CmcAdapter.h"
 
 namespace marusa {
 namespace swms {
 
 
-class TaskProcessorAPI
+class Result
 {
 public:
-	class TPCallbackListener;
-	class TPContext;
+	Result();
+	Result(const JOB_ID &job_id,
+		   const TASK_ID &task_id,
+		   const BYTE *data,
+		   const unsigned int &data_size);
 
-	TaskProcessorAPI(const TPCallbackListener &listener,
-					 const CmcAdapter &cmc);
+	void setJobId(const JOB_ID &job_id);
+	void setTaskId(const TASK_ID &task_id);
+	void setData(const BYTE *data,
+				 const unsigned int &data_size);
 
-	int startWorker();
+	BYTE *getAsByteArray();
 
-	int sendTaskFin(const Result &resut);
+private:
+	JOB_ID  job_id  = 0;
+	TASK_ID task_id = 0;
 
-	int sendUsrMsg(const WORKER_ID &to,
-			       BYTE *msg,
-				   const unsigned int &msg_size);
-};
-
-class TaskProcessorAPI::TPCallbackListener
-{
-public:
-	virtual void onTask(const TPContext &context,
-						const Task &task);
-
-	virtual void onUsrMsg(const TPContext &context,
-						  const BYTE *msg,
-						  const unsigned int &size);
-};
-
-class TaskProcessorAPI::TPContext
-{
-public:
-	TPContext(const TaskProcessorAPI &taskProcessorAPI);
-
-	TaskProcessorAPI *taskProcessorAPI = nullptr;
+	BYTE *data = nullptr;
+	unsigned int data_size = 0;
 };
 
 
 } /* swms */
 } /* marusa */
 
-#endif /* ___TASKPROCESSOR_H___ */
+#endif /* ___TASK_H___ */
+
 
