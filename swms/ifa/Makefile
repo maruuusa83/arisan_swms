@@ -38,7 +38,7 @@ CC = g++
 #-------------------------------------------------------------------
 # Compile Option
 #-------------------------------------------------------------------
-INCDIR = ./
+INCDIR = ../../includes/
 CFLAGS = -Wall -O0 -g -pthread -std=c++11 -I $(INCDIR)
 
 #-------------------------------------------------------------------
@@ -58,17 +58,18 @@ all: make_subdir depend gen_ofile gen_olist gen_aolist
 
 .PHONY: make_subdir
 make_subdir:
-	-@ for i in $(DIRS); do make -C ./$$i INCDIR=$(INCDIR); done
+	-@ for i in $(DIRS); do make -C ./$$i; done
 
 .PHONY: gen_ofile
 gen_ofile: $(OBJS)
 .cpp.o:
+	-@ echo make $<
 	$(CC) $(CFLAGS) -c $<
 
 .PHONY: gen_olist
 gen_olist:
 	-@ $(RM) objs.lst
-	-@ find `pwd` -maxdepth 1 -mindepth 1 |grep \\.o\$ > objs.lst
+	-@ find `pwd` -maxdepth 1 -mindepth 1 |grep \\.o$$ > objs.lst
 
 .PHONY: gen_aolist
 gen_aolist:
@@ -89,3 +90,4 @@ clean:
 
 
 -include depend.inc
+

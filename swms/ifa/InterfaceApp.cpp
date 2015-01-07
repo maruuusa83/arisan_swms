@@ -34,14 +34,16 @@ JOB_ID InterfaceApp::sendTasks(const std::vector<Task> &tasks)
 	return (0);
 }
 
-int InterfaceApp::getTasksByJobId(const JOB_ID &job_id)
+int InterfaceApp::getTasksByJobId(const JOB_ID &job_id,
+								  std::vector<Task> &tasks)
 {
 	//TODO:Implement this function.
 	return (0);
 }
 
 int InterfaceApp::getTaskByTaskId(const JOB_ID &job_id,
-								  const TASK_ID &task_id)
+								  const TASK_ID &task_id,
+								  Task *&task)
 {
 	//TODO:Implement this function.
 	return (0);
@@ -57,17 +59,37 @@ int InterfaceApp::sendUsrMsg(const WORKER_ID &to,
 
 
 /***** InterfaceApp::IFACallbackListener *****/
-void InterfaceApp::IFACallbackListener::onTask(const WorkerContext &context,
-											   const Task &task)
+void InterfaceApp::IFACallbackListener::onFinJob(const IFAContext &context,
+							const JOB_ID &job_id)
 {
-	//TODO:Implement this function.
+	//nothing to do
 }
 
-void InterfaceApp::IFACallbackListener::onRecvMsg(const WorkerContext &context,
-			                                      const BYTE *msg,
-						                          const unsigned int &msg_size)
+void InterfaceApp::IFACallbackListener::onFinTask(const IFAContext &context,
+											      const JOB_ID &job_id,
+											      const TASK_ID &task_id)
 {
-	//TODO:Implement this function.
+	//nothing to do
+}
+
+void InterfaceApp::IFACallbackListener::onNewWorker(const IFAContext &context,
+				 									const WORKER_ID &worker_id)
+{
+	//nothing to do
+}
+
+void InterfaceApp::IFACallbackListener::onDelWorker(const IFAContext &context,
+													const WORKER_ID &worker_id)
+{
+	//nothing to do
+}
+
+void InterfaceApp::IFACallbackListener::onUsrMsg(const IFAContext &context,
+											     const WORKER_ID &worker_id,
+											     const BYTE *msg,
+											     const unsigned int &size)
+{
+	//nothing to do
 }
 
 
