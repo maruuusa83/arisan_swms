@@ -22,9 +22,16 @@ namespace marusa {
 namespace swms {
 
 
+/*** COMMON ***/
+typedef unsigned char BYTE;
+
+/*** Stigmagy Layer ***/
 typedef unsigned int JOB_ID;
 typedef unsigned int TASK_ID;
 typedef unsigned int WORKER_ID;
+
+/*** Messaging Layer ***/
+typedef unsigned int HOST_ID;
 
 
 } /* swms */

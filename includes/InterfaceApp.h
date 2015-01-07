@@ -19,6 +19,7 @@
 #define ___INTERFACEAPP_H___
 
 #include "./common.h"
+#include "./Task.h"
 
 #include <vector>
 
@@ -35,15 +36,26 @@ public:
 			     const CmcAdapter &cmc);
 
 	JOB_ID sendTasks(const std::vector<Task> &tasks);
-	int getTasksByJobId(const JOB_ID &job_id
+	int getTasksByJobId(const JOB_ID &job_id,
 						std::vector<Task> &tasks);
 	int getTaskByTaskId(const JOB_ID &job_id,
-			            const TASK_ID &task_id
+			            const TASK_ID &task_id,
 						Task *&task);
 
 	int sendUsrMsg(const WORKER_ID &to,
 			       BYTE *msg,
-				const unsigned int &msg_size);
+				   const unsigned int &msg_size);
+};
+
+class InterfaceApp::IFACallbackListener
+{
+public:
+	virtual void onTask(const WorkerContext &context,
+			            const Task &task);
+
+	virtual void onRecvMsg(const WorkerContext &context,
+			               const BYTE *msg,
+						   const unsigned int &msg_size);
 };
 
 
