@@ -38,8 +38,16 @@ TaskProcessorAPI::~TaskProcessorAPI()
 
 int TaskProcessorAPI::startWorker()
 {
-	//TODO: implement this function
-	return (0);
+	mCmc->connToStigma();
+
+	while (1){
+		/* sending tasklist request to stigmergy */
+		if (sendReqTasklist() != 0){
+			//TODO: error process
+		}
+
+		sleep(TP_SPAN_POLLING);
+	}
 }
 
 int TaskProcessorAPI::sendTaskFin(const Result &resut)

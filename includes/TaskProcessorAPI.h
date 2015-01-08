@@ -45,9 +45,13 @@ public:
 			       BYTE *msg,
 				   const unsigned int &msg_size);
 
+	static const unsigned int TP_SPAN_POLLING = 1;
+
 private:
 	TPCallbackListener *mListener;
 	CmcAdapter *mCmc;
+
+	int sendReqTasklist();
 };
 
 class TaskProcessorAPI::TPCallbackListener
