@@ -35,6 +35,7 @@ public:
 
 	TaskProcessorAPI(const TPCallbackListener &listener,
 					 const CmcAdapter &cmc);
+	virtual ~TaskProcessorAPI();
 
 	int startWorker();
 
@@ -43,6 +44,10 @@ public:
 	int sendUsrMsg(const WORKER_ID &to,
 			       BYTE *msg,
 				   const unsigned int &msg_size);
+
+private:
+	TPCallbackListener *mListener;
+	CmcAdapter *mCmc;
 };
 
 class TaskProcessorAPI::TPCallbackListener
@@ -54,6 +59,8 @@ public:
 	virtual void onUsrMsg(const TPContext &context,
 						  const BYTE *msg,
 						  const unsigned int &size);
+
+	virtual ~TPCallbackListener();
 };
 
 class TaskProcessorAPI::TPContext

@@ -29,7 +29,9 @@ public:
 	class CmcCallbackListener;
 		
 	/***    Common    ***/
+	CmcAdapter();
 	CmcAdapter(CmcCallbackListener *listener);
+	virtual ~CmcAdapter();
 		
 	virtual int sendMessage(const HOST_ID &host_id,
 							const BYTE *msg);
