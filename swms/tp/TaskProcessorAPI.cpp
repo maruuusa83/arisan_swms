@@ -23,7 +23,17 @@ namespace swms {
 TaskProcessorAPI::TaskProcessorAPI(const TPCallbackListener &listener,
 								   const CmcAdapter &cmc)
 {
-	//TODO: implement this function
+	this->mListener = new TPCallbackListener();
+	*(this->mListener) = listener;
+
+	this->mCmc = new CmcAdapter();
+	*(this->mCmc) = cmc;
+}
+
+TaskProcessorAPI::~TaskProcessorAPI()
+{
+	delete this->mListener;
+	delete this->mCmc;
 }
 
 int TaskProcessorAPI::startWorker()
