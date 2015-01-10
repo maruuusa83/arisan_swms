@@ -38,12 +38,29 @@ TaskProcessorAPI::~TaskProcessorAPI()
 
 int TaskProcessorAPI::startWorker()
 {
-	mCmc->connToStigma();
+	if (mCmc->connToStigma() == 0){
+		//TODO: it needs the error code.
+		//if success, connToStigma will return HOST_ID (not zero)
+		return (-1);
+	}
 
 	while (1){
 		/* sending tasklist request to stigmergy */
 		if (sendReqTasklist() != 0){
 			//TODO: error process
+			//TODO: it needs the error code.
+			return (-1);
+		}
+
+		/* Reaction threshold */
+		JOB_ID job_id;
+		TASK_ID task_id;
+		checkDoTask(job_id, task_id);
+		if (task_id != TASK_ID_NO_TASK){
+			Job::Task task;
+
+			getTask(task, job_id, task_id);
+			doTask(task);
 		}
 
 		sleep(TP_SPAN_POLLING);
@@ -65,6 +82,21 @@ int TaskProcessorAPI::sendUsrMsg(const WORKER_ID &to,
 	//TODO: implement this function
 	return (0);
 }
+
+int TaskProcessorAPI::getTask(Job::Task &task,
+							  const JOB_ID &job_id,
+							  const TASK_ID &task_id)
+{
+	//TODO: implement this function
+	return (0);
+}
+
+int TaskProcessorAPI::doTask(const Job::Task &task)
+{
+	//TODO: implement this function
+	return (0);
+}
+
 
 void TaskProcessorAPI::TPCallbackListener::onTask(const TPContext &context,
 												  const Job::Task &task)
