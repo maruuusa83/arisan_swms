@@ -18,6 +18,8 @@
 #ifndef ___TASKPROCESSOR_H___
 #define ___TASKPROCESSOR_H___
 
+#include <unistd.h>
+
 #include "./common.h"
 #include "./Task.h"
 #include "./Result.h"

@@ -55,7 +55,7 @@ int TaskProcessorAPI::startWorker()
 		/* Reaction threshold */
 		JOB_ID job_id;
 		TASK_ID task_id;
-		checkDoTask(&job_id, &task_id);
+		checkDoTask(job_id, task_id);
 		if (task_id != TASK_ID_NO_TASK){
 			Task task;
 
