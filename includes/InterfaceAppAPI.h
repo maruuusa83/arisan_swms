@@ -37,12 +37,10 @@ public:
 	InterfaceAppAPI(const IFACallbackListener &listener,
 			        const CmcAdapter &cmc);
 
-	JOB_ID sendTasks(const std::vector<Task> &tasks);
-	int getTasksByJobId(const JOB_ID &job_id,
-						std::vector<Task> &tasks);
+	JOB_ID sendTasks(const Job &job);
+	int getTasksByJobId(const JOB_ID &job_id);
 	int getTaskByTaskId(const JOB_ID &job_id,
-			            const TASK_ID &task_id,
-						Task *&task);
+			            const TASK_ID &task_id);
 
 	int sendUsrMsg(const WORKER_ID &to,
 			       BYTE *msg,
@@ -52,11 +50,16 @@ public:
 class InterfaceAppAPI::IFACallbackListener
 {
 public:
-	virtual void onFinJob(const IFAContext &context,
-						  const JOB_ID &job_id);
 	virtual void onFinTask(const IFAContext &context,
 						   const JOB_ID &job_id,
 						   const TASK_ID &task_id);
+
+	virtual void onRecvJobResult(const IFAContext &context,
+								 const JOB_ID &job_id,
+								 const TASK_ID &task_id);
+	virtual void onRecvTaskResult(const IFAContext &context,
+								 const JOB_ID &job_id,
+								 const TASK_ID &task_id);
 
 	virtual void onNewWorker(const IFAContext &context,
 							 const WORKER_ID &worker_id);
