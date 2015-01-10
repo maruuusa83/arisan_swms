@@ -19,7 +19,8 @@
 #define ___INTERFACEAPPAPI_H___
 
 #include "./common.h"
-#include "./Task.h"
+//#include "./Task.h"
+#include "./Job.h"
 #include "./CmcAdapter.h"
 
 #include <vector>
@@ -72,13 +73,6 @@ public:
 						  const unsigned int &size);
 };
 
-class InterfaceAppAPI::IFAContext
-{
-public:
-	IFAContext(const InterfaceAppAPI &interfaceAppAPI);
-
-	InterfaceAppAPI *interfaceAppAPI = nullptr;
-};
 
 
 } /* swms */

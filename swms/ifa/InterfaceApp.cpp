@@ -64,14 +64,14 @@ void InterfaceAppAPI::IFACallbackListener::onFinTask(const IFAContext &context,
 	//nothing to do
 }
 
-void onRecvJobResult(const IFAContext &context,
+void InterfaceAppAPI::IFACallbackListener::onRecvJobResult(const IFAContext &context,
 					 const JOB_ID &job_id,
 					 const TASK_ID &task_id)
 {
 	//nothing to do
 }
 
-void onRecvTaskResult(const IFAContext &context,
+void InterfaceAppAPI::IFACallbackListener::onRecvTaskResult(const IFAContext &context,
 					  const JOB_ID &job_id,
 					  const TASK_ID &task_id)
 {
@@ -79,7 +79,7 @@ void onRecvTaskResult(const IFAContext &context,
 }
 
 void InterfaceAppAPI::IFACallbackListener::onNewWorker(const IFAContext &context,
-				 									const WORKER_ID &worker_id)
+				 			   						   const WORKER_ID &worker_id)
 {
 	//nothing to do
 }
