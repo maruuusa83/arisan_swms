@@ -18,8 +18,11 @@
 #ifndef ___TASKPROCESSOR_H___
 #define ___TASKPROCESSOR_H___
 
+#include <unistd.h>
+
 #include "./common.h"
-#include "./Task.h"
+//#include "./Task.h"
+#include "./Job.h"
 #include "./Result.h"
 #include "./CmcAdapter.h"
 
@@ -35,6 +38,7 @@ public:
 
 	TaskProcessorAPI(const TPCallbackListener &listener,
 					 const CmcAdapter &cmc);
+	virtual ~TaskProcessorAPI();
 
 	int startWorker();
 
@@ -43,17 +47,27 @@ public:
 	int sendUsrMsg(const WORKER_ID &to,
 			       BYTE *msg,
 				   const unsigned int &msg_size);
+
+	static const unsigned int TP_SPAN_POLLING = 1;
+
+private:
+	TPCallbackListener *mListener;
+	CmcAdapter *mCmc;
+
+	int sendReqTasklist();
 };
 
 class TaskProcessorAPI::TPCallbackListener
 {
 public:
 	virtual void onTask(const TPContext &context,
-						const Task &task);
+						const Job::Task &task);
 
 	virtual void onUsrMsg(const TPContext &context,
 						  const BYTE *msg,
 						  const unsigned int &size);
+
+	virtual ~TPCallbackListener();
 };
 
 class TaskProcessorAPI::TPContext

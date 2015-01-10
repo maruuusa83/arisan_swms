@@ -23,12 +23,32 @@ namespace swms {
 TaskProcessorAPI::TaskProcessorAPI(const TPCallbackListener &listener,
 								   const CmcAdapter &cmc)
 {
-	//TODO: implement this function
+	this->mListener = new TPCallbackListener();
+	*(this->mListener) = listener;
+
+	this->mCmc = new CmcAdapter();
+	*(this->mCmc) = cmc;
+}
+
+TaskProcessorAPI::~TaskProcessorAPI()
+{
+	delete this->mListener;
+	delete this->mCmc;
 }
 
 int TaskProcessorAPI::startWorker()
 {
-	//TODO: implement this function
+	mCmc->connToStigma();
+
+	while (1){
+		/* sending tasklist request to stigmergy */
+		if (sendReqTasklist() != 0){
+			//TODO: error process
+		}
+
+		sleep(TP_SPAN_POLLING);
+	}
+
 	return (0);
 }
 
@@ -47,14 +67,14 @@ int TaskProcessorAPI::sendUsrMsg(const WORKER_ID &to,
 }
 
 void TaskProcessorAPI::TPCallbackListener::onTask(const TPContext &context,
-												const Task &task)
+												  const Job::Task &task)
 {
 	//TODO: implement this function
 }
 
 void TaskProcessorAPI::TPCallbackListener::onUsrMsg(const TPContext &context,
-												  const BYTE *msg,
-												  const unsigned int &size)
+												    const BYTE *msg,
+												    const unsigned int &size)
 {
 	//TODO: implement this function
 }
