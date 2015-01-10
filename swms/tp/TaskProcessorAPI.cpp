@@ -57,7 +57,7 @@ int TaskProcessorAPI::startWorker()
 		TASK_ID task_id;
 		checkDoTask(job_id, task_id);
 		if (task_id != TASK_ID_NO_TASK){
-			Task task;
+			Job::Task task;
 
 			getTask(task, job_id, task_id);
 			doTask(task);
