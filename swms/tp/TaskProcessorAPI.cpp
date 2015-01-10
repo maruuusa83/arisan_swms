@@ -83,6 +83,21 @@ int TaskProcessorAPI::sendUsrMsg(const WORKER_ID &to,
 	return (0);
 }
 
+int TaskProcessorAPI::getTask(Job::Task &task,
+							  const JOB_ID &job_id,
+							  const TASK_ID &task_id)
+{
+	//TODO: implement this function
+	return (0);
+}
+
+int TaskProcessorAPI::doTask(const Job::Task &task)
+{
+	//TODO: implement this function
+	return (0);
+}
+
+
 void TaskProcessorAPI::TPCallbackListener::onTask(const TPContext &context,
 												  const Job::Task &task)
 {
