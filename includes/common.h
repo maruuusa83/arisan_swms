@@ -30,6 +30,8 @@ typedef unsigned int JOB_ID;
 typedef unsigned int TASK_ID;
 typedef unsigned int WORKER_ID;
 
+static const unsigned int TASK_ID_NO_TASK = 0;
+
 /*** Messaging Layer ***/
 typedef unsigned int HOST_ID;
 
