@@ -65,6 +65,8 @@ int TaskProcessorAPI::startWorker()
 
 		sleep(TP_SPAN_POLLING);
 	}
+
+	return (0);
 }
 
 int TaskProcessorAPI::sendTaskFin(const Result &resut)
@@ -82,14 +84,14 @@ int TaskProcessorAPI::sendUsrMsg(const WORKER_ID &to,
 }
 
 void TaskProcessorAPI::TPCallbackListener::onTask(const TPContext &context,
-												const Task &task)
+												  const Job::Task &task)
 {
 	//TODO: implement this function
 }
 
 void TaskProcessorAPI::TPCallbackListener::onUsrMsg(const TPContext &context,
-												  const BYTE *msg,
-												  const unsigned int &size)
+												    const BYTE *msg,
+												    const unsigned int &size)
 {
 	//TODO: implement this function
 }

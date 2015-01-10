@@ -21,7 +21,8 @@
 #include <unistd.h>
 
 #include "./common.h"
-#include "./Task.h"
+//#include "./Task.h"
+#include "./Job.h"
 #include "./Result.h"
 #include "./CmcAdapter.h"
 
@@ -66,7 +67,7 @@ class TaskProcessorAPI::TPCallbackListener
 {
 public:
 	virtual void onTask(const TPContext &context,
-						const Task &task);
+						const Job::Task &task);
 
 	virtual void onUsrMsg(const TPContext &context,
 						  const BYTE *msg,

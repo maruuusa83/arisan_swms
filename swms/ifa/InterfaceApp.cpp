@@ -23,27 +23,25 @@ namespace swms {
 
 /***** InterfaceAppAPI *****/
 InterfaceAppAPI::InterfaceAppAPI(const IFACallbackListener &listener,
-						   const CmcAdapter &cmc)
+							     const CmcAdapter &cmc)
 {
 	//TODO:Implement this function.
 }
 
-JOB_ID InterfaceAppAPI::sendTasks(const std::vector<Task> &tasks)
+JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 {
 	//TODO:Implement this function.
 	return (0);
 }
 
-int InterfaceAppAPI::getTasksByJobId(const JOB_ID &job_id,
-								  std::vector<Task> &tasks)
+int InterfaceAppAPI::getTasksByJobId(const JOB_ID &job_id)
 {
 	//TODO:Implement this function.
 	return (0);
 }
 
 int InterfaceAppAPI::getTaskByTaskId(const JOB_ID &job_id,
-								  const TASK_ID &task_id,
-								  Task *&task)
+								  const TASK_ID &task_id)
 {
 	//TODO:Implement this function.
 	return (0);
@@ -59,12 +57,6 @@ int InterfaceAppAPI::sendUsrMsg(const WORKER_ID &to,
 
 
 /***** InterfaceAppAPI::IFACallbackListener *****/
-void InterfaceAppAPI::IFACallbackListener::onFinJob(const IFAContext &context,
-							const JOB_ID &job_id)
-{
-	//nothing to do
-}
-
 void InterfaceAppAPI::IFACallbackListener::onFinTask(const IFAContext &context,
 											      const JOB_ID &job_id,
 											      const TASK_ID &task_id)
@@ -72,8 +64,22 @@ void InterfaceAppAPI::IFACallbackListener::onFinTask(const IFAContext &context,
 	//nothing to do
 }
 
+void InterfaceAppAPI::IFACallbackListener::onRecvJobResult(const IFAContext &context,
+					 const JOB_ID &job_id,
+					 const TASK_ID &task_id)
+{
+	//nothing to do
+}
+
+void InterfaceAppAPI::IFACallbackListener::onRecvTaskResult(const IFAContext &context,
+					  const JOB_ID &job_id,
+					  const TASK_ID &task_id)
+{
+	//nothing to do
+}
+
 void InterfaceAppAPI::IFACallbackListener::onNewWorker(const IFAContext &context,
-				 									const WORKER_ID &worker_id)
+				 			   						   const WORKER_ID &worker_id)
 {
 	//nothing to do
 }
