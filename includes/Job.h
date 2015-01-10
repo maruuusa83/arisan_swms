@@ -18,13 +18,31 @@
 #ifndef ___TASK_H___
 #define ___TASK_H___
 
+#include <vector>
+
 #include "./common.h"
 
 namespace marusa {
 namespace swms {
 
+class Job
+{
+public:
+	class Task;
+	
+	Job();
+	virtual ~Job();
 
-class Task
+	TASK_ID addTask(const Task &task);
+	int delTask(const TASK_ID &task_id);
+
+	void getTaskList(std::vector<Task> &task_list);
+
+private:
+	std::vector<Task> task_list;
+};
+
+class Job::Task
 {
 public:
 	Task();
@@ -36,6 +54,11 @@ public:
 	void setTaskId(const TASK_ID &task_id);
 	void setData(const BYTE *data,
 				 const unsigned int &data_size);
+
+	JOB_ID getJobId();
+	TASK_ID getTaskId();
+	int getData(BYTE *&data,
+			    unsigned int &dat_size);
 
 	BYTE *getAsByteArray();
 
