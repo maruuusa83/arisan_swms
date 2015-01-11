@@ -56,7 +56,7 @@ private:
 class CmcAdapter::CmcCallbackListener
 {
 public:
-	class CMCContext;
+	class CmcContext;
 
 	void onMessage(const HOST_ID &hostid,
 				   const BYTE *msg);

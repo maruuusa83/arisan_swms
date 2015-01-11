@@ -19,17 +19,25 @@
 #define ___CMCCONTEXT_H___
 
 #include "./common.h"
+
+#include "./TaskProcessorAPI.h"
 #include "./InterfaceAppAPI.h"
+
 #include "./CmcAdapter.h"
 
 namespace marusa {
 namespace swms {
 
 
-class CmcAdapter::CmcCallbackListener::CMCContext
+class CmcAdapter::CmcCallbackListener::CmcContext
 {
 public:
 	int setIFACallbackListener(const InterfaceAppAPI::IFACallbackListener &ifaCallbackListener);
+	int setTPCallbackListener(const TaskProcessorAPI::TPCallbackListener &tpCallbackListener);
+
+private:
+	InterfaceAppAPI::IFACallbackListener mIFACallbackListener;
+	TaskProcessorAPI::TPCallbackListener mTPCallbackListener;
 };
 
 
