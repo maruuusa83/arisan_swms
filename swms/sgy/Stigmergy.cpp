@@ -15,32 +15,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#ifndef ___STIGMAGY_H___
-#define ___STIGMAGY_H___
-
-#include "./common.h"
-#include "./CmcAdapter.h"
+#include "Stigmergy.h"
 
 namespace marusa {
 namespace swms {
 
-
-class Stigmagy
+Stigmergy::Stigmergy(const CmcAdapter &cmc)
 {
-public:
-	Stigmagy(const CmcAdapter &cmc);
-	virtual ~Stigmagy();
+	//TODO: implement this method
+}
 
-	int startStigmagy();
+Stigmergy::~Stigmergy()
+{
+	//tohitng to do
+}
 
-private:
-	CmcAdapter *mCmc;
-};
-
+int Stigmergy::startStigmergy()
+{
+	//TODO: implement this method
+	return (0);
+}
 
 } /* swms */
 } /* marusa */
-
-#endif /* ___TASKPROCESSOR_H___ */
-
 

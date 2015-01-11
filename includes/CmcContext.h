@@ -22,6 +22,7 @@
 
 #include "./TaskProcessorAPI.h"
 #include "./InterfaceAppAPI.h"
+#include "./Stigmergy.h"
 
 #include "./CmcAdapter.h"
 
@@ -34,10 +35,12 @@ class CmcAdapter::CmcCallbackListener::CmcContext
 public:
 	int setIFACallbackListener(const InterfaceAppAPI::IFACallbackListener &ifaCallbackListener);
 	int setTPCallbackListener(const TaskProcessorAPI::TPCallbackListener &tpCallbackListener);
+	int setSGYCallbackListener(const Stigmergy::SGYCallbackListener &sgyCallbackListner);
 
 private:
 	InterfaceAppAPI::IFACallbackListener mIFACallbackListener;
 	TaskProcessorAPI::TPCallbackListener mTPCallbackListener;
+	Stigmergy::SGYCallbackListener mSGYCallbackListener;
 };
 
 
