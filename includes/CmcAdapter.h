@@ -55,12 +55,19 @@ private:
 class CmcAdapter::CmcCallbackListener
 {
 public:
+	class CMCContext;
+
 	void onMessage(const HOST_ID &hostid,
 				   const BYTE *msg);
 
 	void onNewWorker(const HOST_ID &host_id);
 
 	void onDisconnWorker(const HOST_ID &host_id);
+};
+
+class CmcAdapter::CmcCallbackListener::CMCContext
+{
+public:
 };
 
 
