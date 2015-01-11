@@ -34,7 +34,7 @@ public:
 	class IFACallbackListener;
 	class IFAContext;
 
-	InterfaceAppAPI(const IFACallbackListener &listener,
+	InterfaceAppAPI(IFACallbackListener *listener,
 			        const CmcAdapter &cmc);
 
 	JOB_ID sendTasks(const Job &job);
@@ -47,10 +47,13 @@ public:
 				   const unsigned int &msg_size);
 
 private:
-	IFACallbackListener mListener;
+	IFACallbackListener *mListener;
 	CmcAdapter mCmc;
 
 	HOST_ID stigmergy_id = 0;
+
+	int packetBuilder(BYTE *&pkt,
+					  const Job &job);
 };
 
 class InterfaceAppAPI::IFACallbackListener
