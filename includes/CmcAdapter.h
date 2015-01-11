@@ -16,9 +16,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 #ifndef ___CMCADAPTER_H___
+namespace marusa {
+namespace swms {
+	class CmcAdapter;
+}}
 #define ___CMCADAPTER_H___
 
 #include "./common.h"
+#include "./InterfaceAppAPI.h"
 
 namespace marusa {
 namespace swms {
@@ -55,12 +60,20 @@ private:
 class CmcAdapter::CmcCallbackListener
 {
 public:
+	class CMCContext;
+
 	void onMessage(const HOST_ID &hostid,
 				   const BYTE *msg);
 
 	void onNewWorker(const HOST_ID &host_id);
 
 	void onDisconnWorker(const HOST_ID &host_id);
+};
+
+class CmcAdapter::CmcCallbackListener::CMCContext
+{
+public:
+	int setIFACallbackListener(const InterfaceAppAPI::IFACallbackListener &ifaCallbackListener);
 };
 
 
