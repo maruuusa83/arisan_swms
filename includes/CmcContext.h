@@ -15,61 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#ifndef ___CMCADAPTER_H___
-#define ___CMCADAPTER_H___
+#ifndef ___CMCCONTEXT_H___
+#define ___CMCCONTEXT_H___
 
 #include "./common.h"
+#include "./InterfaceAppAPI.h"
+#include "./CmcAdapter.h"
 
 namespace marusa {
 namespace swms {
 
 
-class CmcAdapter
+class CmcAdapter::CmcCallbackListener::CMCContext
 {
 public:
-	class CmcCallbackListener;
-		
-	/***    Common    ***/
-	CmcAdapter();
-	CmcAdapter(CmcCallbackListener *listener);
-	virtual ~CmcAdapter();
-		
-	virtual int sendMessage(const HOST_ID &host_id,
-							const BYTE *msg);
-			
-			
-	/***  For Worker  ***/
-	virtual HOST_ID connToStigma();
-				
-	/*** For Stigmagy ***/
-	virtual int startListen();
-
-	
-	/*** Special host ID ***/
-	static const HOST_ID HOST_ID_STIGMAGY  = 0x00000000;
-	static const HOST_ID HOST_ID_BROADCAST = 0xFFFFFFFF;
-
-private:
-	CmcCallbackListener *listener;
-};
-
-class CmcAdapter::CmcCallbackListener
-{
-public:
-	class CMCContext;
-
-	void onMessage(const HOST_ID &hostid,
-				   const BYTE *msg);
-
-	void onNewWorker(const HOST_ID &host_id);
-
-	void onDisconnWorker(const HOST_ID &host_id);
+	int setIFACallbackListener(const InterfaceAppAPI::IFACallbackListener &ifaCallbackListener);
 };
 
 
 } /* swms */
 } /* marusa */
 
-#endif /* ___CMCADAPTER_H___ */
+#endif /* ___CMCCONTEXT_H___ */
+
 
 
