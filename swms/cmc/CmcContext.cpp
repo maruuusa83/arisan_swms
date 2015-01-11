@@ -23,18 +23,18 @@ namespace swms {
 
 int CmcAdapter::CmcCallbackListener::CmcContext::setIFACallbackListener(const InterfaceAppAPI::IFACallbackListener &ifaCallbackListener)
 {
-	//TODO: implement this method
+	this->mIFACallbackListener = ifaCallbackListener;
 	return (0);
 }
 
 int CmcAdapter::CmcCallbackListener::CmcContext::setTPCallbackListener(const TaskProcessorAPI::TPCallbackListener &tpCallbackListener)
 {
-	//TODO: implement this method
+	this->mTPCallbackListener = tpCallbackListener;
 	return (0);
 }
-int CmcAdapter::CmcCallbackListener::CmcContext::setSGYCallbackListener(const Stigmergy::SGYCallbackListener &sgyCallbackListner)
+int CmcAdapter::CmcCallbackListener::CmcContext::setSGYCallbackListener(const Stigmergy::SGYCallbackListener &sgyCallbackListener)
 {
-	//TODO: implement this method
+	this->mSGYCallbackListener = sgyCallbackListener;
 	return (0);
 }
 
