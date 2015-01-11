@@ -25,12 +25,17 @@ namespace swms {
 InterfaceAppAPI::InterfaceAppAPI(const IFACallbackListener &listener,
 							     const CmcAdapter &cmc)
 {
-	//TODO:Implement this function.
+	this->mListener = listener;
+	this->mCmc = cmc;
 }
 
 JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 {
-	//TODO:Implement this function.
+	CmcAdapter &cmc = this->mCmc;
+
+	//TODO:send message
+	std::vector<Task> task_list = job.getTaskList();
+
 	return (0);
 }
 

@@ -19,7 +19,6 @@
 #define ___INTERFACEAPPAPI_H___
 
 #include "./common.h"
-//#include "./Task.h"
 #include "./Job.h"
 #include "./CmcAdapter.h"
 
@@ -46,6 +45,12 @@ public:
 	int sendUsrMsg(const WORKER_ID &to,
 			       BYTE *msg,
 				   const unsigned int &msg_size);
+
+private:
+	IFACallbackListener mListener;
+	CmcAdapter mCmc;
+
+	HOST_ID stigmergy_id = 0;
 };
 
 class InterfaceAppAPI::IFACallbackListener
