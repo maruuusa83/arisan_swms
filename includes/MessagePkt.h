@@ -46,7 +46,6 @@ public:
 	static const int SIZE_MSG_TYPE	= 1;
 	static const int SIZE_DATA_SIZE	= 4;
 
-	static const int TO_STIGMAGY = 0;
 
 	/* Message types */
 	static const int MSG_SEND_TASK		= 0;
@@ -66,7 +65,7 @@ public:
 	static const int MSG_TYPE_PLUS_ONE	= 10;
 
 private:
-	int to = TO_STIGMAGY;
+	HOST_ID to = 0;
 	unsigned char msg_type = MSG_TYPE_PLUS_ONE;
 	unsigned int size_data = 0;
 	BYTE *data;
