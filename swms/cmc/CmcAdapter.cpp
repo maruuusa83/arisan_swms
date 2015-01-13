@@ -24,13 +24,12 @@ namespace swms {
 CmcAdapter::CmcAdapter(CmcCallbackListener *listener)
 {
 	//nothing to do.
+	this->mListener = listener;
 }
 
-	
-int CmcAdapter::sendMessage(const HOST_ID &host_id,
-							const BYTE *msg)
+int CmcAdapter::sendMessagePkt(const MessagePkt &pkt)
 {
-	//TODO: implement this function
+	//TODO: implement this method
 	return (0);
 }
 		
@@ -61,6 +60,13 @@ void CmcAdapter::CmcCallbackListener::onNewWorker(const HOST_ID &host_id)
 void CmcAdapter::CmcCallbackListener::onDisconnWorker(const HOST_ID &host_id)
 {
 	//nothing to do.
+}
+
+int CmcAdapter::sendMessage(const HOST_ID &host_id,
+							const BYTE *msg)
+{
+	//TODO: implement this function
+	return (0);
 }
 
 

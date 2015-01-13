@@ -19,6 +19,7 @@
 #define ___CMCADAPTER_H___
 
 #include "./common.h"
+#include "./MessagePkt.h"
 
 namespace marusa {
 namespace swms {
@@ -35,8 +36,7 @@ public:
 	CmcAdapter(CmcCallbackListener *listener);
 	virtual ~CmcAdapter();
 		
-	virtual int sendMessage(const HOST_ID &host_id,
-							const BYTE *msg);
+	virtual int sendMessagePkt(const MessagePkt &pkt);
 
 	int setCmcContext(const CmcContext &context);
 			
@@ -53,7 +53,10 @@ public:
 	static const HOST_ID HOST_ID_BROADCAST = 0xFFFFFFFF;
 
 private:
-	CmcCallbackListener *listener;
+	CmcCallbackListener *mListener;
+
+	virtual int sendMessage(const HOST_ID &host_id,
+							const BYTE *msg);
 };
 
 class CmcAdapter::CmcCallbackListener
