@@ -36,6 +36,8 @@ public:
 		
 	virtual int sendMessage(const HOST_ID &host_id,
 							const BYTE *msg);
+
+	int setCmcContext(const CmcCallbackListener::CmcContext &context);
 			
 			
 	/***  For Worker  ***/
