@@ -30,7 +30,7 @@ namespace marusa {
 namespace swms {
 
 
-class CmcAdapter::CmcCallbackListener::CmcContext
+class CmcAdapter::CmcContext
 {
 public:
 	int setIFACallbackListener(const InterfaceAppAPI::IFACallbackListener &ifaCallbackListener);
