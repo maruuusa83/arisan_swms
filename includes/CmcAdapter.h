@@ -28,6 +28,7 @@ class CmcAdapter
 {
 public:
 	class CmcCallbackListener;
+	class CmcContext;
 		
 	/***    Common    ***/
 	CmcAdapter();
@@ -36,6 +37,8 @@ public:
 		
 	virtual int sendMessage(const HOST_ID &host_id,
 							const BYTE *msg);
+
+	int setCmcContext(const CmcContext &context);
 			
 			
 	/***  For Worker  ***/
@@ -56,8 +59,6 @@ private:
 class CmcAdapter::CmcCallbackListener
 {
 public:
-	class CmcContext;
-
 	void onMessage(const HOST_ID &hostid,
 				   const BYTE *msg);
 
