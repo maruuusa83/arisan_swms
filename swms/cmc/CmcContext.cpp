@@ -21,18 +21,18 @@ namespace marusa {
 namespace swms {
 
 
-int CmcAdapter::CmcCallbackListener::CmcContext::setIFACallbackListener(const InterfaceAppAPI::IFACallbackListener &ifaCallbackListener)
+int CmcAdapter::CmcContext::setIFACallbackListener(const InterfaceAppAPI::IFACallbackListener &ifaCallbackListener)
 {
 	this->mIFACallbackListener = ifaCallbackListener;
 	return (0);
 }
 
-int CmcAdapter::CmcCallbackListener::CmcContext::setTPCallbackListener(const TaskProcessorAPI::TPCallbackListener &tpCallbackListener)
+int CmcAdapter::CmcContext::setTPCallbackListener(const TaskProcessorAPI::TPCallbackListener &tpCallbackListener)
 {
 	this->mTPCallbackListener = tpCallbackListener;
 	return (0);
 }
-int CmcAdapter::CmcCallbackListener::CmcContext::setSGYCallbackListener(const Stigmergy::SGYCallbackListener &sgyCallbackListener)
+int CmcAdapter::CmcContext::setSGYCallbackListener(const Stigmergy::SGYCallbackListener &sgyCallbackListener)
 {
 	this->mSGYCallbackListener = sgyCallbackListener;
 	return (0);

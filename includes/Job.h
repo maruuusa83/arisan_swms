@@ -36,7 +36,7 @@ public:
 	TASK_ID addTask(const Task &task);
 	int delTask(const TASK_ID &task_id);
 
-	void getTaskList(std::vector<Task> &task_list);
+	void getTaskList (std::vector<Task> &task_list) const;
 
 private:
 	std::vector<Task> task_list;

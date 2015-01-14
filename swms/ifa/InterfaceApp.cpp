@@ -17,12 +17,14 @@
  *******************************************************************************/
 #include "InterfaceAppAPI.h"
 
+#include "MessagePkt.h"
+
 namespace marusa {
 namespace swms {
 
 
 /***** InterfaceAppAPI *****/
-InterfaceAppAPI::InterfaceAppAPI(const IFACallbackListener &listener,
+InterfaceAppAPI::InterfaceAppAPI(IFACallbackListener *listener,
 							     const CmcAdapter &cmc)
 {
 	this->mListener = listener;
@@ -33,8 +35,17 @@ JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 {
 	CmcAdapter &cmc = this->mCmc;
 
-	//TODO:send message
-	std::vector<Task> task_list = job.getTaskList();
+	std::vector<Job::Task> task_list;
+	job.getTaskList(task_list);
+
+	for (auto task : task_list){
+		BYTE *byte_task_data;
+		unsigned int size;
+		task.getData(byte_task_data, size);
+
+		MessagePkt pkt(stigmergy_id, MessagePkt::MSG_SEND_TASK, byte_task_data, size);
+		cmc.sendMessagePkt(pkt);
+	}
 
 	return (0);
 }
@@ -57,6 +68,13 @@ int InterfaceAppAPI::sendUsrMsg(const WORKER_ID &to,
 							 const unsigned int &msg_size)
 {
 	//TODO:Implement this function.
+	return (0);
+}
+
+int InterfaceAppAPI::packetBuilder(BYTE *&pkt,
+								   const Job &job)
+{
+	//TODO: implement this method
 	return (0);
 }
 
