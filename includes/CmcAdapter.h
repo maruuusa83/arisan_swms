@@ -57,7 +57,8 @@ private:
 	CmcContext *mContext;
 
 	virtual int sendMessage(const HOST_ID &host_id,
-							const BYTE *msg);
+							const BYTE *msg,
+							const unsigned int &size_msg);
 };
 
 class CmcAdapter::CmcCallbackListener

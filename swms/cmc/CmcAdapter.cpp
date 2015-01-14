@@ -23,14 +23,21 @@ namespace swms {
 
 CmcAdapter::CmcAdapter(CmcCallbackListener *listener)
 {
-	//nothing to do.
 	this->mListener = listener;
 }
 
 int CmcAdapter::sendMessagePkt(const MessagePkt &pkt)
 {
-	//TODO: implement this method
-	return (0);
+	int result;
+
+	BYTE *data;
+	unsigned int size;
+	pkt.get_msg(&data, size);
+
+	HOST_ID to = pkt.get_to();
+	result = sendMessage(to, data, size);
+
+	return (result);
 }
 
 int CmcAdapter::setCmcContext(CmcContext *context)
@@ -69,7 +76,8 @@ void CmcAdapter::CmcCallbackListener::onDisconnWorker(const HOST_ID &host_id)
 }
 
 int CmcAdapter::sendMessage(const HOST_ID &host_id,
-							const BYTE *msg)
+							const BYTE *msg,
+							const unsigned int &size_msg)
 {
 	//TODO: implement this function
 	return (0);

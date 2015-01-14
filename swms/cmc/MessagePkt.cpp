@@ -67,7 +67,7 @@ int MessagePkt::set_data(const unsigned char &msg_type, const BYTE *data, const 
 	return (0);
 }
 
-int MessagePkt::get_to()
+int MessagePkt::get_to() const
 {
 	return (this->to);
 }
@@ -78,8 +78,12 @@ int MessagePkt::get_to()
  * BYTE ** : To save massage data
  * unsigned int * : To save length of message
  */
-void MessagePkt::get_msg(BYTE **data)
+void MessagePkt::get_msg(BYTE **data, unsigned int &size_data) const
 {
+	/* save data size */
+	size_data = this->size_data;
+
+	/* save data */
 	*data = (BYTE *)malloc(MessagePkt::SIZE_MSG_TYPE + MessagePkt::SIZE_DATA_SIZE + sizeof(BYTE) * this->size_data);
 
 	*((unsigned char *)*data) = (unsigned char)this->msg_type;
