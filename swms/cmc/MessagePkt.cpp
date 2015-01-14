@@ -91,6 +91,11 @@ void MessagePkt::get_msg(BYTE **data, unsigned int &size_data) const
 	bytecpy(*data + MessagePkt::SIZE_MSG_TYPE + MessagePkt::SIZE_DATA_SIZE, this->data, this->size_data);
 }
 
+unsigned char MessagePkt::get_msg_type() const
+{
+	return (this->msg_type);
+}
+
 void MessagePkt::free_msg(BYTE *data)
 {
 	free(data);

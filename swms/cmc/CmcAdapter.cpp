@@ -75,6 +75,10 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 											    const MessagePkt &msg)
 {
 	//TODO: implemet this method
+	switch (msg.get_msg_type()){
+	  default:
+	    break;
+	}
 }
 
 void CmcAdapter::CmcCallbackListener::onNewWorker(const CmcContext &context,

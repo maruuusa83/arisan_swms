@@ -39,6 +39,7 @@ public:
 
 	int get_to() const;
 	void get_msg(BYTE **data, unsigned int &size_data) const;
+	unsigned char get_msg_type() const;
 
 	static void free_msg(BYTE *data);
 
