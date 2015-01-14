@@ -54,6 +54,39 @@ const Stigmergy::SGYCallbackListener &CmcAdapter::CmcContext::getSGYCallbackList
 }
 
 
+int CmcAdapter::CmcContext::setIFAContext(const InterfaceAppAPI::IFAContext &ifaContext)
+{
+	this->mIFAContext = ifaContext;
+	return (0);
+}
+
+int CmcAdapter::CmcContext::setTPContext(const TaskProcessorAPI::TPContext &tpContext)
+{
+	this->mTPContext = tpContext;
+	return (0);
+}
+int CmcAdapter::CmcContext::setSGYContext(const Stigmergy::SGYContext &sgyContext)
+{
+	this->mSGYContext = sgyContext;
+	return (0);
+}
+
+const InterfaceAppAPI::IFAContext &CmcAdapter::CmcContext::getIFAContext() const
+{
+	return (this->mIFAContext);
+}
+
+const TaskProcessorAPI::TPContext &CmcAdapter::CmcContext::getTPContext() const
+{
+	return (this->mTPContext);
+}
+
+const Stigmergy::SGYContext &CmcAdapter::CmcContext::getSGYContext() const
+{
+	return (this->mSGYContext);
+}
+
+
 } /* swms */
 } /* marusa */
 

@@ -41,10 +41,24 @@ public:
 	const TaskProcessorAPI::TPCallbackListener &getTPCallbackListener() const;
 	const Stigmergy::SGYCallbackListener &getSGYCallbackListener() const;
 
+
+	int setIFAContext(const InterfaceAppAPI::IFAContext &ifaContext);
+	int setTPContext(const TaskProcessorAPI::TPContext &tpContext);
+	int setSGYContext(const Stigmergy::SGYContext &sgyCallbackListner);
+
+	const InterfaceAppAPI::IFAContext &getIFAContext() const;
+	const TaskProcessorAPI::TPContext &getTPContext() const;
+	const Stigmergy::SGYContext &getSGYContext() const;
+
 private:
 	InterfaceAppAPI::IFACallbackListener mIFACallbackListener;
+	InterfaceAppAPI::IFAContext mIFAContext;
+
 	TaskProcessorAPI::TPCallbackListener mTPCallbackListener;
+	TaskProcessorAPI::TPContext mTPContext;
+
 	Stigmergy::SGYCallbackListener mSGYCallbackListener;
+	Stigmergy::SGYContext mSGYContext;
 };
 
 

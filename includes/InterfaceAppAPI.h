@@ -81,6 +81,13 @@ public:
 						  const unsigned int &size);
 };
 
+class InterfaceAppAPI::IFAContext
+{
+public:
+	IFAContext(InterfaceAppAPI &interfaceAppAPI);
+
+	InterfaceAppAPI *mInterfaceAppAPI = nullptr;
+};
 
 
 } /* swms */

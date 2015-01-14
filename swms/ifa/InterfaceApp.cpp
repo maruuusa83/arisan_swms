@@ -125,6 +125,12 @@ void InterfaceAppAPI::IFACallbackListener::onUsrMsg(const IFAContext &context,
 }
 
 
+InterfaceAppAPI::IFAContext::IFAContext(InterfaceAppAPI &interfaceAppAPI)
+{
+	this->mInterfaceAppAPI = &interfaceAppAPI;
+}
+
+
 } /* swms */
 } /* marusa */
 
