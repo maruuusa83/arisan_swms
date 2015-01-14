@@ -42,7 +42,7 @@ public:
 			
 			
 	/***  For Worker  ***/
-	virtual HOST_ID connToStigma();
+	virtual HOST_ID connToStigmergy();
 				
 	/*** For Stigmagy ***/
 	virtual int startListen();

@@ -104,7 +104,7 @@ void InterfaceAppAPI::IFACallbackListener::onRecvTaskResult(const IFAContext &co
 	//nothing to do
 }
 
-virtual void InterfaceAppAPI::IFACallbackListener::onRecvJobId(const IFAContext &context,
+void InterfaceAppAPI::IFACallbackListener::onRecvJobId(const IFAContext &context,
 						 									   const JOB_ID &job_id) const
 {
 	//nothing todo
