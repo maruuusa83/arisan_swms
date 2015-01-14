@@ -58,6 +58,18 @@ int CmcAdapter::startListen()
 	return (0);
 }
 
+
+/*** Private methods ***/
+int CmcAdapter::sendMessage(const HOST_ID &host_id,
+							const BYTE *msg,
+							const unsigned int &size_msg)
+{
+	//nothing to do.
+	return (0);
+}
+
+
+/*** CmcCallbackListener ***/
 void CmcAdapter::CmcCallbackListener::onMessage(const HOST_ID &hostid,
 											    const BYTE *msg)
 {
@@ -74,15 +86,6 @@ void CmcAdapter::CmcCallbackListener::onDisconnWorker(const HOST_ID &host_id)
 {
 	//nothing to do.
 }
-
-int CmcAdapter::sendMessage(const HOST_ID &host_id,
-							const BYTE *msg,
-							const unsigned int &size_msg)
-{
-	//TODO: implement this function
-	return (0);
-}
-
 
 
 } /* swms */
