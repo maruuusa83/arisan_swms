@@ -38,7 +38,7 @@ public:
 		
 	virtual int sendMessagePkt(const MessagePkt &pkt);
 
-	int setCmcContext(const CmcContext &context);
+	int setCmcContext(CmcContext *context);
 			
 			
 	/***  For Worker  ***/
@@ -54,6 +54,7 @@ public:
 
 private:
 	CmcCallbackListener *mListener;
+	CmcContext *mContext;
 
 	virtual int sendMessage(const HOST_ID &host_id,
 							const BYTE *msg);

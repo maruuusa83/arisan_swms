@@ -32,6 +32,12 @@ int CmcAdapter::sendMessagePkt(const MessagePkt &pkt)
 	//TODO: implement this method
 	return (0);
 }
+
+int CmcAdapter::setCmcContext(CmcContext *context)
+{
+	this->mContext = context;
+	return (0);
+}
 		
 HOST_ID CmcAdapter::connToStigma()
 {
