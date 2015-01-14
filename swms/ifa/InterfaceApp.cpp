@@ -29,6 +29,9 @@ InterfaceAppAPI::InterfaceAppAPI(IFACallbackListener *listener,
 {
 	this->mListener = listener;
 	this->mCmc = cmc;
+
+	//TODO: this line needs throw exception, i think
+	this->mCmc.connToStigmergy();
 }
 
 JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
