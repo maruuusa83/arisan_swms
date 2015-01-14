@@ -38,7 +38,7 @@ TaskProcessorAPI::~TaskProcessorAPI()
 
 int TaskProcessorAPI::startWorker()
 {
-	if (mCmc->connToStigma() == 0){
+	if (mCmc->connToStigmergy() == 0){
 		//TODO: it needs the error code.
 		//if success, connToStigma will return HOST_ID (not zero)
 		return (-1);

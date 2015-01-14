@@ -49,7 +49,7 @@ int CmcAdapter::setCmcContext(CmcContext *context)
 	return (0);
 }
 		
-HOST_ID CmcAdapter::connToStigma()
+HOST_ID CmcAdapter::connToStigmergy()
 {
 	//TODO: implement this function
 	return (0);

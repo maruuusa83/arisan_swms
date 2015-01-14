@@ -36,8 +36,8 @@ int Stigmergy::startStigmergy()
 	return (0);
 }
 
-void Stirgmergy::SGYCallbackListener(const SGYContext &context,
-									 const BYTE *task) const
+void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
+												const BYTE *task) const
 {
 	// nothing to do
 }
