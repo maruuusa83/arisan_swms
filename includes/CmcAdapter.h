@@ -64,12 +64,15 @@ private:
 class CmcAdapter::CmcCallbackListener
 {
 public:
-	void onMessage(const HOST_ID &hostid,
-				   const BYTE *msg);
+	void onMessage(const CmcContext &context,
+				   const HOST_ID &hostid,
+				   const MessagePkt &msg);
 
-	void onNewWorker(const HOST_ID &host_id);
+	void onNewWorker(const CmcContext &context,
+					 const HOST_ID &host_id);
 
-	void onDisconnWorker(const HOST_ID &host_id);
+	void onDisconnWorker(const CmcContext &context,
+						 const HOST_ID &host_id);
 };
 
 

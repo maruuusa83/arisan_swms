@@ -70,21 +70,24 @@ int CmcAdapter::sendMessage(const HOST_ID &host_id,
 
 
 /*** CmcCallbackListener ***/
-void CmcAdapter::CmcCallbackListener::onMessage(const HOST_ID &hostid,
-											    const BYTE *msg)
+void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
+												const HOST_ID &hostid,
+											    const MessagePkt &msg)
 {
-	//nothing to do.
+	//TODO: implemet this method
 }
 
-void CmcAdapter::CmcCallbackListener::onNewWorker(const HOST_ID &host_id)
+void CmcAdapter::CmcCallbackListener::onNewWorker(const CmcContext &context,
+												  const HOST_ID &host_id)
 {
-	//nothing to do.
+	//TODO: implement this method
 }
 
 
-void CmcAdapter::CmcCallbackListener::onDisconnWorker(const HOST_ID &host_id)
+void CmcAdapter::CmcCallbackListener::onDisconnWorker(const CmcContext &context,
+													  const HOST_ID &host_id)
 {
-	//nothing to do.
+	//TODO: implement this method
 }
 
 
