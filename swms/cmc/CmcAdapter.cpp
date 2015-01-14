@@ -85,10 +85,10 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 	switch (msg.get_msg_type()){
 	  case MessagePkt::MSG_SEND_TASK:
 	  {
-		//const Stigmergy::SGYCallbackListener &sgyCL = context.getSGYCallbackListener();
-		//Stigmergy::SGYContext &sgyCTXT = context.getSGYContext();
+		const Stigmergy::SGYCallbackListener &sgyCL = context.getSGYCallbackListener();
+		const Stigmergy::SGYContext &sgyCTXT = context.getSGYContext();
 
-		//sgyCTXT.onRecvTask(sgyCTXT, data);
+		sgyCL.onRecvTask(sgyCTXT, data);
 	  }
 
 	  case MessagePkt::MSG_RET_JOBID:
