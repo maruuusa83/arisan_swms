@@ -74,8 +74,15 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 												const HOST_ID &hostid,
 											    const MessagePkt &msg)
 {
-	//TODO: implemet this method
 	switch (msg.get_msg_type()){
+	  case MessagePkt::MSG_SEND_TASK:
+		//TODO: implement here
+		break;
+
+	  case MessagePkt::MSG_RET_JOBID:
+		//TODO: implement here
+		break;
+
 	  default:
 	    break;
 	}
