@@ -31,10 +31,10 @@ int CmcAdapter::sendMessagePkt(const MessagePkt &pkt)
 	int result;
 
 	BYTE *data;
-	int size;
-	get_msg(data, size);
+	unsigned int size;
+	pkt.get_msg(&data, size);
 
-	HOST_ID host_id = pkt.get_to();
+	HOST_ID to = pkt.get_to();
 	result = sendMessage(to, data, size);
 
 	return (result);
@@ -76,7 +76,8 @@ void CmcAdapter::CmcCallbackListener::onDisconnWorker(const HOST_ID &host_id)
 }
 
 int CmcAdapter::sendMessage(const HOST_ID &host_id,
-							const BYTE *msg)
+							const BYTE *msg,
+							const unsigned int &size_msg)
 {
 	//TODO: implement this function
 	return (0);

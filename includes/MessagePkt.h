@@ -37,8 +37,8 @@ public:
 	int set_to(const int &to);
 	int set_data(const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data);
 
-	int get_to();
-	void get_msg(BYTE **data);
+	int get_to() const;
+	void get_msg(BYTE **data, unsigned int &size_data) const;
 
 	static void free_msg(BYTE *data);
 
