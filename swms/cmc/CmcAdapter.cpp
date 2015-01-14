@@ -16,6 +16,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
 #include "CmcAdapter.h"
+#include "CmcContext.h"
+
+#include "Stigmergy.h"
 
 namespace marusa {
 namespace swms {
@@ -74,14 +77,27 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 												const HOST_ID &hostid,
 											    const MessagePkt &msg)
 {
+	BYTE *data;
+	unsigned int size_data;
+
+	msg.get_msg(&data, size_data);
+
 	switch (msg.get_msg_type()){
 	  case MessagePkt::MSG_SEND_TASK:
-		//TODO: implement here
-		break;
+	  {
+		//const Stigmergy::SGYCallbackListener &sgyCL = context.getSGYCallbackListener();
+		//Stigmergy::SGYContext &sgyCTXT = context.getSGYContext();
+
+		//sgyCTXT.onRecvTask(sgyCTXT, data);
+	  }
 
 	  case MessagePkt::MSG_RET_JOBID:
-		//TODO: implement here
-		break;
+	  {
+		//const InterfaceAppAPI::IFACallbackListener &ifaCL = context.getIFACallbackListener();
+		//InterfaceAppAPI::IFAContext &ifaCTXT = context.getIFAContext();
+
+		//ifaCL.onRecjJobId(ifaCTXT, (JOB_ID *)data);
+	  }
 
 	  default:
 	    break;

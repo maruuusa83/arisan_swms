@@ -37,9 +37,9 @@ public:
 	int setTPCallbackListener(const TaskProcessorAPI::TPCallbackListener &tpCallbackListener);
 	int setSGYCallbackListener(const Stigmergy::SGYCallbackListener &sgyCallbackListner);
 
-	InterfaceAppAPI::IFACallbackListener getIFACallbackListener() const;
-	TaskProcessorAPI::TPCallbackListener getTPCallbackListener() const;
-	Stigmergy::SGYCallbackListener getSGYCallbackListener() const;
+	const InterfaceAppAPI::IFACallbackListener &getIFACallbackListener() const;
+	const TaskProcessorAPI::TPCallbackListener &getTPCallbackListener() const;
+	const Stigmergy::SGYCallbackListener &getSGYCallbackListener() const;
 
 private:
 	InterfaceAppAPI::IFACallbackListener mIFACallbackListener;

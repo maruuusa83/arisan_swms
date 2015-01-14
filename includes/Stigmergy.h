@@ -29,6 +29,7 @@ class Stigmergy
 {
 public:
 	class SGYCallbackListener;
+	class SGYContext;
 
 	Stigmergy(const CmcAdapter &cmc);
 	virtual ~Stigmergy();
@@ -42,6 +43,16 @@ private:
 class Stigmergy::SGYCallbackListener
 {
 public:
+	virtual void onRecvTask(const SGYContext &context,
+							const BYTE *task);
+};
+
+class Stigmergy::SGYContext
+{
+public:
+	SGYContext(const Stigmergy &stigmergy);
+
+	Stigmergy *mSGY = nullptr;
 };
 
 

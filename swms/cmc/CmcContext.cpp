@@ -38,17 +38,17 @@ int CmcAdapter::CmcContext::setSGYCallbackListener(const Stigmergy::SGYCallbackL
 	return (0);
 }
 
-InterfaceAppAPI::IFACallbackListener CmcAdapter::CmcContext::getIFACallbackListener() const
+const InterfaceAppAPI::IFACallbackListener &CmcAdapter::CmcContext::getIFACallbackListener() const
 {
 	return (this->mIFACallbackListener);
 }
 
-TaskProcessorAPI::TPCallbackListener CmcAdapter::CmcContext::getTPCallbackListener() const
+const TaskProcessorAPI::TPCallbackListener &CmcAdapter::CmcContext::getTPCallbackListener() const
 {
 	return (this->mTPCallbackListener);
 }
 
-Stigmergy::SGYCallbackListener CmcAdapter::CmcContext::getSGYCallbackListener() const
+const Stigmergy::SGYCallbackListener &CmcAdapter::CmcContext::getSGYCallbackListener() const
 {
 	return (this->mSGYCallbackListener);
 }
