@@ -93,10 +93,10 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 
 	  case MessagePkt::MSG_RET_JOBID:
 	  {
-		//const InterfaceAppAPI::IFACallbackListener &ifaCL = context.getIFACallbackListener();
-		//InterfaceAppAPI::IFAContext &ifaCTXT = context.getIFAContext();
+		const InterfaceAppAPI::IFACallbackListener &ifaCL = context.getIFACallbackListener();
+		const InterfaceAppAPI::IFAContext &ifaCTXT = context.getIFAContext();
 
-		//ifaCL.onRecjJobId(ifaCTXT, (JOB_ID *)data);
+		ifaCL.onRecvJobId(ifaCTXT, *((JOB_ID *)data));
 	  }
 
 	  default:

@@ -70,6 +70,9 @@ public:
 								 const JOB_ID &job_id,
 								 const TASK_ID &task_id);
 
+	virtual void onRecvJobId(const IFAContext &context,
+							 const JOB_ID &job_id) const;
+
 	virtual void onNewWorker(const IFAContext &context,
 							 const WORKER_ID &worker_id);
 	virtual void onDelWorker(const IFAContext &context,
