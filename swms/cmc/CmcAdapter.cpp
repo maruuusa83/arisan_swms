@@ -24,9 +24,19 @@ namespace marusa {
 namespace swms {
 
 
+CmcAdapter::CmcAdapter()
+{
+	// nothing to do
+}
+
 CmcAdapter::CmcAdapter(CmcCallbackListener *listener)
 {
 	this->mListener = listener;
+}
+
+CmcAdapter::~CmcAdapter()
+{
+	// nothing to do
 }
 
 int CmcAdapter::sendMessagePkt(const MessagePkt &pkt)
