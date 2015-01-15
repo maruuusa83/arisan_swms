@@ -18,6 +18,8 @@
 #ifndef ___COMMON_H___
 #define ___COMMON_H___
 
+#define ___DEBUG_TRANS_TASK_IFA2SGY___
+
 namespace marusa {
 namespace swms {
 
