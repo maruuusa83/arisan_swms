@@ -19,24 +19,34 @@
 
 #include "MessagePkt.h"
 
+#include <iostream>
+
 namespace marusa {
 namespace swms {
 
 
 /***** InterfaceAppAPI *****/
 InterfaceAppAPI::InterfaceAppAPI(IFACallbackListener *listener,
-							     const CmcAdapter &cmc)
+							     CmcAdapter *cmc)
 {
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "in TnterfaceAppAPI::InterfaceAppAPI" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+
 	this->mListener = listener;
 	this->mCmc = cmc;
 
 	//TODO: this line needs throw exception, i think
-	this->mCmc.connToStigmergy();
+	(this->mCmc)->connToStigmergy();
+
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "out TnterfaceAppAPI::InterfaceAppAPI" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 }
 
 JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 {
-	CmcAdapter &cmc = this->mCmc;
+	CmcAdapter *cmc = this->mCmc;
 
 	std::vector<Job::Task> task_list;
 	job.getTaskList(task_list);
@@ -47,7 +57,7 @@ JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 		task.getData(byte_task_data, size);
 
 		MessagePkt pkt(stigmergy_id, MessagePkt::MSG_SEND_TASK, byte_task_data, size);
-		cmc.sendMessagePkt(pkt);
+		cmc->sendMessagePkt(pkt);
 	}
 
 	return (0);
