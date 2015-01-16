@@ -20,9 +20,9 @@
 namespace marusa {
 namespace swms {
 
-Stigmergy::Stigmergy(const CmcAdapter &cmc)
+Stigmergy::Stigmergy(CmcAdapter *cmc)
 {
-	//TODO: implement this method
+	(this->mCmc) = cmc;
 }
 
 Stigmergy::~Stigmergy()
