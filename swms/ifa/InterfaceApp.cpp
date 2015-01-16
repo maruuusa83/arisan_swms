@@ -46,6 +46,10 @@ InterfaceAppAPI::InterfaceAppAPI(IFACallbackListener *listener,
 
 JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 {
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "in InterfaceAppAPI::sendTasks" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+
 	CmcAdapter *cmc = this->mCmc;
 
 	std::vector<Job::Task> task_list;
@@ -60,6 +64,9 @@ JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 		cmc->sendMessagePkt(pkt);
 	}
 
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "out InterfaceAppAPI::sendTasks" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 	return (0);
 }
 

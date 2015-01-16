@@ -31,9 +31,14 @@ Job::~Job()
 
 }
 
-TASK_ID Job::addTask(const Task &task)
+TASK_ID Job::addTask(Task &task)
 {
-	return (0);
+	task.setTaskId(id_num);
+	id_num++;
+
+	(this->task_list).push_back(task);
+
+	return (task.getTaskId());
 }
 
 int Job::delTask(const TASK_ID &task_id)
@@ -53,27 +58,29 @@ Job::Task::Task()
 
 }
 
-Job::Task::Task(const TASK_ID &task_id,
-				 const BYTE *data,
+Job::Task::Task(TASK_ID task_id,
+				 BYTE *data,
 				 const unsigned int &data_size)
 {
-
+	setTaskId(task_id);
+	setData(data, data_size);
 }
 
 void Job::Task::setJobId(const JOB_ID &job_id)
 {
-
+	this->job_id = job_id;
 }
 
-void Job::Task::setTaskId(const TASK_ID &task_id)
+void Job::Task::setTaskId(TASK_ID task_id)
 {
-
+	this->task_id = task_id;
 }
 
-void Job::Task::setData(const BYTE *data,
+void Job::Task::setData(BYTE *data,
 						const unsigned int &data_size)
 {
-
+	this->data = data;
+	this->data_size = data_size;
 }
 
 JOB_ID Job::Task::getJobId()
@@ -81,9 +88,9 @@ JOB_ID Job::Task::getJobId()
 	return (0);
 }
 
-TASK_ID Job::Task::getTaskId()
+TASK_ID Job::Task::getTaskId() const
 {
-	return (0);
+	return (this->task_id);
 }
 
 int Job::Task::getData(BYTE *&data,

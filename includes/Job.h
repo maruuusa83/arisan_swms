@@ -33,30 +33,31 @@ public:
 	Job();
 	virtual ~Job();
 
-	TASK_ID addTask(const Task &task);
+	TASK_ID addTask(Task &task);
 	int delTask(const TASK_ID &task_id);
 
 	void getTaskList (std::vector<Task> &task_list) const;
 
 private:
 	std::vector<Task> task_list;
+	TASK_ID id_num = 0;
 };
 
 class Job::Task
 {
 public:
 	Task();
-	Task(const TASK_ID &task_id,
-		 const BYTE *data,
+	Task(TASK_ID task_id,
+		 BYTE *data,
 		 const unsigned int &data_size);
 
 	void setJobId(const JOB_ID &job_id);
-	void setTaskId(const TASK_ID &task_id);
-	void setData(const BYTE *data,
+	void setTaskId(TASK_ID task_id);
+	void setData(BYTE *data,
 				 const unsigned int &data_size);
 
 	JOB_ID getJobId();
-	TASK_ID getTaskId();
+	TASK_ID getTaskId() const;
 	int getData(BYTE *&data,
 			    unsigned int &dat_size);
 

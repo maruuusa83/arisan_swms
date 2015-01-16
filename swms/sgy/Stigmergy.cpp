@@ -32,7 +32,8 @@ Stigmergy::~Stigmergy()
 
 int Stigmergy::startStigmergy()
 {
-	//TODO: implement this method
+	(this->mCmc)->startListen();
+
 	return (0);
 }
 
