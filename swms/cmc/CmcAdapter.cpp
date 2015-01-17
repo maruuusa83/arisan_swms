@@ -55,10 +55,6 @@ int CmcAdapter::sendMessagePkt(const MessagePkt &pkt)
 	HOST_ID to = pkt.get_to();
 	result = sendMessage(to, data, size);
 
-#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
-	printf("%s\n", &data[MessagePkt::SIZE_MSG_TYPE + MessagePkt::SIZE_DATA_SIZE]);
-#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
-
 	pkt.free_msg(data);
 	return (result);
 }
@@ -100,14 +96,10 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 	BYTE *data;
 	unsigned int size_data;
 
-#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
-	std::cout << "in CmcAdapter::CmcCallbackListener::onMessage" << std::endl;
-#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
-
 	msg.get_msg(&data, size_data);
 
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
-	std::cout << "CmcAdapter::CmcCallbackListener::onMessage - msg type : " << msg.get_msg_type() << std::endl;
+	std::cout << "CmcAdapter::CmcCallbackListener::onMessage - recv msg : TYPE-" << msg.get_msg_type() << std::endl;
 #endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 
 	switch (msg.get_msg_type()){
@@ -130,10 +122,6 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 	  default:
 	    break;
 	}
-
-#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
-	std::cout << "out CmcAdapter::CmcCallbackListener::onMessage" << std::endl;
-#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 }
 
 void CmcAdapter::CmcCallbackListener::onNewWorker(const CmcContext &context,

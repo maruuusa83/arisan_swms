@@ -70,10 +70,6 @@ int MessagePkt::set_data(const unsigned char &msg_type,
 	bytecpy(this->data, data, size_data);
 	this->size_data = size_data;
 
-#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
-	printf("MessagePkt::set_data - set data : %s\n", this->data);
-#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
-
 	return (0);
 }
 
