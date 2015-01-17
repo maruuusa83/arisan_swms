@@ -56,9 +56,9 @@ public:
 	void setData(BYTE *data,
 				 const unsigned int &data_size);
 
-	JOB_ID getJobId();
+	JOB_ID getJobId() const;
 	TASK_ID getTaskId() const;
-	int getData(BYTE *&data,
+	int getData(BYTE **data,
 			    unsigned int &dat_size);
 
 	BYTE *getAsByteArray();

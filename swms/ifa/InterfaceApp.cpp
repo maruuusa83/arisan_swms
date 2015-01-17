@@ -55,13 +55,23 @@ JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 	std::vector<Job::Task> task_list;
 	job.getTaskList(task_list);
 
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "InterfaceAppAPI::sendTasks - Start sending task" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 	for (auto task : task_list){
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "InterfaceAppAPI::sendTasks - Sending task : " << task.getTaskId() << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 		BYTE *byte_task_data;
 		unsigned int size;
-		task.getData(byte_task_data, size);
+		task.getData(&byte_task_data, size);
+		printf("BYTE data[] = \"%s\"\n", byte_task_data);
 
 		MessagePkt pkt(stigmergy_id, MessagePkt::MSG_SEND_TASK, byte_task_data, size);
 		cmc->sendMessagePkt(pkt);
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "InterfaceAppAPI::sendTasks - Fin sending task : " << task.getTaskId() << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 	}
 
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
