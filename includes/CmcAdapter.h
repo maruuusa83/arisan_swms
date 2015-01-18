@@ -19,26 +19,30 @@
 #define ___CMCADAPTER_H___
 
 #include "./common.h"
+#include "./MessagePkt.h"
 
 namespace marusa {
 namespace swms {
+
 
 class CmcAdapter
 {
 public:
 	class CmcCallbackListener;
+	class CmcContext;
 		
 	/***    Common    ***/
 	CmcAdapter();
 	CmcAdapter(CmcCallbackListener *listener);
 	virtual ~CmcAdapter();
 		
-	virtual int sendMessage(const HOST_ID &host_id,
-							const BYTE *msg);
+	int sendMessagePkt(const MessagePkt &pkt);
+
+	int setCmcContext(CmcContext *context);
 			
 			
 	/***  For Worker  ***/
-	virtual HOST_ID connToStigma();
+	virtual HOST_ID connToStigmergy();
 				
 	/*** For Stigmagy ***/
 	virtual int startListen();
@@ -49,18 +53,26 @@ public:
 	static const HOST_ID HOST_ID_BROADCAST = 0xFFFFFFFF;
 
 private:
-	CmcCallbackListener *listener;
+	CmcCallbackListener *mListener;
+	CmcContext *mContext;
+
+	virtual int sendMessage(const HOST_ID &host_id,
+							const BYTE *msg,
+							const unsigned int &size_msg);
 };
 
 class CmcAdapter::CmcCallbackListener
 {
 public:
-	void onMessage(const HOST_ID &hostid,
-				   const BYTE *msg);
+	void onMessage(const CmcContext &context,
+				   const HOST_ID &hostid,
+				   const MessagePkt &msg);
 
-	void onNewWorker(const HOST_ID &host_id);
+	void onNewWorker(const CmcContext &context,
+					 const HOST_ID &host_id);
 
-	void onDisconnWorker(const HOST_ID &host_id);
+	void onDisconnWorker(const CmcContext &context,
+						 const HOST_ID &host_id);
 };
 
 

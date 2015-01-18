@@ -15,30 +15,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#ifndef ___COMMON_H___
-#define ___COMMON_H___
-
-#define ___DEBUG_TRANS_TASK_IFA2SGY___
+#include "Stigmergy.h"
 
 namespace marusa {
 namespace swms {
 
+Stigmergy::Stigmergy(CmcAdapter *cmc)
+{
+	(this->mCmc) = cmc;
+}
 
-/*** COMMON ***/
-typedef unsigned char BYTE;
+Stigmergy::~Stigmergy()
+{
+	//tohitng to do
+}
 
-/*** Stigmagy Layer ***/
-typedef unsigned int JOB_ID;
-typedef unsigned int TASK_ID;
-typedef unsigned int WORKER_ID;
+int Stigmergy::startStigmergy()
+{
+	(this->mCmc)->startListen();
 
-static const unsigned int TASK_ID_NO_TASK = 0;
+	return (0);
+}
 
-/*** Messaging Layer ***/
-typedef unsigned int HOST_ID;
+void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
+												const BYTE *task) const
+{
+	// nothing to do
+}
 
 
 } /* swms */
 } /* marusa */
 
-#endif /* ___COMMON_H___ */

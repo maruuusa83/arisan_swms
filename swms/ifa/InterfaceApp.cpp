@@ -17,20 +17,53 @@
  *******************************************************************************/
 #include "InterfaceAppAPI.h"
 
+#include "MessagePkt.h"
+
+#include <iostream>
+
 namespace marusa {
 namespace swms {
 
 
 /***** InterfaceAppAPI *****/
-InterfaceAppAPI::InterfaceAppAPI(const IFACallbackListener &listener,
-							     const CmcAdapter &cmc)
+InterfaceAppAPI::InterfaceAppAPI(IFACallbackListener *listener,
+							     CmcAdapter *cmc)
 {
-	//TODO:Implement this function.
+	this->mListener = listener;
+	this->mCmc = cmc;
+
+	//TODO: this line needs throw exception, i think
+	(this->mCmc)->connToStigmergy();
 }
 
 JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 {
-	//TODO:Implement this function.
+	CmcAdapter *cmc = this->mCmc;
+
+	std::vector<Job::Task> task_list;
+	job.getTaskList(task_list);
+
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "InterfaceAppAPI::sendTasks - Start sending task" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+	for (auto task : task_list){
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "InterfaceAppAPI::sendTasks - Sending task : No." << task.getTaskId() << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+		BYTE *byte_task_data;
+		unsigned int size;
+		task.getData(&byte_task_data, size);
+
+		MessagePkt pkt(stigmergy_id, MessagePkt::MSG_SEND_TASK, byte_task_data, size);
+		cmc->sendMessagePkt(pkt);
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "InterfaceAppAPI::sendTasks - Fin sending task : No." << task.getTaskId() << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+	}
+
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "out InterfaceAppAPI::sendTasks" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 	return (0);
 }
 
@@ -52,6 +85,13 @@ int InterfaceAppAPI::sendUsrMsg(const WORKER_ID &to,
 							 const unsigned int &msg_size)
 {
 	//TODO:Implement this function.
+	return (0);
+}
+
+int InterfaceAppAPI::packetBuilder(BYTE *&pkt,
+								   const Job &job)
+{
+	//TODO: implement this method
 	return (0);
 }
 
@@ -78,6 +118,12 @@ void InterfaceAppAPI::IFACallbackListener::onRecvTaskResult(const IFAContext &co
 	//nothing to do
 }
 
+void InterfaceAppAPI::IFACallbackListener::onRecvJobId(const IFAContext &context,
+						 									   const JOB_ID &job_id) const
+{
+	//nothing todo
+}
+
 void InterfaceAppAPI::IFACallbackListener::onNewWorker(const IFAContext &context,
 				 			   						   const WORKER_ID &worker_id)
 {
@@ -96,6 +142,12 @@ void InterfaceAppAPI::IFACallbackListener::onUsrMsg(const IFAContext &context,
 											     const unsigned int &size)
 {
 	//nothing to do
+}
+
+
+InterfaceAppAPI::IFAContext::IFAContext(InterfaceAppAPI &interfaceAppAPI)
+{
+	this->mInterfaceAppAPI = &interfaceAppAPI;
 }
 
 

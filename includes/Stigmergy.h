@@ -15,30 +15,50 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *******************************************************************************/
-#ifndef ___COMMON_H___
-#define ___COMMON_H___
+#ifndef ___STIGMERGY_H___
+#define ___STIGMERGY_H___
 
-#define ___DEBUG_TRANS_TASK_IFA2SGY___
+#include "./common.h"
+#include "./CmcAdapter.h"
 
 namespace marusa {
 namespace swms {
 
 
-/*** COMMON ***/
-typedef unsigned char BYTE;
+class Stigmergy
+{
+public:
+	class SGYCallbackListener;
+	class SGYContext;
 
-/*** Stigmagy Layer ***/
-typedef unsigned int JOB_ID;
-typedef unsigned int TASK_ID;
-typedef unsigned int WORKER_ID;
+	Stigmergy(CmcAdapter *cmc);
+	virtual ~Stigmergy();
 
-static const unsigned int TASK_ID_NO_TASK = 0;
+	int startStigmergy();
 
-/*** Messaging Layer ***/
-typedef unsigned int HOST_ID;
+private:
+	CmcAdapter *mCmc;
+};
+
+class Stigmergy::SGYCallbackListener
+{
+public:
+	virtual void onRecvTask(const SGYContext &context,
+							const BYTE *task) const;
+};
+
+class Stigmergy::SGYContext
+{
+public:
+	SGYContext(const Stigmergy &stigmergy);
+
+	Stigmergy *mSGY = nullptr;
+};
 
 
 } /* swms */
 } /* marusa */
 
-#endif /* ___COMMON_H___ */
+#endif /* ___STIGMERGY_H___ */
+
+

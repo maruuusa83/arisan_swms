@@ -68,7 +68,7 @@ gen_ofile: $(OBJS)
 .PHONY: gen_olist
 gen_olist:
 	-@ $(RM) objs.lst
-	-@ find `pwd` -maxdepth 1 -mindepth 1 |grep \\.o\$ > objs.lst
+	-@ find `pwd` -maxdepth 1 -mindepth 1 |grep \\.o$$ > objs.lst
 
 .PHONY: gen_aolist
 gen_aolist:

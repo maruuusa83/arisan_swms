@@ -38,7 +38,7 @@ CC = g++
 #-------------------------------------------------------------------
 # Compile Option
 #-------------------------------------------------------------------
-INCDIR = ../includes/
+INCDIR = ../../includes/
 CFLAGS = -Wall -O0 -g -pthread -std=c++11 -I $(INCDIR)
 
 #-------------------------------------------------------------------
@@ -63,6 +63,7 @@ make_subdir:
 .PHONY: gen_ofile
 gen_ofile: $(OBJS)
 .cpp.o:
+	-@ echo make $<
 	$(CC) $(CFLAGS) -c $<
 
 .PHONY: gen_olist
@@ -89,3 +90,4 @@ clean:
 
 
 -include depend.inc
+

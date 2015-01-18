@@ -19,7 +19,6 @@
 #define ___INTERFACEAPPAPI_H___
 
 #include "./common.h"
-//#include "./Task.h"
 #include "./Job.h"
 #include "./CmcAdapter.h"
 
@@ -35,8 +34,8 @@ public:
 	class IFACallbackListener;
 	class IFAContext;
 
-	InterfaceAppAPI(const IFACallbackListener &listener,
-			        const CmcAdapter &cmc);
+	InterfaceAppAPI(IFACallbackListener *listener,
+			        CmcAdapter *cmc);
 
 	JOB_ID sendTasks(const Job &job);
 	int getTasksByJobId(const JOB_ID &job_id);
@@ -46,6 +45,15 @@ public:
 	int sendUsrMsg(const WORKER_ID &to,
 			       BYTE *msg,
 				   const unsigned int &msg_size);
+
+private:
+	IFACallbackListener *mListener;
+	CmcAdapter *mCmc;
+
+	HOST_ID stigmergy_id = 0;
+
+	int packetBuilder(BYTE *&pkt,
+					  const Job &job);
 };
 
 class InterfaceAppAPI::IFACallbackListener
@@ -62,6 +70,9 @@ public:
 								 const JOB_ID &job_id,
 								 const TASK_ID &task_id);
 
+	virtual void onRecvJobId(const IFAContext &context,
+							 const JOB_ID &job_id) const;
+
 	virtual void onNewWorker(const IFAContext &context,
 							 const WORKER_ID &worker_id);
 	virtual void onDelWorker(const IFAContext &context,
@@ -73,6 +84,13 @@ public:
 						  const unsigned int &size);
 };
 
+class InterfaceAppAPI::IFAContext
+{
+public:
+	IFAContext(InterfaceAppAPI &interfaceAppAPI);
+
+	InterfaceAppAPI *mInterfaceAppAPI = nullptr;
+};
 
 
 } /* swms */
