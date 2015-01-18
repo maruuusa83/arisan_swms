@@ -99,24 +99,28 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 	msg.get_msg(&data, size_data);
 
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
-	std::cout << "CmcAdapter::CmcCallbackListener::onMessage - recv msg : TYPE-" << msg.get_msg_type() << std::endl;
+	std::cout << "CmcAdapter::CmcCallbackListener::onMessage - recv msg : TYPE-" << (int)msg.get_msg_type() << std::endl;
 #endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 
 	switch (msg.get_msg_type()){
 	  case MessagePkt::MSG_SEND_TASK:
 	  {
-		const Stigmergy::SGYCallbackListener &sgyCL = context.getSGYCallbackListener();
-		const Stigmergy::SGYContext &sgyCTXT = context.getSGYContext();
+		const Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
+		const Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
 
-		sgyCL.onRecvTask(sgyCTXT, data);
+		sgyCL->onRecvTask(*sgyCTXT, data);
+
+		break;
 	  }
 
 	  case MessagePkt::MSG_RET_JOBID:
 	  {
-		const InterfaceAppAPI::IFACallbackListener &ifaCL = context.getIFACallbackListener();
-		const InterfaceAppAPI::IFAContext &ifaCTXT = context.getIFAContext();
+		const InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();
+		const InterfaceAppAPI::IFAContext *ifaCTXT = context.getIFAContext();
 
-		ifaCL.onRecvJobId(ifaCTXT, *((JOB_ID *)data));
+		ifaCL->onRecvJobId(*ifaCTXT, *((JOB_ID *)data));
+
+		break;
 	  }
 
 	  default:

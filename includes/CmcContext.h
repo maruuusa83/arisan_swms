@@ -33,32 +33,32 @@ namespace swms {
 class CmcAdapter::CmcContext
 {
 public:
-	int setIFACallbackListener(const InterfaceAppAPI::IFACallbackListener &ifaCallbackListener);
-	int setTPCallbackListener(const TaskProcessorAPI::TPCallbackListener &tpCallbackListener);
-	int setSGYCallbackListener(const Stigmergy::SGYCallbackListener &sgyCallbackListner);
+	int setIFACallbackListener(InterfaceAppAPI::IFACallbackListener *ifaCallbackListener);
+	int setTPCallbackListener(TaskProcessorAPI::TPCallbackListener *tpCallbackListener);
+	int setSGYCallbackListener(Stigmergy::SGYCallbackListener *sgyCallbackListner);
 
-	const InterfaceAppAPI::IFACallbackListener &getIFACallbackListener() const;
-	const TaskProcessorAPI::TPCallbackListener &getTPCallbackListener() const;
-	const Stigmergy::SGYCallbackListener &getSGYCallbackListener() const;
+	const InterfaceAppAPI::IFACallbackListener *getIFACallbackListener() const;
+	const TaskProcessorAPI::TPCallbackListener *getTPCallbackListener() const;
+	const Stigmergy::SGYCallbackListener *getSGYCallbackListener() const;
 
 
-	int setIFAContext(const InterfaceAppAPI::IFAContext &ifaContext);
-	int setTPContext(const TaskProcessorAPI::TPContext &tpContext);
-	int setSGYContext(const Stigmergy::SGYContext &sgyCallbackListner);
+	int setIFAContext(InterfaceAppAPI::IFAContext *ifaContext);
+	int setTPContext(TaskProcessorAPI::TPContext *tpContext);
+	int setSGYContext(Stigmergy::SGYContext *sgyCallbackListner);
 
-	const InterfaceAppAPI::IFAContext &getIFAContext() const;
-	const TaskProcessorAPI::TPContext &getTPContext() const;
-	const Stigmergy::SGYContext &getSGYContext() const;
+	const InterfaceAppAPI::IFAContext *getIFAContext() const;
+	const TaskProcessorAPI::TPContext *getTPContext() const;
+	const Stigmergy::SGYContext *getSGYContext() const;
 
 private:
-	InterfaceAppAPI::IFACallbackListener mIFACallbackListener;
-	InterfaceAppAPI::IFAContext mIFAContext;
+	InterfaceAppAPI::IFACallbackListener *mIFACallbackListener = nullptr;
+	InterfaceAppAPI::IFAContext *mIFAContext = nullptr;
 
-	TaskProcessorAPI::TPCallbackListener mTPCallbackListener;
-	TaskProcessorAPI::TPContext mTPContext;
+	TaskProcessorAPI::TPCallbackListener *mTPCallbackListener = nullptr;
+	TaskProcessorAPI::TPContext *mTPContext = nullptr;
 
-	Stigmergy::SGYCallbackListener mSGYCallbackListener;
-	Stigmergy::SGYContext mSGYContext;
+	Stigmergy::SGYCallbackListener *mSGYCallbackListener = nullptr;
+	Stigmergy::SGYContext *mSGYContext = nullptr;
 };
 
 

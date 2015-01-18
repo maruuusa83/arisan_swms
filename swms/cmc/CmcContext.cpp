@@ -21,67 +21,67 @@ namespace marusa {
 namespace swms {
 
 
-int CmcAdapter::CmcContext::setIFACallbackListener(const InterfaceAppAPI::IFACallbackListener &ifaCallbackListener)
+int CmcAdapter::CmcContext::setIFACallbackListener(InterfaceAppAPI::IFACallbackListener *ifaCallbackListener)
 {
 	this->mIFACallbackListener = ifaCallbackListener;
 	return (0);
 }
 
-int CmcAdapter::CmcContext::setTPCallbackListener(const TaskProcessorAPI::TPCallbackListener &tpCallbackListener)
+int CmcAdapter::CmcContext::setTPCallbackListener(TaskProcessorAPI::TPCallbackListener *tpCallbackListener)
 {
 	this->mTPCallbackListener = tpCallbackListener;
 	return (0);
 }
-int CmcAdapter::CmcContext::setSGYCallbackListener(const Stigmergy::SGYCallbackListener &sgyCallbackListener)
+int CmcAdapter::CmcContext::setSGYCallbackListener(Stigmergy::SGYCallbackListener *sgyCallbackListener)
 {
 	this->mSGYCallbackListener = sgyCallbackListener;
 	return (0);
 }
 
-const InterfaceAppAPI::IFACallbackListener &CmcAdapter::CmcContext::getIFACallbackListener() const
+const InterfaceAppAPI::IFACallbackListener *CmcAdapter::CmcContext::getIFACallbackListener() const
 {
 	return (this->mIFACallbackListener);
 }
 
-const TaskProcessorAPI::TPCallbackListener &CmcAdapter::CmcContext::getTPCallbackListener() const
+const TaskProcessorAPI::TPCallbackListener *CmcAdapter::CmcContext::getTPCallbackListener() const
 {
 	return (this->mTPCallbackListener);
 }
 
-const Stigmergy::SGYCallbackListener &CmcAdapter::CmcContext::getSGYCallbackListener() const
+const Stigmergy::SGYCallbackListener *CmcAdapter::CmcContext::getSGYCallbackListener() const
 {
 	return (this->mSGYCallbackListener);
 }
 
 
-int CmcAdapter::CmcContext::setIFAContext(const InterfaceAppAPI::IFAContext &ifaContext)
+int CmcAdapter::CmcContext::setIFAContext(InterfaceAppAPI::IFAContext *ifaContext)
 {
 	this->mIFAContext = ifaContext;
 	return (0);
 }
 
-int CmcAdapter::CmcContext::setTPContext(const TaskProcessorAPI::TPContext &tpContext)
+int CmcAdapter::CmcContext::setTPContext(TaskProcessorAPI::TPContext *tpContext)
 {
 	this->mTPContext = tpContext;
 	return (0);
 }
-int CmcAdapter::CmcContext::setSGYContext(const Stigmergy::SGYContext &sgyContext)
+int CmcAdapter::CmcContext::setSGYContext(Stigmergy::SGYContext *sgyContext)
 {
 	this->mSGYContext = sgyContext;
 	return (0);
 }
 
-const InterfaceAppAPI::IFAContext &CmcAdapter::CmcContext::getIFAContext() const
+const InterfaceAppAPI::IFAContext *CmcAdapter::CmcContext::getIFAContext() const
 {
 	return (this->mIFAContext);
 }
 
-const TaskProcessorAPI::TPContext &CmcAdapter::CmcContext::getTPContext() const
+const TaskProcessorAPI::TPContext *CmcAdapter::CmcContext::getTPContext() const
 {
 	return (this->mTPContext);
 }
 
-const Stigmergy::SGYContext &CmcAdapter::CmcContext::getSGYContext() const
+const Stigmergy::SGYContext *CmcAdapter::CmcContext::getSGYContext() const
 {
 	return (this->mSGYContext);
 }
