@@ -29,9 +29,9 @@ namespace swms {
 
 void bytecpy(BYTE *to,
 			 const BYTE *from,
-			 unsigned int len)
+			 const unsigned int &len)
 {
-	while (len--){
+	for (unsigned int i = 0; i < len; i++){
 		*to++ = *from++;
 	}
 }

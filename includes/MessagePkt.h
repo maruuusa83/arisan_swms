@@ -24,7 +24,7 @@ namespace marusa {
 namespace swms {
 
 
-void bytecpy(BYTE *to, const BYTE *from, const int &len);
+void bytecpy(BYTE *to, const BYTE *from, const unsigned int &len);
 
 class MessagePkt
 {

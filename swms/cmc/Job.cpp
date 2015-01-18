@@ -112,9 +112,22 @@ int Job::Task::getData(BYTE **data,
 }
 
 /* deprecated */
-[[gnu::deprecated("getAsByteArray was deprecated")]] BYTE *Job::Task::getAsByteArray()
+void Job::Task::getAsByteArray(BYTE **result, unsigned int &size)
 {
-	return (nullptr);
+	BYTE *tmp = (BYTE *)malloc(sizeof(BYTE) * (sizeof(TASK_PKT_HEADER) + data_size));
+	((TASK_PKT_HEADER *)tmp)->job_id = getJobId();
+	((TASK_PKT_HEADER *)tmp)->task_id = getTaskId();
+	((TASK_PKT_HEADER *)tmp)->div_id = 0;
+
+	marusa::swms::bytecpy((BYTE *)&(tmp[sizeof(TASK_PKT_HEADER)]), this->data, this->data_size);
+	*result = tmp;
+	size = this->data_size + sizeof(TASK_PKT_HEADER);
+}
+
+int Job::Task::freeTaskAsByteArray(BYTE *task_byte)
+{
+	free(task_byte);
+	return (0);
 }
 
 
