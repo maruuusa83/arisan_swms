@@ -20,6 +20,7 @@
 
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 #include <stdio.h>
+#include <iostream>
 #endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 
 namespace marusa {
@@ -43,6 +44,18 @@ MessagePkt::MessagePkt() {  }
 MessagePkt::MessagePkt(const int &to)
 {
 	set_to(to);
+}
+
+MessagePkt::MessagePkt(const int &from, const BYTE *msg)
+{
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "MessagePkt::MessagePkt - building message from BYTE" << std::endl;
+	printf("\tmsg type : %d\n", *msg);
+	printf("\tmsg size : %u\n", *(unsigned int *)&msg[SIZE_MSG_TYPE]);
+	printf("\tmsg dmp : %s\n", &msg[SIZE_MSG_TYPE + SIZE_DATA_SIZE]);
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+	set_to(from);
+	set_data((unsigned char)*msg, &msg[SIZE_MSG_TYPE + SIZE_DATA_SIZE], *(unsigned int *)&msg[SIZE_MSG_TYPE]);
 }
 
 MessagePkt::MessagePkt(const int &to, const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data)

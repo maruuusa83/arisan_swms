@@ -31,6 +31,7 @@ class MessagePkt
 public:
 	MessagePkt();
 	MessagePkt(const int &to);
+	MessagePkt(const int &from, const BYTE *msg);
 	MessagePkt(const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data);
 	MessagePkt(const int &to, const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data);
 
