@@ -18,16 +18,24 @@
 #include "MessagePkt.h"
 #include <stdlib.h>
 
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+#include <stdio.h>
+#include <iostream>
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+
 namespace marusa {
 namespace swms {
 
 
-void bytecpy(BYTE *to, const BYTE *from, unsigned int len)
+void bytecpy(BYTE *to,
+			 const BYTE *from,
+			 unsigned int len)
 {
 	while (len--){
 		*to++ = *from++;
 	}
 }
+
 
 /*** MessagePkt class ***/
 /* constractor */
@@ -38,9 +46,16 @@ MessagePkt::MessagePkt(const int &to)
 	set_to(to);
 }
 
-MessagePkt::MessagePkt(const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data)
+MessagePkt::MessagePkt(const int &from, const BYTE *msg)
 {
-	set_data(msg_type, data, size_data);
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "MessagePkt::MessagePkt - building message from BYTE" << std::endl;
+	printf("\tmsg type : %d\n", *msg);
+	printf("\tmsg size : %u\n", *(unsigned int *)&msg[SIZE_MSG_TYPE]);
+	printf("\tmsg dmp : %s\n", &msg[SIZE_MSG_TYPE + SIZE_DATA_SIZE]);
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+	set_to(from);
+	set_data((unsigned char)*msg, &msg[SIZE_MSG_TYPE + SIZE_DATA_SIZE], *(unsigned int *)&msg[SIZE_MSG_TYPE]);
 }
 
 MessagePkt::MessagePkt(const int &to, const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data)
@@ -48,6 +63,7 @@ MessagePkt::MessagePkt(const int &to, const unsigned char &msg_type, const BYTE 
 	set_to(to);
 	set_data(msg_type, data, size_data);
 }
+
 
 /* methods */
 int MessagePkt::set_to(const int &to)
@@ -57,10 +73,13 @@ int MessagePkt::set_to(const int &to)
 	return (0);
 }
 
-int MessagePkt::set_data(const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data)
+int MessagePkt::set_data(const unsigned char &msg_type,
+						 const BYTE *data,
+						 const unsigned int &size_data)
 {
 	this->msg_type = msg_type;
 
+	this->data = (BYTE *)malloc(sizeof(BYTE) * size_data);
 	bytecpy(this->data, data, size_data);
 	this->size_data = size_data;
 
@@ -74,8 +93,8 @@ int MessagePkt::get_to() const
 
 /**
  * Generate message as byte
- * This metod generate message data as byte.
- * BYTE ** : To save massage data
+ * This method generate message data as byte.
+ * BYTE ** : To save message data
  * unsigned int * : To save length of message
  */
 void MessagePkt::get_msg(BYTE **data, unsigned int &size_data) const
@@ -101,7 +120,6 @@ void MessagePkt::free_msg(BYTE *data)
 	free(data);
 }
 
-
-} /* namespace grad_res */
-} /* namespace marusa */
+}
+}
 

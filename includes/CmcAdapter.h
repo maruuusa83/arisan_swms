@@ -36,7 +36,7 @@ public:
 	CmcAdapter(CmcCallbackListener *listener);
 	virtual ~CmcAdapter();
 		
-	virtual int sendMessagePkt(const MessagePkt &pkt);
+	int sendMessagePkt(const MessagePkt &pkt);
 
 	int setCmcContext(CmcContext *context);
 			

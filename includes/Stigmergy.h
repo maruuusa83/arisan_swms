@@ -31,7 +31,7 @@ public:
 	class SGYCallbackListener;
 	class SGYContext;
 
-	Stigmergy(const CmcAdapter &cmc);
+	Stigmergy(CmcAdapter *cmc);
 	virtual ~Stigmergy();
 
 	int startStigmergy();

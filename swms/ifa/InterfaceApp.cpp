@@ -19,37 +19,51 @@
 
 #include "MessagePkt.h"
 
+#include <iostream>
+
 namespace marusa {
 namespace swms {
 
 
 /***** InterfaceAppAPI *****/
 InterfaceAppAPI::InterfaceAppAPI(IFACallbackListener *listener,
-							     const CmcAdapter &cmc)
+							     CmcAdapter *cmc)
 {
 	this->mListener = listener;
 	this->mCmc = cmc;
 
 	//TODO: this line needs throw exception, i think
-	this->mCmc.connToStigmergy();
+	(this->mCmc)->connToStigmergy();
 }
 
 JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 {
-	CmcAdapter &cmc = this->mCmc;
+	CmcAdapter *cmc = this->mCmc;
 
 	std::vector<Job::Task> task_list;
 	job.getTaskList(task_list);
 
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "InterfaceAppAPI::sendTasks - Start sending task" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 	for (auto task : task_list){
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "InterfaceAppAPI::sendTasks - Sending task : No." << task.getTaskId() << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 		BYTE *byte_task_data;
 		unsigned int size;
-		task.getData(byte_task_data, size);
+		task.getData(&byte_task_data, size);
 
 		MessagePkt pkt(stigmergy_id, MessagePkt::MSG_SEND_TASK, byte_task_data, size);
-		cmc.sendMessagePkt(pkt);
+		cmc->sendMessagePkt(pkt);
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "InterfaceAppAPI::sendTasks - Fin sending task : No." << task.getTaskId() << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 	}
 
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	std::cout << "out InterfaceAppAPI::sendTasks" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 	return (0);
 }
 

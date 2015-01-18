@@ -35,7 +35,7 @@ public:
 	class IFAContext;
 
 	InterfaceAppAPI(IFACallbackListener *listener,
-			        const CmcAdapter &cmc);
+			        CmcAdapter *cmc);
 
 	JOB_ID sendTasks(const Job &job);
 	int getTasksByJobId(const JOB_ID &job_id);
@@ -48,7 +48,7 @@ public:
 
 private:
 	IFACallbackListener *mListener;
-	CmcAdapter mCmc;
+	CmcAdapter *mCmc;
 
 	HOST_ID stigmergy_id = 0;
 
