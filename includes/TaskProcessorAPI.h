@@ -36,8 +36,8 @@ public:
 	class TPCallbackListener;
 	class TPContext;
 
-	TaskProcessorAPI(const TPCallbackListener &listener,
-					 const CmcAdapter &cmc);
+	TaskProcessorAPI(TPCallbackListener *listener,
+					 CmcAdapter *cmc);
 	virtual ~TaskProcessorAPI();
 
 	int startWorker();
@@ -79,7 +79,7 @@ public:
 class TaskProcessorAPI::TPContext
 {
 public:
-	TPContext(const TaskProcessorAPI &taskProcessorAPI);
+	TPContext(TaskProcessorAPI *taskProcessorAPI);
 
 	TaskProcessorAPI *taskProcessorAPI = nullptr;
 };

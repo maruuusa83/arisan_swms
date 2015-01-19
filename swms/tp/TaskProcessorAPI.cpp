@@ -20,14 +20,12 @@
 namespace marusa {
 namespace swms {
 
-TaskProcessorAPI::TaskProcessorAPI(const TPCallbackListener &listener,
-								   const CmcAdapter &cmc)
+TaskProcessorAPI::TaskProcessorAPI(TPCallbackListener *listener,
+								   CmcAdapter *cmc)
 {
-	this->mListener = new TPCallbackListener();
-	*(this->mListener) = listener;
+	this->mListener = listener;
 
-	this->mCmc = new CmcAdapter();
-	*(this->mCmc) = cmc;
+	this->mCmc = cmc;
 }
 
 TaskProcessorAPI::~TaskProcessorAPI()
@@ -127,9 +125,9 @@ TaskProcessorAPI::TPCallbackListener::~TPCallbackListener()
 
 }
 
-TaskProcessorAPI::TPContext::TPContext(const TaskProcessorAPI &taskProcessorAPI)
+TaskProcessorAPI::TPContext::TPContext(TaskProcessorAPI *taskProcessorAPI)
 {
-	//TODO: implement this function
+	this->taskProcessorAPI = taskProcessorAPI;
 }
 
 
