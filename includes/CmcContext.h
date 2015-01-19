@@ -37,18 +37,18 @@ public:
 	int setTPCallbackListener(TaskProcessorAPI::TPCallbackListener *tpCallbackListener);
 	int setSGYCallbackListener(Stigmergy::SGYCallbackListener *sgyCallbackListner);
 
-	const InterfaceAppAPI::IFACallbackListener *getIFACallbackListener() const;
-	const TaskProcessorAPI::TPCallbackListener *getTPCallbackListener() const;
-	const Stigmergy::SGYCallbackListener *getSGYCallbackListener() const;
+	InterfaceAppAPI::IFACallbackListener *getIFACallbackListener() const;
+	TaskProcessorAPI::TPCallbackListener *getTPCallbackListener() const;
+	Stigmergy::SGYCallbackListener *getSGYCallbackListener() const;
 
 
 	int setIFAContext(InterfaceAppAPI::IFAContext *ifaContext);
 	int setTPContext(TaskProcessorAPI::TPContext *tpContext);
 	int setSGYContext(Stigmergy::SGYContext *sgyCallbackListner);
 
-	const InterfaceAppAPI::IFAContext *getIFAContext() const;
-	const TaskProcessorAPI::TPContext *getTPContext() const;
-	const Stigmergy::SGYContext *getSGYContext() const;
+	InterfaceAppAPI::IFAContext *getIFAContext() const;
+	TaskProcessorAPI::TPContext *getTPContext() const;
+	Stigmergy::SGYContext *getSGYContext() const;
 
 private:
 	InterfaceAppAPI::IFACallbackListener *mIFACallbackListener = nullptr;

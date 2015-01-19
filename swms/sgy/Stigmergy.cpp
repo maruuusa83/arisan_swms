@@ -38,7 +38,7 @@ int Stigmergy::startStigmergy()
 }
 
 void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
-												const BYTE *task) const
+												const BYTE *task)
 {
 	// nothing to do
 }

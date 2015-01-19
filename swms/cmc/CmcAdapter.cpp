@@ -105,8 +105,8 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 	switch (msg.get_msg_type()){
 	  case MessagePkt::MSG_SEND_TASK:
 	  {
-		const Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
-		const Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
+		Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
+		Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
 
 		sgyCL->onRecvTask(*sgyCTXT, data);
 
@@ -118,8 +118,8 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 
 	  case MessagePkt::MSG_RET_JOBID:
 	  {
-		const InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();
-		const InterfaceAppAPI::IFAContext *ifaCTXT = context.getIFAContext();
+		InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();
+		InterfaceAppAPI::IFAContext *ifaCTXT = context.getIFAContext();
 
 		ifaCL->onRecvJobId(*ifaCTXT, *((JOB_ID *)data));
 
