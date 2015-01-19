@@ -48,12 +48,6 @@ MessagePkt::MessagePkt(const int &to)
 
 MessagePkt::MessagePkt(const int &from, const BYTE *msg)
 {
-#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
-	std::cout << "MessagePkt::MessagePkt - building message from BYTE" << std::endl;
-	printf("\tmsg type : %d\n", *msg);
-	printf("\tmsg size : %u\n", *(unsigned int *)&msg[SIZE_MSG_TYPE]);
-	printf("\tmsg dmp : %s\n", &msg[SIZE_MSG_TYPE + SIZE_DATA_SIZE]);
-#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 	set_to(from);
 	set_data((unsigned char)*msg, &msg[SIZE_MSG_TYPE + SIZE_DATA_SIZE], *(unsigned int *)&msg[SIZE_MSG_TYPE]);
 }
@@ -91,19 +85,28 @@ int MessagePkt::get_to() const
 	return (this->to);
 }
 
+int MessagePkt::get_data(BYTE **data, unsigned int &size_data) const
+{
+	*data = (BYTE *)malloc(sizeof(BYTE) * this->size_data);
+	bytecpy(*data, this->data, this->size_data);
+	size_data = this->size_data;
+
+	return (0);
+}
+
 /**
  * Generate message as byte
  * This method generate message data as byte.
  * BYTE ** : To save message data
- * unsigned int * : To save length of message
+ * unsigned int & : To save length of message
  */
-void MessagePkt::get_msg(BYTE **data, unsigned int &size_data) const
+void MessagePkt::get_msg(BYTE **data, unsigned int &size_msg) const
 {
 	/* save data size */
-	size_data = this->size_data;
+	size_msg = this->size_data + MessagePkt::SIZE_MSG_TYPE + MessagePkt::SIZE_DATA_SIZE;
 
 	/* save data */
-	*data = (BYTE *)malloc(MessagePkt::SIZE_MSG_TYPE + MessagePkt::SIZE_DATA_SIZE + sizeof(BYTE) * this->size_data);
+	*data = (BYTE *)malloc(size_msg * sizeof(BYTE));
 
 	*((unsigned char *)*data) = (unsigned char)this->msg_type;
 	*((unsigned int *)(*data + MessagePkt::SIZE_MSG_TYPE)) = (unsigned int)this->size_data;

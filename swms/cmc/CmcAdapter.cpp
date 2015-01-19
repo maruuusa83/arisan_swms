@@ -96,7 +96,7 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 	BYTE *data;
 	unsigned int size_data;
 
-	msg.get_msg(&data, size_data);
+	msg.get_data(&data, size_data);
 
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 	std::cout << "CmcAdapter::CmcCallbackListener::onMessage - recv msg : TYPE-" << (int)msg.get_msg_type() << std::endl;
