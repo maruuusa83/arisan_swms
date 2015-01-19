@@ -17,6 +17,8 @@
  *******************************************************************************/
 #include "Stigmergy.h"
 
+#include <time.h>
+
 namespace marusa {
 namespace swms {
 
@@ -33,6 +35,28 @@ Stigmergy::~Stigmergy()
 int Stigmergy::startStigmergy()
 {
 	(this->mCmc)->startListen();
+
+	return (0);
+}
+
+int Stigmergy::sendTaskList(HOST_ID to)
+{
+	return (0);
+}
+
+int Stigmergy::addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
+					   const BYTE *data,
+					   const unsigned int data_size)
+{
+	TASK_INFO *task_info = (TASK_INFO *)malloc(sizeof(TASK_INFO));
+
+	task_info->job_id = task_uid.first;
+	task_info->task_id = task_uid.second;
+	task_info->put_time = time(NULL);
+	task_info->task_data = (BYTE *)malloc(sizeof(BYTE) * data_size);
+	bytecpy(task_info->task_data, data, data_size);
+
+	this->mTaskList[task_uid] = task_info;
 
 	return (0);
 }
