@@ -59,7 +59,7 @@ public:
 class Stigmergy::SGYContext
 {
 public:
-	SGYContext(const Stigmergy &stigmergy);
+	SGYContext(Stigmergy *stigmergy);
 
 	Stigmergy *mSGY = nullptr;
 };

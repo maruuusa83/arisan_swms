@@ -86,6 +86,11 @@ void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
 	// nothing to do
 }
 
+Stigmergy::SGYContext::SGYContext(Stigmergy *stigmergy)
+{
+	this->mSGY = stigmergy;
+}
+
 
 } /* swms */
 } /* marusa */
