@@ -20,6 +20,8 @@
 
 #define ___DEBUG_TRANS_TASK_IFA2SGY___
 
+#include <time.h>
+
 namespace marusa {
 namespace swms {
 
@@ -43,6 +45,24 @@ typedef struct _task_pkt {
 	unsigned int div_id;
 	unsigned int data_size;
 } TASK_PKT_HEADER;
+
+typedef struct _task_info {
+	JOB_ID job_id;
+	TASK_ID task_id;
+	time_t put_time;
+	BYTE *task_data;
+} TASK_INFO;
+
+typedef struct _tasklst_pkt_header {
+	unsigned int num_task;
+} TASKLST_PKT_HEADER;
+
+typedef struct _tasklst_pkt_body {
+	JOB_ID job_id;
+	TASK_ID task_id;
+	time_t put_time;
+} TASKLST_PKT_BODY;
+
 
 } /* swms */
 } /* marusa */
