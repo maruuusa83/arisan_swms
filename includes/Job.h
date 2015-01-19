@@ -75,12 +75,6 @@ private:
 	static const int SIZE_TASK_ID = 4;
 	static const int SIZE_DIV_ID = 4;
 	static const int SIZE_DATA_SIZE = 4;
-
-	typedef struct _task_pkt {
-		JOB_ID job_id;
-		TASK_ID task_id;
-		unsigned int div_id;
-	} TASK_PKT_HEADER;
 };
 
 

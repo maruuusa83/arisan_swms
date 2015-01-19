@@ -110,6 +110,9 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 
 		sgyCL->onRecvTask(*sgyCTXT, data);
 
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_SEND_TASK" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 		break;
 	  }
 

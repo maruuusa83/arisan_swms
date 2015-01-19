@@ -114,10 +114,11 @@ int Job::Task::getData(BYTE **data,
 /* deprecated */
 void Job::Task::getAsByteArray(BYTE **result, unsigned int &size)
 {
-	BYTE *tmp = (BYTE *)malloc(sizeof(BYTE) * (sizeof(TASK_PKT_HEADER) + data_size));
+	BYTE *tmp = (BYTE *)malloc(sizeof(BYTE) * (sizeof(TASK_PKT_HEADER) + this->data_size));
 	((TASK_PKT_HEADER *)tmp)->job_id = getJobId();
 	((TASK_PKT_HEADER *)tmp)->task_id = getTaskId();
 	((TASK_PKT_HEADER *)tmp)->div_id = 0;
+	((TASK_PKT_HEADER *)tmp)->data_size = this->data_size;
 
 	marusa::swms::bytecpy((BYTE *)&(tmp[sizeof(TASK_PKT_HEADER)]), this->data, this->data_size);
 	*result = tmp;
