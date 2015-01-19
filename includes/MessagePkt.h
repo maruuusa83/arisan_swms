@@ -24,7 +24,7 @@ namespace marusa {
 namespace swms {
 
 
-void bytecpy(BYTE *to, const BYTE *from, const int &len);
+void bytecpy(BYTE *to, const BYTE *from, const unsigned int &len);
 
 class MessagePkt
 {
@@ -39,7 +39,8 @@ public:
 	int set_data(const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data);
 
 	int get_to() const;
-	void get_msg(BYTE **data, unsigned int &size_data) const;
+	int get_data(BYTE **data, unsigned int &size_data) const;
+	void get_msg(BYTE **data, unsigned int &size_msg) const;
 	unsigned char get_msg_type() const;
 
 	static void free_msg(BYTE *data);

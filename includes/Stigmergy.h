@@ -21,6 +21,8 @@
 #include "./common.h"
 #include "./CmcAdapter.h"
 
+#include <map>
+
 namespace marusa {
 namespace swms {
 
@@ -36,21 +38,28 @@ public:
 
 	int startStigmergy();
 
+	int sendTaskList(HOST_ID to);
+	int addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
+				const BYTE *data,
+				const unsigned int data_size);
+
 private:
 	CmcAdapter *mCmc;
+
+	std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> mMapTasks;
 };
 
 class Stigmergy::SGYCallbackListener
 {
 public:
 	virtual void onRecvTask(const SGYContext &context,
-							const BYTE *task) const;
+							const BYTE *task);
 };
 
 class Stigmergy::SGYContext
 {
 public:
-	SGYContext(const Stigmergy &stigmergy);
+	SGYContext(Stigmergy *stigmergy);
 
 	Stigmergy *mSGY = nullptr;
 };

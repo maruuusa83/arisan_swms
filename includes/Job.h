@@ -61,7 +61,8 @@ public:
 	int getData(BYTE **data,
 			    unsigned int &dat_size);
 
-	BYTE *getAsByteArray();
+	void getAsByteArray(BYTE **result, unsigned int &size);
+	int freeTaskAsByteArray(BYTE *task_byte);
 
 private:
 	JOB_ID  job_id  = 0;
@@ -69,6 +70,11 @@ private:
 
 	BYTE *data = nullptr;
 	unsigned int data_size = 0;
+
+	static const int SIZE_JOB_ID = 4;
+	static const int SIZE_TASK_ID = 4;
+	static const int SIZE_DIV_ID = 4;
+	static const int SIZE_DATA_SIZE = 4;
 };
 
 

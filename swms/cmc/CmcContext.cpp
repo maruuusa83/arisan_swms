@@ -38,17 +38,17 @@ int CmcAdapter::CmcContext::setSGYCallbackListener(Stigmergy::SGYCallbackListene
 	return (0);
 }
 
-const InterfaceAppAPI::IFACallbackListener *CmcAdapter::CmcContext::getIFACallbackListener() const
+InterfaceAppAPI::IFACallbackListener *CmcAdapter::CmcContext::getIFACallbackListener() const
 {
 	return (this->mIFACallbackListener);
 }
 
-const TaskProcessorAPI::TPCallbackListener *CmcAdapter::CmcContext::getTPCallbackListener() const
+TaskProcessorAPI::TPCallbackListener *CmcAdapter::CmcContext::getTPCallbackListener() const
 {
 	return (this->mTPCallbackListener);
 }
 
-const Stigmergy::SGYCallbackListener *CmcAdapter::CmcContext::getSGYCallbackListener() const
+Stigmergy::SGYCallbackListener *CmcAdapter::CmcContext::getSGYCallbackListener() const
 {
 	return (this->mSGYCallbackListener);
 }
@@ -71,17 +71,17 @@ int CmcAdapter::CmcContext::setSGYContext(Stigmergy::SGYContext *sgyContext)
 	return (0);
 }
 
-const InterfaceAppAPI::IFAContext *CmcAdapter::CmcContext::getIFAContext() const
+InterfaceAppAPI::IFAContext *CmcAdapter::CmcContext::getIFAContext() const
 {
 	return (this->mIFAContext);
 }
 
-const TaskProcessorAPI::TPContext *CmcAdapter::CmcContext::getTPContext() const
+TaskProcessorAPI::TPContext *CmcAdapter::CmcContext::getTPContext() const
 {
 	return (this->mTPContext);
 }
 
-const Stigmergy::SGYContext *CmcAdapter::CmcContext::getSGYContext() const
+Stigmergy::SGYContext *CmcAdapter::CmcContext::getSGYContext() const
 {
 	return (this->mSGYContext);
 }

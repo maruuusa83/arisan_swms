@@ -52,7 +52,8 @@ JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 #endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 		BYTE *byte_task_data;
 		unsigned int size;
-		task.getData(&byte_task_data, size);
+		//task.getData(&byte_task_data, size);
+		task.getAsByteArray(&byte_task_data, size);
 
 		MessagePkt pkt(stigmergy_id, MessagePkt::MSG_SEND_TASK, byte_task_data, size);
 		cmc->sendMessagePkt(pkt);
