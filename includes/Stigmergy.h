@@ -46,7 +46,7 @@ public:
 private:
 	CmcAdapter *mCmc;
 
-	std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> mTaskList;
+	std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> mMapTasks;
 };
 
 class Stigmergy::SGYCallbackListener

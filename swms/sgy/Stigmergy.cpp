@@ -41,6 +41,25 @@ int Stigmergy::startStigmergy()
 
 int Stigmergy::sendTaskList(HOST_ID to)
 {
+	int num_task = this->mMapTasks.size();
+	unsigned int size = sizeof(TASKLST_PKT_HEADER) + sizeof(TASKLST_PKT_BODY) * num_task;
+	BYTE *data = (BYTE *)malloc(size);
+
+	((TASKLST_PKT_HEADER *)data)->num_task = num_task;
+	int pos = sizeof(TASKLST_PKT_HEADER);
+	for (auto task : this->mMapTasks){
+		std::pair<JOB_ID, TASK_ID> task_uid = task.first;
+		TASK_INFO *task_info = task.second;
+
+		((TASKLST_PKT_BODY *)data)->job_id   = task_uid.first;
+		((TASKLST_PKT_BODY *)data)->task_id  = task_uid.second;
+		((TASKLST_PKT_BODY *)data)->put_time = task_info->put_time;
+
+		pos += sizeof(TASKLST_PKT_BODY);
+	}
+
+	MessagePkt pkt(to, MessagePkt::MSG_RET_TASKLIST, data, size);
+	this->mCmc->sendMessagePkt(pkt);
 	return (0);
 }
 
@@ -56,7 +75,7 @@ int Stigmergy::addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 	task_info->task_data = (BYTE *)malloc(sizeof(BYTE) * data_size);
 	bytecpy(task_info->task_data, data, data_size);
 
-	this->mTaskList[task_uid] = task_info;
+	this->mMapTasks[task_uid] = task_info;
 
 	return (0);
 }
