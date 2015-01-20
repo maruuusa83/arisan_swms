@@ -19,6 +19,7 @@
 #define ___TASKPROCESSOR_H___
 
 #include <unistd.h>
+#include <map>
 
 #include "./common.h"
 //#include "./Task.h"
@@ -53,6 +54,8 @@ public:
 private:
 	TPCallbackListener *mListener;
 	CmcAdapter *mCmc;
+
+	std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> mMapTasks;
 
 	int sendReqTasklist();
 	int checkDoTask(JOB_ID &job_id,

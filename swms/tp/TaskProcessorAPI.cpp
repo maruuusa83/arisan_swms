@@ -54,7 +54,7 @@ int TaskProcessorAPI::startWorker()
 		JOB_ID job_id;
 		TASK_ID task_id;
 		checkDoTask(job_id, task_id);
-		if (task_id != TASK_ID_NO_TASK){
+		if (job_id != JOB_ID_NO_TASK){
 			Job::Task task;
 
 			getTask(task, job_id, task_id);
@@ -89,6 +89,12 @@ int TaskProcessorAPI::sendReqTasklist()
 int TaskProcessorAPI::checkDoTask(JOB_ID &job_id,
 								  TASK_ID &task_id)
 {
+	// First, send request.
+	sendReqTasklist();
+
+	// Second, check old data
+	
+	job_id = JOB_ID_NO_TASK;
 	return (0);
 }
 
