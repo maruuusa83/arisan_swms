@@ -57,6 +57,8 @@ JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 
 		MessagePkt pkt(stigmergy_id, MessagePkt::MSG_SEND_TASK, byte_task_data, size);
 		cmc->sendMessagePkt(pkt);
+
+		task.freeTaskAsByteArray(byte_task_data);
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 	std::cout << "InterfaceAppAPI::sendTasks - Fin sending task : No." << task.getTaskId() << std::endl;
 #endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */

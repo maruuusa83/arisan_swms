@@ -55,14 +55,15 @@ private:
 	TPCallbackListener *mListener;
 	CmcAdapter *mCmc;
 
+	HOST_ID stigmergy_id;
+
 	std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> mMapTasks;
 
 	int sendReqTasklist();
 	int checkDoTask(JOB_ID &job_id,
-			        TASK_ID &task_id);
+					TASK_ID &task_id);
 	CONS_PROB calcTaskConsumeProb(time_t age);
-	int getTask(Job::Task &task,
-			    const JOB_ID &job_id,
+	int getTask(const JOB_ID &job_id,
 				const TASK_ID &task_id);
 	int doTask(const Job::Task &task);
 };
