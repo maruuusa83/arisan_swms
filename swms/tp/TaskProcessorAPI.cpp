@@ -27,7 +27,6 @@ TaskProcessorAPI::TaskProcessorAPI(TPCallbackListener *listener,
 								   CmcAdapter *cmc)
 {
 	this->mListener = listener;
-
 	this->mCmc = cmc;
 }
 

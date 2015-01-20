@@ -86,6 +86,12 @@ void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
 	// nothing to do
 }
 
+void Stigmergy::SGYCallbackListener::onRecvReqTaskList(const SGYContext &context,
+													   const HOST_ID &from)
+{
+	// nothing to do
+}
+
 Stigmergy::SGYContext::SGYContext(Stigmergy *stigmergy)
 {
 	this->mSGY = stigmergy;

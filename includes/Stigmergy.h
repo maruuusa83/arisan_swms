@@ -54,6 +54,8 @@ class Stigmergy::SGYCallbackListener
 public:
 	virtual void onRecvTask(const SGYContext &context,
 							const BYTE *task);
+	virtual void onRecvReqTaskList(const Stigmergy::SGYContext &context,
+								   const HOST_ID &from);
 };
 
 class Stigmergy::SGYContext

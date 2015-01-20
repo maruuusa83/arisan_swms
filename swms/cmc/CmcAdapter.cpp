@@ -19,6 +19,7 @@
 #include "CmcContext.h"
 
 #include "Stigmergy.h"
+#include "TaskProcessorAPI.h"
 
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 #include <stdio.h>
@@ -113,6 +114,33 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_SEND_TASK" << std::endl;
 #endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+		break;
+	  }
+
+	  case MessagePkt::MSG_REQ_TASKLIST:
+	  {
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_REQ_TASKLIST" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+		Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
+		Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
+
+		sgyCL->onRecvReqTaskList(*sgyCTXT, hostid);
+
+		break;
+	  }
+
+	  case MessagePkt::MSG_RET_TASKLIST:
+	  {
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_RET_TASKLIST" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+		TaskProcessorAPI::TPCallbackListener *tpCL = context.getTPCallbackListener();
+		TaskProcessorAPI::TPContext *tpCTXT = context.getTPContext();
+
+		Job::Task task;
+		tpCL->onTask(*tpCTXT, task);
+
 		break;
 	  }
 
