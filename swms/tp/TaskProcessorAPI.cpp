@@ -109,6 +109,7 @@ int TaskProcessorAPI::checkDoTask(JOB_ID &job_id,
 
 CONS_PROB TaskProcessorAPI::calcTaskConsumeProb(time_t age)
 {
+	//TODO: calc probability
 	return (1.0);
 }
 
