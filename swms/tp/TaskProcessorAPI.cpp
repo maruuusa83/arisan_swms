@@ -93,9 +93,23 @@ int TaskProcessorAPI::checkDoTask(JOB_ID &job_id,
 	sendReqTasklist();
 
 	// Second, check old data
+	for (auto task : mMapTasks){
+		//TODO: calculate needs of each task
+		TASK_INFO *info = task.second;
+		time_t task_age = difftime(time(NULL), info->put_time);
+		CONS_PROB cons_prob = calcTaskConsumeProb(task_age);
+
+		//TODO: decide consume or reject task
+
+	}
 	
 	job_id = JOB_ID_NO_TASK;
 	return (0);
+}
+
+CONS_PROB TaskProcessorAPI::calcTaskConsumeProb(time_t age)
+{
+	return (1.0);
 }
 
 int TaskProcessorAPI::getTask(Job::Task &task,

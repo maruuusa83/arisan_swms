@@ -29,6 +29,8 @@ namespace swms {
 /*** COMMON ***/
 typedef unsigned char BYTE;
 
+typedef double CONS_PROB;
+
 /*** Stigmagy Layer ***/
 typedef unsigned int JOB_ID;
 typedef unsigned int TASK_ID;

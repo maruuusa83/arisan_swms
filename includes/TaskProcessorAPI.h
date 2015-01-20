@@ -60,6 +60,7 @@ private:
 	int sendReqTasklist();
 	int checkDoTask(JOB_ID &job_id,
 			        TASK_ID &task_id);
+	CONS_PROB calcTaskConsumeProb(time_t age);
 	int getTask(Job::Task &task,
 			    const JOB_ID &job_id,
 				const TASK_ID &task_id);
