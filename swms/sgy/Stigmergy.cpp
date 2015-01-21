@@ -80,6 +80,18 @@ int Stigmergy::addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 	return (0);
 }
 
+int Stigmergy::addResult(const Result &result)
+{
+	std::pair<JOB_ID, TASK_ID> task_uid;
+	task_uid.first  = result.getJobId();
+	task_uid.second = result.getTaskId();
+
+	Result *tmp = new Result(result);
+	this->mMapResults[task_uid] = tmp;
+
+	return (0);
+}
+
 void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
 												const BYTE *task)
 {
@@ -88,6 +100,13 @@ void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
 
 void Stigmergy::SGYCallbackListener::onRecvReqTaskList(const SGYContext &context,
 													   const HOST_ID &from)
+{
+	// nothing to do
+}
+
+void Stigmergy::SGYCallbackListener::onRecvTaskFin(const SGYContext &context,
+												   const Result &result,
+												   const HOST_ID &from)
 {
 	// nothing to do
 }
