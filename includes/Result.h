@@ -28,6 +28,7 @@ class Result
 {
 public:
 	Result();
+	Result(const Result &result);
 	Result(const JOB_ID &job_id,
 		   const TASK_ID &task_id,
 		   const BYTE *data,
@@ -37,6 +38,12 @@ public:
 	void setTaskId(const TASK_ID &task_id);
 	void setData(const BYTE *data,
 				 const unsigned int &data_size);
+
+	JOB_ID getJobId() const;
+	TASK_ID getTaskId() const;
+	void getData(BYTE **data,
+				 unsigned int &data_size) const;
+	void freeData(BYTE *data) const;
 
 	void getAsByteArray(BYTE **result, unsigned int &size);
 	int freeResultAsByteArray(BYTE *result_byte);

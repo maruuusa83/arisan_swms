@@ -28,6 +28,18 @@ Result::Result()
 
 }
 
+Result::Result(const Result &result)
+{
+	setJobId(result.getJobId());
+	setTaskId(result.getJobId());
+
+	BYTE *data;
+	unsigned int data_size;
+	result.getData(&data, data_size);
+	setData(data, data_size);
+	result.freeData(data);
+}
+
 Result::Result(const JOB_ID &job_id,
 			   const TASK_ID &task_id,
 			   const BYTE *data,
@@ -54,6 +66,29 @@ void Result::setData(const BYTE *data,
 	this->data = (BYTE *)malloc(sizeof(BYTE) * data_size);
 	bytecpy(this->data, data, data_size);
 	this->data_size = data_size;
+}
+
+JOB_ID Result::getJobId() const
+{
+	return (this->job_id);
+}
+
+TASK_ID Result::getTaskId() const
+{
+	return (this->task_id);
+}
+
+void Result::getData(BYTE **data,
+					 unsigned int &data_size) const
+{
+	*data = (BYTE *)malloc(sizeof(BYTE) * this->data_size);
+	bytecpy(*data, this->data, this->data_size);
+	data_size = this->data_size;
+}
+
+void Result::freeData(BYTE *data) const
+{
+	free(data);
 }
 
 void Result::getAsByteArray(BYTE **result, unsigned int &size)
