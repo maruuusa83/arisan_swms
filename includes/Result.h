@@ -38,7 +38,8 @@ public:
 	void setData(const BYTE *data,
 				 const unsigned int &data_size);
 
-	BYTE *getAsByteArray();
+	void getAsByteArray(BYTE **result, unsigned int &size);
+	int freeResultAsByteArray(BYTE *result_byte);
 
 private:
 	JOB_ID  job_id  = 0;

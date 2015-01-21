@@ -56,6 +56,26 @@ void Result::setData(const BYTE *data,
 	this->data_size = data_size;
 }
 
+void Result::getAsByteArray(BYTE **result, unsigned int &size)
+{
+	*result = (BYTE *)malloc(sizeof(RESULT_PKT_HEADER) + sizeof(BYTE) * this->data_size);
+	((RESULT_PKT_HEADER *)result)->job_id = this->job_id;
+	((RESULT_PKT_HEADER *)result)->task_id = this->task_id;
+	((RESULT_PKT_HEADER *)result)->div_id = 0;
+	((RESULT_PKT_HEADER *)result)->data_size = this->data_size;
+
+	bytecpy((BYTE *)&(result[sizeof(RESULT_PKT_HEADER)]), this->data, this->data_size);
+	
+	size = sizeof(RESULT_PKT_HEADER) + this->data_size;
+}
+
+int Result::freeResultAsByteArray(BYTE *result_byte)
+{
+	free (result_byte);
+
+	return (0);
+}
+
 
 } /* namespace swms */
 } /* namespace marusa */

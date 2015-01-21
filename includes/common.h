@@ -65,6 +65,13 @@ typedef struct _tasklst_pkt_body {
 	time_t put_time;
 } TASKLST_PKT_BODY;
 
+typedef struct _result_pkt_header {
+	JOB_ID job_id;
+	TASK_ID task_id;
+	unsigned int div_id;
+	unsigned int data_size;
+} RESULT_PKT_HEADER;
+
 
 } /* swms */
 } /* marusa */
