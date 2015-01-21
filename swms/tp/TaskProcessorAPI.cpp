@@ -71,7 +71,9 @@ int TaskProcessorAPI::startWorker()
 
 int TaskProcessorAPI::sendTaskFin(const Result &resut)
 {
-	//TODO: implement this function
+	MessagePkt pkt(stigmergy_id, MessagePkt::MSG_NOTE_TASKFIN, nullptr, 0);
+	this->mCmc->sendMessagePkt(pkt);
+
 	return (0);
 }
 
