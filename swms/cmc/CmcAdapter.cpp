@@ -153,7 +153,11 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 		Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
 		Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
 
-		Result result;
+		RESULT_PKT_HEADER *header = (RESULT_PKT_HEADER *)data;
+		Result result(header->job_id,
+					  header->task_id,
+					  (BYTE *)&data[sizeof(RESULT_PKT_HEADER)],
+					  header->data_size);
 		sgyCL->onRecvTaskFin(*sgyCTXT, result, hostid);
 
 		break;
@@ -173,6 +177,8 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 	  default:
 	    break;
 	}
+
+	msg.free_msg(data);
 }
 
 void CmcAdapter::CmcCallbackListener::onNewWorker(const CmcContext &context,
