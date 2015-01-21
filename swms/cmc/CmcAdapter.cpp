@@ -163,7 +163,6 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 		break;
 	  }
 
-
 	  case MessagePkt::MSG_RET_JOBID:
 	  {
 		InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();
