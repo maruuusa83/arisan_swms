@@ -20,6 +20,7 @@
 
 #include "./common.h"
 #include "./CmcAdapter.h"
+#include "./Result.h"
 
 #include <map>
 
@@ -39,14 +40,21 @@ public:
 	int startStigmergy();
 
 	int sendTaskList(HOST_ID to);
+	int sendResultList(HOST_ID to);
 	int addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 				const BYTE *data,
 				const unsigned int data_size);
+	int delTask(const std::pair<JOB_ID, TASK_ID> &task_uid);
+
+	int addResult(const Result &result);
+
+	int sendTaskFin(HOST_ID to);
 
 private:
 	CmcAdapter *mCmc;
 
 	std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> mMapTasks;
+	std::map<std::pair<JOB_ID, TASK_ID>, Result *> mMapResults;
 };
 
 class Stigmergy::SGYCallbackListener
@@ -54,6 +62,13 @@ class Stigmergy::SGYCallbackListener
 public:
 	virtual void onRecvTask(const SGYContext &context,
 							const BYTE *task);
+	virtual void onRecvReqTaskList(const Stigmergy::SGYContext &context,
+								   const HOST_ID &from);
+	virtual void onRecvTaskFin(const SGYContext &context,
+							   const Result &result,
+							   const HOST_ID &from);
+	virtual void onRecvReqResultList(const Stigmergy::SGYContext &context,
+								   const HOST_ID &from);
 };
 
 class Stigmergy::SGYContext

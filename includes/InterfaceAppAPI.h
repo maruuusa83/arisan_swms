@@ -42,6 +42,7 @@ public:
 	int getTaskByTaskId(const JOB_ID &job_id,
 			            const TASK_ID &task_id);
 
+	int sendReqResultList();
 	int sendUsrMsg(const WORKER_ID &to,
 			       BYTE *msg,
 				   const unsigned int &msg_size);
@@ -62,6 +63,9 @@ public:
 	virtual void onFinTask(const IFAContext &context,
 						   const JOB_ID &job_id,
 						   const TASK_ID &task_id);
+
+	virtual void onRecvResultList(const InterfaceAppAPI::IFAContext &context,
+								  const std::vector<std::pair<JOB_ID, TASK_ID>> &results_info);
 
 	virtual void onRecvJobResult(const IFAContext &context,
 								 const JOB_ID &job_id,

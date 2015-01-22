@@ -53,19 +53,21 @@ public:
 	/* Message types */
 	static const int MSG_SEND_TASK		= 0;
 	static const int MSG_REQ_TASKRES	= 1;
+	static const int MSG_REQ_RESULTLIST = 2;
+	static const int MSG_REP_RESULTLIST = 3;
 
-	static const int MSG_RET_JOBID		= 2;
-	static const int MSG_NOTE_TASKFIN	= 3;
-	static const int MSG_RET_TASKRES	= 4;
+	static const int MSG_RET_JOBID		= 4;
+	static const int MSG_NOTE_TASKFIN	= 5;
+	static const int MSG_RET_TASKRES	= 6;
 
-	static const int MSG_RET_TASKLIST	= 5;
-	static const int MSG_RET_TASK		= 6;
-	static const int MSG_NOTE_TASKRES	= 7;
+	static const int MSG_RET_TASKLIST	= 7;
+	static const int MSG_RET_TASK		= 8;
+	static const int MSG_NOTE_TASKRES	= 9;
 
-	static const int MSG_REQ_TASKLIST	= 8;
-	static const int MSG_REQ_TASK		= 9;
+	static const int MSG_REQ_TASKLIST	= 10;
+	static const int MSG_REQ_TASK		= 11;
 
-	static const int MSG_TYPE_PLUS_ONE	= 10;
+	static const int MSG_TYPE_PLUS_ONE	= 12;
 
 private:
 	HOST_ID to = 0;

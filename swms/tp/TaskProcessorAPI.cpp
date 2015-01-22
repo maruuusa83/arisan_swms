@@ -17,17 +17,17 @@
  *******************************************************************************/
 #include "TaskProcessorAPI.h"
 
+#include <random>
+#include <iostream>
+
 namespace marusa {
 namespace swms {
 
-TaskProcessorAPI::TaskProcessorAPI(const TPCallbackListener &listener,
-								   const CmcAdapter &cmc)
+TaskProcessorAPI::TaskProcessorAPI(TPCallbackListener *listener,
+								   CmcAdapter *cmc)
 {
-	this->mListener = new TPCallbackListener();
-	*(this->mListener) = listener;
-
-	this->mCmc = new CmcAdapter();
-	*(this->mCmc) = cmc;
+	this->mListener = listener;
+	this->mCmc = cmc;
 }
 
 TaskProcessorAPI::~TaskProcessorAPI()
@@ -38,11 +38,13 @@ TaskProcessorAPI::~TaskProcessorAPI()
 
 int TaskProcessorAPI::startWorker()
 {
-	if (mCmc->connToStigmergy() == 0){
+	this->stigmergy_id = (this->mCmc)->connToStigmergy();
+	if (this->stigmergy_id == 0){
 		//TODO: it needs the error code.
 		//if success, connToStigma will return HOST_ID (not zero)
 		return (-1);
 	}
+
 
 	while (1){
 		/* sending tasklist request to stigmergy */
@@ -53,14 +55,12 @@ int TaskProcessorAPI::startWorker()
 		}
 
 		/* Reaction threshold */
-		JOB_ID job_id;
+		JOB_ID job_id = JOB_ID_NO_TASK;
 		TASK_ID task_id;
-		checkDoTask(job_id, task_id);
-		if (task_id != TASK_ID_NO_TASK){
-			Job::Task task;
 
-			getTask(task, job_id, task_id);
-			doTask(task);
+		checkDoTask(job_id, task_id);
+		if (job_id != JOB_ID_NO_TASK){
+			getTask(job_id, task_id);
 		}
 
 		sleep(TP_SPAN_POLLING);
@@ -71,7 +71,9 @@ int TaskProcessorAPI::startWorker()
 
 int TaskProcessorAPI::sendTaskFin(const Result &resut)
 {
-	//TODO: implement this function
+	MessagePkt pkt(stigmergy_id, MessagePkt::MSG_NOTE_TASKFIN, nullptr, 0);
+	this->mCmc->sendMessagePkt(pkt);
+
 	return (0);
 }
 
@@ -85,17 +87,39 @@ int TaskProcessorAPI::sendUsrMsg(const WORKER_ID &to,
 
 int TaskProcessorAPI::sendReqTasklist()
 {
+	MessagePkt pkt(stigmergy_id, MessagePkt::MSG_REQ_TASKLIST, nullptr, 0);
+	this->mCmc->sendMessagePkt(pkt);
+
 	return (0);
 }
 
 int TaskProcessorAPI::checkDoTask(JOB_ID &job_id,
 								  TASK_ID &task_id)
 {
+	std::random_device r_seed;
+	std::mt19937 mt(r_seed());
+
+	for (auto task : mMapTasks){
+		// calculate needs of each task
+		TASK_INFO *info = task.second;
+		time_t task_age = difftime(time(NULL), info->put_time);
+		CONS_PROB cons_prob = calcTaskConsumeProb(task_age);
+
+		// decide consume or reject task
+		std::cout << mt() << std::endl;
+	}
+	
+	job_id = JOB_ID_NO_TASK;
 	return (0);
 }
 
-int TaskProcessorAPI::getTask(Job::Task &task,
-							  const JOB_ID &job_id,
+CONS_PROB TaskProcessorAPI::calcTaskConsumeProb(time_t age)
+{
+	//TODO: calc probability
+	return (1.0);
+}
+
+int TaskProcessorAPI::getTask(const JOB_ID &job_id,
 							  const TASK_ID &task_id)
 {
 	//TODO: implement this function
@@ -127,9 +151,9 @@ TaskProcessorAPI::TPCallbackListener::~TPCallbackListener()
 
 }
 
-TaskProcessorAPI::TPContext::TPContext(const TaskProcessorAPI &taskProcessorAPI)
+TaskProcessorAPI::TPContext::TPContext(TaskProcessorAPI *taskProcessorAPI)
 {
-	//TODO: implement this function
+	this->taskProcessorAPI = taskProcessorAPI;
 }
 
 

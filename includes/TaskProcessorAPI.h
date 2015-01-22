@@ -19,6 +19,7 @@
 #define ___TASKPROCESSOR_H___
 
 #include <unistd.h>
+#include <map>
 
 #include "./common.h"
 //#include "./Task.h"
@@ -36,8 +37,8 @@ public:
 	class TPCallbackListener;
 	class TPContext;
 
-	TaskProcessorAPI(const TPCallbackListener &listener,
-					 const CmcAdapter &cmc);
+	TaskProcessorAPI(TPCallbackListener *listener,
+					 CmcAdapter *cmc);
 	virtual ~TaskProcessorAPI();
 
 	int startWorker();
@@ -54,11 +55,15 @@ private:
 	TPCallbackListener *mListener;
 	CmcAdapter *mCmc;
 
+	HOST_ID stigmergy_id;
+
+	std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> mMapTasks;
+
 	int sendReqTasklist();
 	int checkDoTask(JOB_ID &job_id,
-			        TASK_ID &task_id);
-	int getTask(Job::Task &task,
-			    const JOB_ID &job_id,
+					TASK_ID &task_id);
+	CONS_PROB calcTaskConsumeProb(time_t age);
+	int getTask(const JOB_ID &job_id,
 				const TASK_ID &task_id);
 	int doTask(const Job::Task &task);
 };
@@ -79,7 +84,7 @@ public:
 class TaskProcessorAPI::TPContext
 {
 public:
-	TPContext(const TaskProcessorAPI &taskProcessorAPI);
+	TPContext(TaskProcessorAPI *taskProcessorAPI);
 
 	TaskProcessorAPI *taskProcessorAPI = nullptr;
 };

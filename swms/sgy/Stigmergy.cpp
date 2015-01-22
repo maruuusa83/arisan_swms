@@ -60,6 +60,30 @@ int Stigmergy::sendTaskList(HOST_ID to)
 
 	MessagePkt pkt(to, MessagePkt::MSG_RET_TASKLIST, data, size);
 	this->mCmc->sendMessagePkt(pkt);
+
+	return (0);
+}
+
+int Stigmergy::sendResultList(HOST_ID to)
+{
+	int num_result = this->mMapResults.size();
+	unsigned int size = sizeof(RESULTLST_PKT_HEADER) + sizeof(RESULTLST_PKT_BODY) * num_result;
+	BYTE *data = (BYTE *)malloc(size);
+
+	((RESULTLST_PKT_HEADER *)data)->num_result = num_result;
+	int pos = sizeof(RESULTLST_PKT_HEADER);
+	for (auto result : this->mMapResults){
+		std::pair<JOB_ID, TASK_ID> task_uid = result.first;
+
+		((RESULTLST_PKT_BODY *)data)->job_id = task_uid.first;
+		((RESULTLST_PKT_BODY *)data)->task_id = task_uid.second;
+
+		pos += sizeof(RESULTLST_PKT_BODY);
+	}
+
+	MessagePkt pkt(to, MessagePkt::MSG_REP_RESULTLIST, data, size);
+	(this->mCmc)->sendMessagePkt(pkt);
+
 	return (0);
 }
 
@@ -80,11 +104,51 @@ int Stigmergy::addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 	return (0);
 }
 
+int Stigmergy::delTask(const std::pair<JOB_ID, TASK_ID> &task_uid)
+{
+	free(this->mMapTasks[task_uid]);
+	(this->mMapTasks).erase(task_uid);
+
+	return (0);
+}
+
+int Stigmergy::addResult(const Result &result)
+{
+	std::pair<JOB_ID, TASK_ID> task_uid;
+	task_uid.first  = result.getJobId();
+	task_uid.second = result.getTaskId();
+
+	Result *tmp = new Result(result);
+	this->mMapResults[task_uid] = tmp;
+
+	return (0);
+}
+
 void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
 												const BYTE *task)
 {
 	// nothing to do
 }
+
+void Stigmergy::SGYCallbackListener::onRecvReqTaskList(const SGYContext &context,
+													   const HOST_ID &from)
+{
+	// nothing to do
+}
+
+void Stigmergy::SGYCallbackListener::onRecvTaskFin(const SGYContext &context,
+												   const Result &result,
+												   const HOST_ID &from)
+{
+	// nothing to do
+}
+
+void Stigmergy::SGYCallbackListener::onRecvReqResultList(const SGYContext &context,
+														 const HOST_ID &from)
+{
+	// nothing to do
+}
+
 
 Stigmergy::SGYContext::SGYContext(Stigmergy *stigmergy)
 {

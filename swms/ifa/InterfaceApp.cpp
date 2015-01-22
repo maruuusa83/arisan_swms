@@ -57,6 +57,8 @@ JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 
 		MessagePkt pkt(stigmergy_id, MessagePkt::MSG_SEND_TASK, byte_task_data, size);
 		cmc->sendMessagePkt(pkt);
+
+		task.freeTaskAsByteArray(byte_task_data);
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 	std::cout << "InterfaceAppAPI::sendTasks - Fin sending task : No." << task.getTaskId() << std::endl;
 #endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
@@ -78,6 +80,13 @@ int InterfaceAppAPI::getTaskByTaskId(const JOB_ID &job_id,
 								  const TASK_ID &task_id)
 {
 	//TODO:Implement this function.
+	return (0);
+}
+
+int InterfaceAppAPI::sendReqResultList()
+{
+	MessagePkt pkt(this->stigmergy_id, MessagePkt::MSG_REQ_RESULTLIST, nullptr, 0);
+	(this->mCmc)->sendMessagePkt(pkt);
 	return (0);
 }
 
@@ -104,6 +113,13 @@ void InterfaceAppAPI::IFACallbackListener::onFinTask(const IFAContext &context,
 {
 	//nothing to do
 }
+
+void InterfaceAppAPI::IFACallbackListener::onRecvResultList(const InterfaceAppAPI::IFAContext &context,
+															const std::vector<std::pair<JOB_ID, TASK_ID>> &results_info)
+{
+	// nothing to do
+}
+
 
 void InterfaceAppAPI::IFACallbackListener::onRecvJobResult(const IFAContext &context,
 					 const JOB_ID &job_id,

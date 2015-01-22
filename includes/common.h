@@ -29,12 +29,14 @@ namespace swms {
 /*** COMMON ***/
 typedef unsigned char BYTE;
 
+typedef double CONS_PROB;
+
 /*** Stigmagy Layer ***/
 typedef unsigned int JOB_ID;
 typedef unsigned int TASK_ID;
 typedef unsigned int WORKER_ID;
 
-static const unsigned int TASK_ID_NO_TASK = 0;
+static const unsigned int JOB_ID_NO_TASK = 0;
 
 /*** Messaging Layer ***/
 typedef unsigned int HOST_ID;
@@ -62,6 +64,22 @@ typedef struct _tasklst_pkt_body {
 	TASK_ID task_id;
 	time_t put_time;
 } TASKLST_PKT_BODY;
+
+typedef struct _resultlst_pkt_header {
+	unsigned int num_result;
+} RESULTLST_PKT_HEADER;
+
+typedef struct _resultlst_pkt_body {
+	JOB_ID job_id;
+	TASK_ID task_id;
+} RESULTLST_PKT_BODY;
+
+typedef struct _result_pkt_header {
+	JOB_ID job_id;
+	TASK_ID task_id;
+	unsigned int div_id;
+	unsigned int data_size;
+} RESULT_PKT_HEADER;
 
 
 } /* swms */

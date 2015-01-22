@@ -19,6 +19,7 @@
 #include "CmcContext.h"
 
 #include "Stigmergy.h"
+#include "TaskProcessorAPI.h"
 
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 #include <stdio.h>
@@ -116,6 +117,82 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 		break;
 	  }
 
+	  case MessagePkt::MSG_REQ_TASKLIST:
+	  {
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_REQ_TASKLIST" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+		Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
+		Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
+
+		sgyCL->onRecvReqTaskList(*sgyCTXT, hostid);
+
+		break;
+	  }
+
+	  case MessagePkt::MSG_RET_TASKLIST:
+	  {
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_RET_TASKLIST" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+		TaskProcessorAPI::TPCallbackListener *tpCL = context.getTPCallbackListener();
+		TaskProcessorAPI::TPContext *tpCTXT = context.getTPContext();
+
+		Job::Task task;
+		tpCL->onTask(*tpCTXT, task);
+
+		break;
+	  }
+
+	  case MessagePkt::MSG_NOTE_TASKFIN:
+	  {
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_NOTE_TASKFIN" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+
+		Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
+		Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
+
+		RESULT_PKT_HEADER *header = (RESULT_PKT_HEADER *)data;
+		Result result(header->job_id,
+					  header->task_id,
+					  (BYTE *)&data[sizeof(RESULT_PKT_HEADER)],
+					  header->data_size);
+		sgyCL->onRecvTaskFin(*sgyCTXT, result, hostid);
+
+		break;
+	  }
+
+	  case MessagePkt::MSG_REQ_RESULTLIST:
+	  {
+		Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
+		Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
+
+		sgyCL->onRecvReqResultList(*sgyCTXT, hostid);
+
+		break;
+	  }
+
+	  case MessagePkt::MSG_REP_RESULTLIST:
+	  {
+		InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();
+		InterfaceAppAPI::IFAContext *ifaCTXT = context.getIFAContext();
+
+		std::vector<std::pair<JOB_ID, TASK_ID>> results_info;
+		unsigned int num_result = ((RESULTLST_PKT_HEADER *)data)->num_result;
+		for (unsigned int i = 0; i < num_result; i++){
+			JOB_ID job_id = ((RESULTLST_PKT_BODY *)data)->job_id;
+			TASK_ID task_id = ((RESULTLST_PKT_BODY *)data)->task_id;
+
+			std::pair<JOB_ID, TASK_ID> pair(job_id, task_id);
+			results_info.push_back(pair);
+		}
+
+		ifaCL->onRecvResultList(*ifaCTXT, results_info);
+
+		break;
+	  }
+
 	  case MessagePkt::MSG_RET_JOBID:
 	  {
 		InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();
@@ -129,6 +206,8 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 	  default:
 	    break;
 	}
+
+	msg.free_msg(data);
 }
 
 void CmcAdapter::CmcCallbackListener::onNewWorker(const CmcContext &context,
