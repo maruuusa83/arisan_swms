@@ -35,6 +35,8 @@ public:
 	MessagePkt(const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data);
 	MessagePkt(const int &to, const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data);
 
+	virtual ~MessagePkt();
+
 	int set_to(const int &to);
 	int set_data(const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data);
 
