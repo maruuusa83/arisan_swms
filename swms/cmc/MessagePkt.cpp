@@ -58,6 +58,11 @@ MessagePkt::MessagePkt(const int &to, const unsigned char &msg_type, const BYTE 
 	set_data(msg_type, data, size_data);
 }
 
+MessagePkt::~MessagePkt()
+{
+	free(this->data);
+}
+
 
 /* methods */
 int MessagePkt::set_to(const int &to)
