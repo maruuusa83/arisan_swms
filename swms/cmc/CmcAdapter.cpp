@@ -173,6 +173,26 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 		break;
 	  }
 
+	  case MessagePkt::MSG_REP_RESULTLIST:
+	  {
+		InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();
+		InterfaceAppAPI::IFAContext *ifaCTXT = context.getIFAContext();
+
+		std::vector<std::pair<JOB_ID, TASK_ID>> results_info;
+		unsigned int num_result = ((RESULTLST_PKT_HEADER *)data)->num_result;
+		for (unsigned int i = 0; i < num_result; i++){
+			JOB_ID job_id = ((RESULTLST_PKT_BODY *)data)->job_id;
+			TASK_ID task_id = ((RESULTLST_PKT_BODY *)data)->task_id;
+
+			std::pair<JOB_ID, TASK_ID> pair(job_id, task_id);
+			results_info.push_back(pair);
+		}
+
+		ifaCL->onRecvResultList(*ifaCTXT, results_info);
+
+		break;
+	  }
+
 	  case MessagePkt::MSG_RET_JOBID:
 	  {
 		InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();

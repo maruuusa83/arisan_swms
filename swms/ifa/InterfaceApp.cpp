@@ -83,6 +83,13 @@ int InterfaceAppAPI::getTaskByTaskId(const JOB_ID &job_id,
 	return (0);
 }
 
+int InterfaceAppAPI::sendReqResultList()
+{
+	MessagePkt pkt(this->stigmergy_id, MessagePkt::MSG_REQ_RESULTLIST, nullptr, 0);
+	(this->mCmc)->sendMessagePkt(pkt);
+	return (0);
+}
+
 int InterfaceAppAPI::sendUsrMsg(const WORKER_ID &to,
 							 BYTE *msg,
 							 const unsigned int &msg_size)
@@ -106,6 +113,13 @@ void InterfaceAppAPI::IFACallbackListener::onFinTask(const IFAContext &context,
 {
 	//nothing to do
 }
+
+void InterfaceAppAPI::IFACallbackListener::onRecvResultList(const InterfaceAppAPI::IFAContext &context,
+															const std::vector<std::pair<JOB_ID, TASK_ID>> &results_info)
+{
+	// nothing to do
+}
+
 
 void InterfaceAppAPI::IFACallbackListener::onRecvJobResult(const IFAContext &context,
 					 const JOB_ID &job_id,

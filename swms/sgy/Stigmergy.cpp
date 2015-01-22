@@ -60,6 +60,7 @@ int Stigmergy::sendTaskList(HOST_ID to)
 
 	MessagePkt pkt(to, MessagePkt::MSG_RET_TASKLIST, data, size);
 	this->mCmc->sendMessagePkt(pkt);
+
 	return (0);
 }
 
@@ -79,6 +80,10 @@ int Stigmergy::sendResultList(HOST_ID to)
 
 		pos += sizeof(RESULTLST_PKT_BODY);
 	}
+
+	MessagePkt pkt(to, MessagePkt::MSG_REP_RESULTLIST, data, size);
+	(this->mCmc)->sendMessagePkt(pkt);
+
 	return (0);
 }
 
