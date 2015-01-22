@@ -65,6 +65,15 @@ typedef struct _tasklst_pkt_body {
 	time_t put_time;
 } TASKLST_PKT_BODY;
 
+typedef struct _resultlst_pkt_header {
+	unsigned int num_result;
+} RESULTLST_PKT_HEADER;
+
+typedef struct _resultlst_pkt_body {
+	JOB_ID job_id;
+	TASK_ID task_id;
+} RESULTLST_PKT_BODY;
+
 typedef struct _result_pkt_header {
 	JOB_ID job_id;
 	TASK_ID task_id;

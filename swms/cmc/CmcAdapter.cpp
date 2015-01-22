@@ -163,6 +163,16 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 		break;
 	  }
 
+	  case MessagePkt::MSG_REQ_RESULTLIST:
+	  {
+		Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
+		Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
+
+		sgyCL->onRecvReqResultList(*sgyCTXT, hostid);
+
+		break;
+	  }
+
 	  case MessagePkt::MSG_RET_JOBID:
 	  {
 		InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();
