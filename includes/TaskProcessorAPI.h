@@ -49,11 +49,14 @@ public:
 			       BYTE *msg,
 				   const unsigned int &msg_size);
 
+	int renewTaskList(const std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> &tasklist);
+
 	static const unsigned int TP_SPAN_POLLING = 1;
 
 private:
 	TPCallbackListener *mListener;
 	CmcAdapter *mCmc;
+	double mTheta;
 
 	HOST_ID stigmergy_id;
 
@@ -73,6 +76,9 @@ class TaskProcessorAPI::TPCallbackListener
 public:
 	virtual void onTask(const TPContext &context,
 						const Job::Task &task);
+
+	virtual void onTaskList(const TPContext &context,
+							const std::vector<TASKLST_PKT_BODY *> &tasklist);
 
 	virtual void onUsrMsg(const TPContext &context,
 						  const BYTE *msg,

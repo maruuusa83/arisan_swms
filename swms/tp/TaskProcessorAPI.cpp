@@ -28,6 +28,10 @@ TaskProcessorAPI::TaskProcessorAPI(TPCallbackListener *listener,
 {
 	this->mListener = listener;
 	this->mCmc = cmc;
+
+	std::random_device r_seed;
+	std::mt19937 mt(r_seed());
+	this->mTheta = mt();
 }
 
 TaskProcessorAPI::~TaskProcessorAPI()
@@ -107,16 +111,21 @@ int TaskProcessorAPI::checkDoTask(JOB_ID &job_id,
 
 		// decide consume or reject task
 		std::cout << mt() << std::endl;
+		std::cout << cons_prob << std::endl;
 	}
 	
 	job_id = JOB_ID_NO_TASK;
+
 	return (0);
 }
 
 CONS_PROB TaskProcessorAPI::calcTaskConsumeProb(time_t age)
 {
 	//TODO: calc probability
-	return (1.0);
+	double ageage = age * age;
+	CONS_PROB cons_prob = ageage / (ageage + this->mTheta);
+
+	return (cons_prob);
 }
 
 int TaskProcessorAPI::getTask(const JOB_ID &job_id,
@@ -132,11 +141,34 @@ int TaskProcessorAPI::doTask(const Job::Task &task)
 	return (0);
 }
 
+int TaskProcessorAPI::renewTaskList(const std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> &task_list)
+{
+	// delete old taskinfos
+	for (auto old_info : this->mMapTasks){
+		std::pair<JOB_ID, TASK_ID> task_uid = old_info.first;
+		TASK_INFO *task_info = old_info.second;
+
+		free(task_info);
+
+		(this->mMapTasks).erase(task_uid);
+	}
+
+	// append new taskinfos
+	this->mMapTasks = task_list;
+
+	return (0);
+}
 
 void TaskProcessorAPI::TPCallbackListener::onTask(const TPContext &context,
 												  const Job::Task &task)
 {
 	//TODO: implement this function
+}
+
+void TaskProcessorAPI::TPCallbackListener::onTaskList(const TPContext &context,
+													  const std::vector<TASKLST_PKT_BODY *> &tasklist)
+{
+	//nothing
 }
 
 void TaskProcessorAPI::TPCallbackListener::onUsrMsg(const TPContext &context,

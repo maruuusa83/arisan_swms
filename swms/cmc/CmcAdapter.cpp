@@ -138,8 +138,17 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 		TaskProcessorAPI::TPCallbackListener *tpCL = context.getTPCallbackListener();
 		TaskProcessorAPI::TPContext *tpCTXT = context.getTPContext();
 
-		Job::Task task;
-		tpCL->onTask(*tpCTXT, task);
+		unsigned int num_task = ((TASKLST_PKT_HEADER *)data)->num_task;
+
+		std::vector<TASKLST_PKT_BODY *> tasklist;
+		unsigned int pos = sizeof(TASKLST_PKT_HEADER);
+		for (unsigned int i = 0; i < num_task; i++){
+			tasklist.push_back((TASKLST_PKT_BODY *)&data[pos]);
+
+			pos += sizeof(TASKLST_PKT_BODY);
+		}
+
+		tpCL->onTaskList(*tpCTXT, tasklist);
 
 		break;
 	  }

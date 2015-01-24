@@ -19,6 +19,8 @@
 
 #include <time.h>
 
+#include <iostream>
+
 namespace marusa {
 namespace swms {
 
@@ -51,15 +53,17 @@ int Stigmergy::sendTaskList(HOST_ID to)
 		std::pair<JOB_ID, TASK_ID> task_uid = task.first;
 		TASK_INFO *task_info = task.second;
 
-		((TASKLST_PKT_BODY *)data)->job_id   = task_uid.first;
-		((TASKLST_PKT_BODY *)data)->task_id  = task_uid.second;
-		((TASKLST_PKT_BODY *)data)->put_time = task_info->put_time;
+		((TASKLST_PKT_BODY *)&data[pos])->job_id   = task_uid.first;
+		((TASKLST_PKT_BODY *)&data[pos])->task_id  = task_uid.second;
+		((TASKLST_PKT_BODY *)&data[pos])->put_time = task_info->put_time;
 
 		pos += sizeof(TASKLST_PKT_BODY);
 	}
 
 	MessagePkt pkt(to, MessagePkt::MSG_RET_TASKLIST, data, size);
-	this->mCmc->sendMessagePkt(pkt);
+	(this->mCmc)->sendMessagePkt(pkt);
+
+	free(data);
 
 	return (0);
 }
@@ -75,8 +79,8 @@ int Stigmergy::sendResultList(HOST_ID to)
 	for (auto result : this->mMapResults){
 		std::pair<JOB_ID, TASK_ID> task_uid = result.first;
 
-		((RESULTLST_PKT_BODY *)data)->job_id = task_uid.first;
-		((RESULTLST_PKT_BODY *)data)->task_id = task_uid.second;
+		((RESULTLST_PKT_BODY *)&data[pos])->job_id = task_uid.first;
+		((RESULTLST_PKT_BODY *)&data[pos])->task_id = task_uid.second;
 
 		pos += sizeof(RESULTLST_PKT_BODY);
 	}
@@ -100,6 +104,8 @@ int Stigmergy::addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 	bytecpy(task_info->task_data, data, data_size);
 
 	this->mMapTasks[task_uid] = task_info;
+
+	std::cout << "Stigmergy::addTask - task was added. now : " << this->mMapTasks.size() << std::endl;
 
 	return (0);
 }
