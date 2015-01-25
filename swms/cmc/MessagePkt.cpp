@@ -32,7 +32,7 @@ void bytecpy(BYTE *to,
 			 const unsigned int &len)
 {
 	for (unsigned int i = 0; i < len; i++){
-		*to++ = *from++;
+		to[i] = from[i];
 	}
 }
 
@@ -49,7 +49,13 @@ MessagePkt::MessagePkt(const int &to)
 MessagePkt::MessagePkt(const int &from, const BYTE *msg)
 {
 	set_to(from);
-	set_data((unsigned char)*msg, &msg[SIZE_MSG_TYPE + SIZE_DATA_SIZE], *(unsigned int *)&msg[SIZE_MSG_TYPE]);
+	set_data(*(unsigned char *)msg, &msg[SIZE_MSG_TYPE + SIZE_DATA_SIZE], *(unsigned int *)&msg[SIZE_MSG_TYPE]);
+
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+	printf("MessagePkt::MessagePkt - gen from bin data\n");
+	printf("\ttype : %d\n", *(unsigned char *)msg);
+	printf("\tsize : %d\n", *(unsigned int *)&msg[SIZE_MSG_TYPE]);
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
 }
 
 MessagePkt::MessagePkt(const int &to, const unsigned char &msg_type, const BYTE *data, const unsigned int &size_data)

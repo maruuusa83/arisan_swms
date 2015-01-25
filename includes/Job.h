@@ -30,7 +30,7 @@ class Job
 public:
 	class Task;
 	
-	Job();
+	Job(JOB_ID job_id);
 	virtual ~Job();
 
 	TASK_ID addTask(Task &task);
@@ -41,6 +41,7 @@ public:
 private:
 	std::vector<Task> task_list;
 	TASK_ID id_num = 0;
+	JOB_ID job_id = 0;
 };
 
 class Job::Task

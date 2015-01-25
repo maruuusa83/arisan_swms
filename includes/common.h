@@ -38,6 +38,9 @@ typedef unsigned int WORKER_ID;
 
 static const unsigned int JOB_ID_NO_TASK = 0;
 
+static const double HALF_CONSPROB_MSEC = 60000;
+static const double HALF_CONSPROB_DOUBLE_MSEC = ((HALF_CONSPROB_MSEC) * (HALF_CONSPROB_MSEC));
+
 /*** Messaging Layer ***/
 typedef unsigned int HOST_ID;
 
@@ -52,6 +55,8 @@ typedef struct _task_info {
 	JOB_ID job_id;
 	TASK_ID task_id;
 	time_t put_time;
+	timeval tv_put_time;
+	unsigned int task_data_size;
 	BYTE *task_data;
 } TASK_INFO;
 
@@ -80,6 +85,11 @@ typedef struct _result_pkt_header {
 	unsigned int div_id;
 	unsigned int data_size;
 } RESULT_PKT_HEADER;
+
+typedef struct _taskreq_pkt_body {
+	JOB_ID job_id;
+	TASK_ID task_id;
+} TASKREQ_PKT_BODY;
 
 
 } /* swms */

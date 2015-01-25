@@ -182,6 +182,32 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 		break;
 	  }
 
+	  case MessagePkt::MSG_REQ_TASK:
+	  {
+		Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
+		Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
+
+		TASKREQ_PKT_BODY *req = (TASKREQ_PKT_BODY *)data;
+		sgyCL->onRecvReqTask(*sgyCTXT, req->job_id, req->task_id, hostid);
+		break;
+	  }
+
+	  case MessagePkt::MSG_RET_TASK:
+	  {
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_RET_TASK" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+		TaskProcessorAPI::TPCallbackListener *tpCL = context.getTPCallbackListener();
+		TaskProcessorAPI::TPContext *tpCTXT = context.getTPContext();
+
+		TASK_PKT_HEADER *header = (TASK_PKT_HEADER *)data;
+		Job::Task task(header->task_id, (BYTE *)&(data[sizeof(TASK_PKT_HEADER)]), header->data_size);
+
+		tpCL->onTask(*tpCTXT, task);
+
+		break;
+	  }
+
 	  case MessagePkt::MSG_REP_RESULTLIST:
 	  {
 		InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();

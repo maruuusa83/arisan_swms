@@ -24,9 +24,9 @@ namespace marusa {
 namespace swms {
 
 
-Job::Job()
+Job::Job(JOB_ID job_id)
 {
-	
+	this->job_id = job_id;
 }
 
 Job::~Job()
@@ -36,6 +36,7 @@ Job::~Job()
 
 TASK_ID Job::addTask(Task &task)
 {
+	task.setJobId(this->job_id);
 	task.setTaskId(id_num);
 	id_num++;
 

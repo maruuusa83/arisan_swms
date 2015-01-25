@@ -38,7 +38,8 @@ public:
 	virtual ~Stigmergy();
 
 	int startStigmergy();
-
+	
+	int sendTask(const HOST_ID &to, const JOB_ID &job_id, const TASK_ID &task_id);
 	int sendTaskList(HOST_ID to);
 	int sendResultList(HOST_ID to);
 	int addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
@@ -62,6 +63,10 @@ class Stigmergy::SGYCallbackListener
 public:
 	virtual void onRecvTask(const SGYContext &context,
 							const BYTE *task);
+	virtual void onRecvReqTask(const Stigmergy::SGYContext &context,
+							   const JOB_ID &job_id,
+							   const TASK_ID &task_id,
+							   const HOST_ID &from);
 	virtual void onRecvReqTaskList(const Stigmergy::SGYContext &context,
 								   const HOST_ID &from);
 	virtual void onRecvTaskFin(const SGYContext &context,

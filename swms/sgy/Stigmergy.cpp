@@ -1,13 +1,13 @@
-/********************************************************************************
- * Copyright (C) 2014 Daichi Teruya (@maruuusa83)
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License.
- *
- * This program is destributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ /********************************************************************************
+  * Copyright (C) 2014 Daichi Teruya (@maruuusa83)
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+  * as published by the Free Software Foundation; either version 2
+  * of the License.
+  *
+  * This program is destributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
@@ -18,6 +18,7 @@
 #include "Stigmergy.h"
 
 #include <time.h>
+#include <sys/time.h>
 
 #include <iostream>
 
@@ -37,6 +38,23 @@ Stigmergy::~Stigmergy()
 int Stigmergy::startStigmergy()
 {
 	(this->mCmc)->startListen();
+
+	return (0);
+}
+
+int Stigmergy::sendTask(const HOST_ID &to, const JOB_ID &job_id, const TASK_ID &task_id)
+{
+	std::pair<JOB_ID, TASK_ID> task_uid(job_id, task_id);
+	BYTE *task_pkt = (BYTE *)malloc(sizeof(TASK_PKT_HEADER) + mMapTasks[task_uid]->task_data_size);
+	((TASK_PKT_HEADER *)task_pkt)->job_id = job_id;
+	((TASK_PKT_HEADER *)task_pkt)->task_id = task_id;
+	((TASK_PKT_HEADER *)task_pkt)->div_id = 0;
+	((TASK_PKT_HEADER *)task_pkt)->data_size = mMapTasks[task_uid]->task_data_size;
+
+	bytecpy((BYTE *)&(task_pkt[sizeof(TASK_PKT_HEADER)]), mMapTasks[task_uid]->task_data, mMapTasks[task_uid]->task_data_size);
+
+	MessagePkt pkt(to, MessagePkt::MSG_RET_TASK, task_pkt, sizeof(TASK_PKT_HEADER) + mMapTasks[task_uid]->task_data_size);
+	(this->mCmc)->sendMessagePkt(pkt);
 
 	return (0);
 }
@@ -100,6 +118,8 @@ int Stigmergy::addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 	task_info->job_id = task_uid.first;
 	task_info->task_id = task_uid.second;
 	task_info->put_time = time(NULL);
+	gettimeofday(&task_info->tv_put_time, NULL);
+	task_info->task_data_size = data_size;
 	task_info->task_data = (BYTE *)malloc(sizeof(BYTE) * data_size);
 	bytecpy(task_info->task_data, data, data_size);
 
@@ -132,6 +152,14 @@ int Stigmergy::addResult(const Result &result)
 
 void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
 												const BYTE *task)
+{
+	// nothing to do
+}
+
+void Stigmergy::SGYCallbackListener::onRecvReqTask(const SGYContext &context,
+												   const JOB_ID &job_id,
+												   const TASK_ID &task_id,
+												   const HOST_ID &from)
 {
 	// nothing to do
 }

@@ -19,6 +19,7 @@
 
 #include <random>
 #include <iostream>
+#include <sys/time.h>
 
 namespace marusa {
 namespace swms {
@@ -29,9 +30,18 @@ TaskProcessorAPI::TaskProcessorAPI(TPCallbackListener *listener,
 	this->mListener = listener;
 	this->mCmc = cmc;
 
+	
+	// get theta (in 0.0 through 2.0)
 	std::random_device r_seed;
 	std::mt19937 mt(r_seed());
-	this->mTheta = mt();
+	std::normal_distribution<> dist(1.0, 0.4);
+
+	double theta_tmp;
+	do {
+		theta_tmp = dist(mt);
+	} while (theta_tmp < 0.0 || 2.0 < theta_tmp);
+
+	this->mTheta = theta_tmp;
 }
 
 TaskProcessorAPI::~TaskProcessorAPI()
@@ -73,10 +83,25 @@ int TaskProcessorAPI::startWorker()
 	return (0);
 }
 
-int TaskProcessorAPI::sendTaskFin(const Result &resut)
+int TaskProcessorAPI::sendTaskFin(const Result &result)
 {
-	MessagePkt pkt(stigmergy_id, MessagePkt::MSG_NOTE_TASKFIN, nullptr, 0);
+	BYTE *result_data;
+	unsigned int result_data_size;
+	result.getData(&result_data, result_data_size);
+
+	unsigned int pkt_data_size = sizeof(RESULT_PKT_HEADER) + result_data_size * sizeof(BYTE);
+	BYTE *pkt_data = (BYTE *)malloc(pkt_data_size);
+
+	((RESULT_PKT_HEADER *)pkt_data)->job_id  = result.getJobId();
+	((RESULT_PKT_HEADER *)pkt_data)->task_id = result.getTaskId();
+	((RESULT_PKT_HEADER *)pkt_data)->div_id  = 0;
+	((RESULT_PKT_HEADER *)pkt_data)->data_size = result_data_size;
+	bytecpy(&(pkt_data[sizeof(RESULT_PKT_HEADER)]), result_data, result_data_size);
+
+	MessagePkt pkt(stigmergy_id, MessagePkt::MSG_NOTE_TASKFIN, pkt_data, pkt_data_size);
 	this->mCmc->sendMessagePkt(pkt);
+
+	free(pkt_data);
 
 	return (0);
 }
@@ -103,27 +128,63 @@ int TaskProcessorAPI::checkDoTask(JOB_ID &job_id,
 	std::random_device r_seed;
 	std::mt19937 mt(r_seed());
 
-	for (auto task : mMapTasks){
-		// calculate needs of each task
-		TASK_INFO *info = task.second;
-		time_t task_age = difftime(time(NULL), info->put_time);
-		CONS_PROB cons_prob = calcTaskConsumeProb(task_age);
-
-		// decide consume or reject task
-		std::cout << mt() << std::endl;
-		std::cout << cons_prob << std::endl;
-	}
-	
 	job_id = JOB_ID_NO_TASK;
+
+	for (auto task : mMapTasks){
+		// calculate reaction probablity of each task
+		TASK_INFO *info = task.second;
+
+		if (info->job_id == 0){
+			continue;
+		}
+
+		struct timeval tv;
+		gettimeofday(&tv, NULL);
+
+		struct timeval tv_age;
+		tv_age.tv_sec  = tv.tv_sec - info->put_time;
+		if (tv.tv_usec >= info->tv_put_time.tv_usec){
+			tv_age.tv_usec = tv.tv_usec - info->tv_put_time.tv_usec;
+		}
+		else {
+			tv_age.tv_sec--;
+			tv_age.tv_usec = info->tv_put_time.tv_usec - tv.tv_usec;
+		}
+		tv_age.tv_usec = 0;
+
+		CONS_PROB cons_prob = calcTaskConsumeProb(tv_age);
+
+		// decide execute or reject task
+		double random = std::generate_canonical<double, std::numeric_limits<double>::digits>(mt);
+		std::cout << "\t" << info->job_id << "-" << info->task_id;
+		std::cout << " rand:" << random << ", prob:" << cons_prob << ", age:" << (tv_age.tv_sec * 1000.) + (tv_age.tv_usec / 1000.) << ", th:" << this->mTheta << std::endl;
+		if (random < cons_prob){
+			job_id  = info->job_id;
+			task_id = info->task_id;
+			break;
+		}
+	}
 
 	return (0);
 }
 
 CONS_PROB TaskProcessorAPI::calcTaskConsumeProb(time_t age)
 {
-	//TODO: calc probability
 	double ageage = age * age;
 	CONS_PROB cons_prob = ageage / (ageage + this->mTheta);
+
+	return (cons_prob);
+}
+
+CONS_PROB TaskProcessorAPI::calcTaskConsumeProb(const timeval &tv_age)
+{
+	double age = (tv_age.tv_sec * 1000.) + (tv_age.tv_usec / 1000.);
+
+	// ( Th ( t - t0 ) ) ^2
+	double ageage = age * this->mTheta;
+	ageage *= ageage;
+
+	CONS_PROB cons_prob = ageage / (ageage + HALF_CONSPROB_DOUBLE_MSEC);
 
 	return (cons_prob);
 }
@@ -132,6 +193,16 @@ int TaskProcessorAPI::getTask(const JOB_ID &job_id,
 							  const TASK_ID &task_id)
 {
 	//TODO: implement this function
+	std::cout << "TaskProcessorAPI::getTask - get task" << std::endl;
+
+	TASKREQ_PKT_BODY req;
+	req.job_id = job_id;
+	req.task_id = task_id;
+
+	MessagePkt pkt(this->stigmergy_id, MessagePkt::MSG_REQ_TASK, (BYTE *)&req, sizeof(TASKREQ_PKT_BODY));
+	(this->mCmc)->sendMessagePkt(pkt);
+
+
 	return (0);
 }
 

@@ -66,6 +66,7 @@ private:
 	int checkDoTask(JOB_ID &job_id,
 					TASK_ID &task_id);
 	CONS_PROB calcTaskConsumeProb(time_t age);
+	CONS_PROB calcTaskConsumeProb(const timeval &age);
 	int getTask(const JOB_ID &job_id,
 				const TASK_ID &task_id);
 	int doTask(const Job::Task &task);
