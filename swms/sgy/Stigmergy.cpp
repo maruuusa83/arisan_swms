@@ -97,7 +97,7 @@ int Stigmergy::sendResultList(HOST_ID to)
 	std::cout << "******* building result list *******" << std::endl;
 	for (auto result : this->mMapResults){
 		std::pair<JOB_ID, TASK_ID> task_uid = result.first;
-		std::cout << "\t" << task_uid.first << "-" << task_uid.second << std::endl;
+		//std::cout << "\t" << task_uid.first << "-" << task_uid.second << std::endl;
 
 		((RESULTLST_PKT_BODY *)&data[pos])->job_id = task_uid.first;
 		((RESULTLST_PKT_BODY *)&data[pos])->task_id = task_uid.second;

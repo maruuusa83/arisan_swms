@@ -38,7 +38,7 @@ typedef unsigned int WORKER_ID;
 
 static const unsigned int JOB_ID_NO_TASK = 0;
 
-static const double HALF_CONSPROB_MSEC = 60000;
+static const double HALF_CONSPROB_MSEC = 10000;
 static const double HALF_CONSPROB_DOUBLE_MSEC = ((HALF_CONSPROB_MSEC) * (HALF_CONSPROB_MSEC));
 
 /*** Messaging Layer ***/
