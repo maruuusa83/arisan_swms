@@ -21,6 +21,7 @@
 #define ___DEBUG_TRANS_TASK_IFA2SGY___
 
 #include <time.h>
+#include <sys/time.h>
 
 namespace marusa {
 namespace swms {
