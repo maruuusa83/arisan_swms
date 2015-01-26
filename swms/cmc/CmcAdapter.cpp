@@ -202,6 +202,7 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 
 		TASK_PKT_HEADER *header = (TASK_PKT_HEADER *)data;
 		Job::Task task(header->task_id, (BYTE *)&(data[sizeof(TASK_PKT_HEADER)]), header->data_size);
+		task.setJobId(header->job_id);
 
 		tpCL->onTask(*tpCTXT, task);
 
@@ -215,12 +216,15 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 
 		std::vector<std::pair<JOB_ID, TASK_ID>> results_info;
 		unsigned int num_result = ((RESULTLST_PKT_HEADER *)data)->num_result;
+		int pos = sizeof(RESULTLST_PKT_HEADER);
 		for (unsigned int i = 0; i < num_result; i++){
-			JOB_ID job_id = ((RESULTLST_PKT_BODY *)data)->job_id;
-			TASK_ID task_id = ((RESULTLST_PKT_BODY *)data)->task_id;
+			JOB_ID job_id = ((RESULTLST_PKT_BODY *)&(data[pos]))->job_id;
+			TASK_ID task_id = ((RESULTLST_PKT_BODY *)&(data[pos]))->task_id;
 
 			std::pair<JOB_ID, TASK_ID> pair(job_id, task_id);
 			results_info.push_back(pair);
+
+			pos += sizeof(RESULTLST_PKT_BODY);
 		}
 
 		ifaCL->onRecvResultList(*ifaCTXT, results_info);

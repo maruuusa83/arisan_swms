@@ -51,12 +51,19 @@ public:
 
 	int renewTaskList(const std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> &tasklist);
 
+
+	void forbidInterupt();
+	void permitInterupt();
+	bool getForbidInteruptFlag();
+
 	static const unsigned int TP_SPAN_POLLING = 1;
 
 private:
 	TPCallbackListener *mListener;
 	CmcAdapter *mCmc;
 	double mTheta;
+
+	bool forbidInteruptFlag = false;
 
 	HOST_ID stigmergy_id;
 

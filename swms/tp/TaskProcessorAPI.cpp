@@ -73,7 +73,7 @@ int TaskProcessorAPI::startWorker()
 		TASK_ID task_id;
 
 		checkDoTask(job_id, task_id);
-		if (job_id != JOB_ID_NO_TASK){
+		if (job_id != JOB_ID_NO_TASK && forbidInteruptFlag == false){
 			getTask(job_id, task_id);
 		}
 
@@ -168,6 +168,21 @@ int TaskProcessorAPI::checkDoTask(JOB_ID &job_id,
 	return (0);
 }
 
+void TaskProcessorAPI::forbidInterupt()
+{
+	this->forbidInteruptFlag = true;
+}
+
+void TaskProcessorAPI::permitInterupt()
+{
+	this->forbidInteruptFlag = false;
+}
+
+bool TaskProcessorAPI::getForbidInteruptFlag()
+{
+	return (this->forbidInteruptFlag);
+}
+
 CONS_PROB TaskProcessorAPI::calcTaskConsumeProb(time_t age)
 {
 	double ageage = age * age;
@@ -216,12 +231,8 @@ int TaskProcessorAPI::renewTaskList(const std::map<std::pair<JOB_ID, TASK_ID>, T
 {
 	// delete old taskinfos
 	for (auto old_info : this->mMapTasks){
-		std::pair<JOB_ID, TASK_ID> task_uid = old_info.first;
 		TASK_INFO *task_info = old_info.second;
-
 		free(task_info);
-
-		(this->mMapTasks).erase(task_uid);
 	}
 
 	// append new taskinfos

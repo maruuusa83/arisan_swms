@@ -94,14 +94,17 @@ int Stigmergy::sendResultList(HOST_ID to)
 
 	((RESULTLST_PKT_HEADER *)data)->num_result = num_result;
 	int pos = sizeof(RESULTLST_PKT_HEADER);
+	std::cout << "******* building result list *******" << std::endl;
 	for (auto result : this->mMapResults){
 		std::pair<JOB_ID, TASK_ID> task_uid = result.first;
+		std::cout << "\t" << task_uid.first << "-" << task_uid.second << std::endl;
 
 		((RESULTLST_PKT_BODY *)&data[pos])->job_id = task_uid.first;
 		((RESULTLST_PKT_BODY *)&data[pos])->task_id = task_uid.second;
 
 		pos += sizeof(RESULTLST_PKT_BODY);
 	}
+	std::cout << "******* builded result list *******" << std::endl;
 
 	MessagePkt pkt(to, MessagePkt::MSG_REP_RESULTLIST, data, size);
 	(this->mCmc)->sendMessagePkt(pkt);
@@ -140,9 +143,7 @@ int Stigmergy::delTask(const std::pair<JOB_ID, TASK_ID> &task_uid)
 
 int Stigmergy::addResult(const Result &result)
 {
-	std::pair<JOB_ID, TASK_ID> task_uid;
-	task_uid.first  = result.getJobId();
-	task_uid.second = result.getTaskId();
+	std::pair<JOB_ID, TASK_ID> task_uid(result.getJobId(), result.getTaskId());
 
 	Result *tmp = new Result(result);
 	this->mMapResults[task_uid] = tmp;
