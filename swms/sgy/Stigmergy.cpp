@@ -79,6 +79,10 @@ int Stigmergy::sendTaskList(HOST_ID to)
 		std::pair<JOB_ID, TASK_ID> task_uid = task.first;
 		TASK_INFO *task_info = task.second;
 
+		if (task_info == nullptr){
+			continue;
+		}
+
 		if (task_info->flag == true){
 			((TASKLST_PKT_BODY *)&data[pos])->job_id   = task_uid.first;
 		}
