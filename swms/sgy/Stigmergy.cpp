@@ -25,6 +25,10 @@
 namespace marusa {
 namespace swms {
 
+bool forbidIntruptFlg = false;
+bool resultAccessFlg = false;
+bool taskAccessFlg = false;
+
 Stigmergy::Stigmergy(CmcAdapter *cmc)
 {
 	(this->mCmc) = cmc;
@@ -45,6 +49,9 @@ int Stigmergy::startStigmergy()
 int Stigmergy::sendTask(const HOST_ID &to, const JOB_ID &job_id, const TASK_ID &task_id)
 {
 	std::pair<JOB_ID, TASK_ID> task_uid(job_id, task_id);
+	if (mMapTasks[task_uid] == nullptr){
+		return (0);
+	}
 	BYTE *task_pkt = (BYTE *)malloc(sizeof(TASK_PKT_HEADER) + mMapTasks[task_uid]->task_data_size);
 	((TASK_PKT_HEADER *)task_pkt)->job_id = job_id;
 	((TASK_PKT_HEADER *)task_pkt)->task_id = task_id;
@@ -61,6 +68,7 @@ int Stigmergy::sendTask(const HOST_ID &to, const JOB_ID &job_id, const TASK_ID &
 
 int Stigmergy::sendTaskList(HOST_ID to)
 {
+	taskAccessFlg = true;
 	int num_task = this->mMapTasks.size();
 	unsigned int size = sizeof(TASKLST_PKT_HEADER) + sizeof(TASKLST_PKT_BODY) * num_task;
 	BYTE *data = (BYTE *)malloc(size);
@@ -71,7 +79,13 @@ int Stigmergy::sendTaskList(HOST_ID to)
 		std::pair<JOB_ID, TASK_ID> task_uid = task.first;
 		TASK_INFO *task_info = task.second;
 
-		((TASKLST_PKT_BODY *)&data[pos])->job_id   = task_uid.first;
+		if (task_info->flag == true){
+			((TASKLST_PKT_BODY *)&data[pos])->job_id   = task_uid.first;
+		}
+		else {
+			((TASKLST_PKT_BODY *)&data[pos])->job_id   = 0;
+		}
+
 		((TASKLST_PKT_BODY *)&data[pos])->task_id  = task_uid.second;
 		((TASKLST_PKT_BODY *)&data[pos])->put_time = task_info->put_time;
 
@@ -82,6 +96,7 @@ int Stigmergy::sendTaskList(HOST_ID to)
 	(this->mCmc)->sendMessagePkt(pkt);
 
 	free(data);
+	taskAccessFlg = false;
 
 	return (0);
 }
@@ -116,6 +131,9 @@ int Stigmergy::addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 					   const BYTE *data,
 					   const unsigned int data_size)
 {
+	if (forbidIntruptFlg == true){
+		return (0);
+	}
 	TASK_INFO *task_info = (TASK_INFO *)malloc(sizeof(TASK_INFO));
 
 	task_info->job_id = task_uid.first;
@@ -125,6 +143,7 @@ int Stigmergy::addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 	task_info->task_data_size = data_size;
 	task_info->task_data = (BYTE *)malloc(sizeof(BYTE) * data_size);
 	bytecpy(task_info->task_data, data, data_size);
+	task_info->flag = true;
 
 	this->mMapTasks[task_uid] = task_info;
 
@@ -135,14 +154,23 @@ int Stigmergy::addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 
 int Stigmergy::delTask(const std::pair<JOB_ID, TASK_ID> &task_uid)
 {
+	/*
+	if (taskAccessFlg == true){
+		return (0);
+	}
 	free(this->mMapTasks[task_uid]);
 	(this->mMapTasks).erase(task_uid);
+	*/
+	(this->mMapTasks[task_uid])->flag = false;
 
 	return (0);
 }
 
 int Stigmergy::addResult(const Result &result)
 {
+	if (forbidIntruptFlg == true){
+		return (0);
+	}
 	std::pair<JOB_ID, TASK_ID> task_uid(result.getJobId(), result.getTaskId());
 
 	Result *tmp = new Result(result);
