@@ -58,6 +58,7 @@ typedef struct _task_info {
 	timeval tv_put_time;
 	unsigned int task_data_size;
 	BYTE *task_data;
+	bool flag;
 } TASK_INFO;
 
 typedef struct _tasklst_pkt_header {
