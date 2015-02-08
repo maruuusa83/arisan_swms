@@ -24,6 +24,8 @@
 namespace marusa {
 namespace swms {
 
+int task_req_count = 0;
+
 TaskProcessorAPI::TaskProcessorAPI(TPCallbackListener *listener,
 								   CmcAdapter *cmc)
 {
@@ -75,6 +77,8 @@ int TaskProcessorAPI::startWorker()
 		checkDoTask(job_id, task_id);
 		if (job_id != JOB_ID_NO_TASK && forbidInteruptFlag == false){
 			getTask(job_id, task_id);
+			task_req_count++;
+			std::cout << task_req_count << std::endl;
 		}
 
 		sleep(TP_SPAN_POLLING);

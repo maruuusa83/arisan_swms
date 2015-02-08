@@ -80,7 +80,13 @@ int Stigmergy::sendTaskList(HOST_ID to)
 		std::cout << "\t" << task_uid.first << "-" << task_uid.second << std::endl;
 		TASK_INFO *task_info = task.second;
 
+		if (task_uid.first != 1){
+			((TASKLST_PKT_BODY *)&data[pos])->job_id   = 0;
+			continue;
+		}
+
 		if (task_info == nullptr){
+			((TASKLST_PKT_BODY *)&data[pos])->job_id   = 0;
 			continue;
 		}
 
