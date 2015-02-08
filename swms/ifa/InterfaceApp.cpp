@@ -60,9 +60,7 @@ JOB_ID InterfaceAppAPI::sendTasks(const Job &job)
 		cmc->sendMessagePkt(pkt);
 
 		task.freeTaskAsByteArray(byte_task_data);
-		if (task.getTaskId() % 5 == 0){
-			sleep(1);
-		}
+		sleep(1);
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 	std::cout << "InterfaceAppAPI::sendTasks - Fin sending task : No." << task.getTaskId() << std::endl;
 #endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */

@@ -77,6 +77,7 @@ int Stigmergy::sendTaskList(HOST_ID to)
 	int pos = sizeof(TASKLST_PKT_HEADER);
 	for (auto task : this->mMapTasks){
 		std::pair<JOB_ID, TASK_ID> task_uid = task.first;
+		std::cout << "\t" << task_uid.first << "-" << task_uid.second << std::endl;
 		TASK_INFO *task_info = task.second;
 
 		if (task_info == nullptr){
