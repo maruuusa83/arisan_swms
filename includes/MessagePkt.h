@@ -50,6 +50,7 @@ public:
 	/* Constants */
 	static const int SIZE_MSG_TYPE	= 1;
 	static const int SIZE_DATA_SIZE	= 4;
+	static const int MAX_DATA_SIZE = 100000;
 
 
 	/* Message types */
@@ -75,7 +76,7 @@ private:
 	HOST_ID to = 0;
 	unsigned char msg_type = MSG_TYPE_PLUS_ONE;
 	unsigned int size_data = 0;
-	BYTE *data;
+	BYTE *data = nullptr;
 };
 
 

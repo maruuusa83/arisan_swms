@@ -66,7 +66,9 @@ MessagePkt::MessagePkt(const int &to, const unsigned char &msg_type, const BYTE 
 
 MessagePkt::~MessagePkt()
 {
-	free(this->data);
+	if (this->data != nullptr){
+		free(this->data);
+	}
 }
 
 
@@ -82,6 +84,9 @@ int MessagePkt::set_data(const unsigned char &msg_type,
 						 const BYTE *data,
 						 const unsigned int &size_data)
 {
+	if (size_data > MAX_DATA_SIZE){
+		return (-1);
+	}
 	this->msg_type = msg_type;
 
 	this->data = (BYTE *)malloc(sizeof(BYTE) * size_data);
