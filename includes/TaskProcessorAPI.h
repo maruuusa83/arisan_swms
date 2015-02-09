@@ -56,7 +56,7 @@ public:
 	void permitInterupt();
 	bool getForbidInteruptFlag();
 
-	static const unsigned int TP_SPAN_POLLING = 5;
+	static const unsigned int TP_SPAN_POLLING = 1;
 
 private:
 	TPCallbackListener *mListener;
