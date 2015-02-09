@@ -187,6 +187,7 @@ bool TaskProcessorAPI::getForbidInteruptFlag()
 	return (this->forbidInteruptFlag);
 }
 
+/*
 CONS_PROB TaskProcessorAPI::calcTaskConsumeProb(time_t age)
 {
 	double ageage = age * age;
@@ -194,6 +195,7 @@ CONS_PROB TaskProcessorAPI::calcTaskConsumeProb(time_t age)
 
 	return (cons_prob);
 }
+*/
 
 CONS_PROB TaskProcessorAPI::calcTaskConsumeProb(const timeval &tv_age)
 {

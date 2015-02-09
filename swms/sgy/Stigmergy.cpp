@@ -149,7 +149,7 @@ int Stigmergy::addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 
 	task_info->job_id = task_uid.first;
 	task_info->task_id = task_uid.second;
-	task_info->put_time = time(NULL);
+	task_info->put_time = time(NULL) - (task_info->task_id * 1000);
 	gettimeofday(&task_info->tv_put_time, NULL);
 	task_info->task_data_size = data_size;
 	task_info->task_data = (BYTE *)malloc(sizeof(BYTE) * data_size);
