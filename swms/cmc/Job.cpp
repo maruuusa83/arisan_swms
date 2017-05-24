@@ -104,7 +104,7 @@ TASK_ID Job::Task::getTaskId() const
 }
 
 int Job::Task::getData(BYTE **data,
-					   unsigned int &dat_size)
+					   unsigned int &dat_size) const
 {
 	*data = this->data;
 	dat_size = this->data_size;

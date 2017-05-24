@@ -60,7 +60,7 @@ public:
 	JOB_ID getJobId() const;
 	TASK_ID getTaskId() const;
 	int getData(BYTE **data,
-			    unsigned int &dat_size);
+			    unsigned int &dat_size) const;
 
 	void getAsByteArray(BYTE **result, unsigned int &size);
 	int freeTaskAsByteArray(BYTE *task_byte);
