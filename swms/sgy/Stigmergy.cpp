@@ -197,10 +197,19 @@ int Stigmergy::sendTaskFinToIF(const Stigmergy::SGYContext &context,
 {
     BYTE *data;
     unsigned int data_size;
+    
 
     result.getData(&data, data_size);
+	unsigned int pkt_data_size = sizeof(RESULT_PKT_HEADER) + data_size * sizeof(BYTE);
 
-    MessagePkt pkt(ifa, MessagePkt::MSG_NOTE_TASKFIN_IF, data, data_size);
+	BYTE *pkt_data = (BYTE *)malloc(pkt_data_size);
+	((RESULT_PKT_HEADER *)pkt_data)->job_id  = result.getJobId();
+	((RESULT_PKT_HEADER *)pkt_data)->task_id = result.getTaskId();
+	((RESULT_PKT_HEADER *)pkt_data)->div_id  = 0;
+	((RESULT_PKT_HEADER *)pkt_data)->data_size = data_size;
+	bytecpy(&(pkt_data[sizeof(RESULT_PKT_HEADER)]), data, data_size);
+
+    MessagePkt pkt(ifa, MessagePkt::MSG_NOTE_TASKFIN_IF, pkt_data, pkt_data_size);
 	(this->mCmc)->sendMessagePkt(pkt);
     result.freeData(data);
 
