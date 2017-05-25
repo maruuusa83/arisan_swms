@@ -17,6 +17,7 @@
  *******************************************************************************/
 #include "TaskProcessorAPI.h"
 
+#include <map>
 #include <random>
 #include <iostream>
 #include <sys/time.h>
@@ -134,13 +135,18 @@ int TaskProcessorAPI::checkDoTask(JOB_ID &job_id,
 
 	job_id = JOB_ID_NO_TASK;
 
-	for (auto task : mMapTasks){
+	// for (auto task : mMapTasks){
+    std::uniform_int_distribution<> rand_byte(0, mMapTasks.size());
+    for (unsigned int i = 0; i < mMapTasks.size(); i++){
+        auto task = mMapTasks.begin();
+        std::advance(task, rand_byte(mt));
 		// calculate reaction probablity of each task
-		TASK_INFO *info = task.second;
+		TASK_INFO *info = task->second;
 
-		if (info->job_id == 0){
+        if (0 >= info->job_id && info->job_id > 10){
 			continue;
 		}
+
 
 		struct timeval tv;
 		gettimeofday(&tv, NULL);
