@@ -42,6 +42,8 @@ public:
 	int sendTask(const HOST_ID &to, const JOB_ID &job_id, const TASK_ID &task_id);
 	int sendTaskList(HOST_ID to);
 	int sendResultList(HOST_ID to);
+    int sendResult(const HOST_ID to,
+                   const std::pair<JOB_ID, TASK_ID> &task_uid);
 	int addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 				const BYTE *data,
 				const unsigned int data_size);

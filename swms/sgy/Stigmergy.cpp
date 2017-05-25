@@ -192,6 +192,12 @@ int Stigmergy::addResult(const Result &result)
 	return (0);
 }
 
+int Stigmergy::sendTaskFinToIF(const Stigmergy::SGYContext &context,
+                                const Result &result)
+{
+    return (0);
+}
+
 void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
 												const BYTE *task)
 {
