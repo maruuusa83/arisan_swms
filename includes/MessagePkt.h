@@ -70,7 +70,9 @@ public:
 	static const int MSG_REQ_TASKLIST	= 10;
 	static const int MSG_REQ_TASK		= 11;
 
-	static const int MSG_TYPE_PLUS_ONE	= 12;
+	static const int MSG_NOTE_TASKFIN_IF = 6;
+
+	static const int MSG_TYPE_PLUS_ONE	= 13;
 
 private:
 	HOST_ID to = 0;

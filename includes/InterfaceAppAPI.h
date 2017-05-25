@@ -21,6 +21,7 @@
 #include "./common.h"
 #include "./Job.h"
 #include "./CmcAdapter.h"
+#include "./Result.h"
 
 #include <vector>
 
@@ -66,6 +67,9 @@ public:
 
 	virtual void onRecvResultList(const InterfaceAppAPI::IFAContext &context,
 								  const std::vector<std::pair<JOB_ID, TASK_ID>> &results_info);
+
+    virtual void onRecvTaskFin(const IFAContext &context,
+                               const Result &result);
 
 	virtual void onRecvJobResult(const IFAContext &context,
 								 const JOB_ID &job_id,

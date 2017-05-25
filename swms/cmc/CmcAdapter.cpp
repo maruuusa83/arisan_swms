@@ -172,6 +172,25 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 		break;
 	  }
 
+      case MessagePkt::MSG_NOTE_TASKFIN_IF:
+	  {
+#ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
+		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_NOTE_TASKFIN_IF" << std::endl;
+#endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+
+		InterfaceAppAPI::IFACallbackListener *ifaCL = context.getIFACallbackListener();
+		InterfaceAppAPI::IFAContext *ifaCTXT = context.getIFAContext();
+
+		RESULT_PKT_HEADER *header = (RESULT_PKT_HEADER *)data;
+		Result result(header->job_id,
+					  header->task_id,
+					  (BYTE *)&data[sizeof(RESULT_PKT_HEADER)],
+					  header->data_size);
+		ifaCL->onRecvTaskFin(*ifaCTXT, result);
+
+		break;
+	  }
+
 	  case MessagePkt::MSG_REQ_RESULTLIST:
 	  {
 		Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();

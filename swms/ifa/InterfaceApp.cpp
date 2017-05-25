@@ -130,6 +130,12 @@ void InterfaceAppAPI::IFACallbackListener::onRecvJobResult(const IFAContext &con
 	//nothing to do
 }
 
+void InterfaceAppAPI::IFACallbackListener::onRecvTaskFin(const IFAContext &context,
+                                    const Result &result)
+{
+	//nothing to do
+}
+
 void InterfaceAppAPI::IFACallbackListener::onRecvTaskResult(const IFAContext &context,
 					  const JOB_ID &job_id,
 					  const TASK_ID &task_id)
