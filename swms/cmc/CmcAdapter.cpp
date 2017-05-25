@@ -109,7 +109,7 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 		Stigmergy::SGYCallbackListener *sgyCL = context.getSGYCallbackListener();
 		Stigmergy::SGYContext *sgyCTXT = context.getSGYContext();
 
-		sgyCL->onRecvTask(*sgyCTXT, data);
+		sgyCL->onRecvTask(*sgyCTXT, data, hostid);
 
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_SEND_TASK" << std::endl;

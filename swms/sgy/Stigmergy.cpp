@@ -195,11 +195,25 @@ int Stigmergy::addResult(const Result &result)
 int Stigmergy::sendTaskFinToIF(const Stigmergy::SGYContext &context,
                                 const Result &result)
 {
+    BYTE *data;
+    unsigned int data_size;
+
+    result.getData(&data, data_size);
+
+    MessagePkt pkt(ifa, MessagePkt::MSG_NOTE_TASKFIN_IF, data, data_size);
+	(this->mCmc)->sendMessagePkt(pkt);
+    result.freeData(data);
+
     return (0);
 }
 
+void Stigmergy::setIFAID(const HOST_ID hostid){
+    ifa = hostid;
+}
+
 void Stigmergy::SGYCallbackListener::onRecvTask(const SGYContext &context,
-												const BYTE *task)
+												const BYTE *task,
+                                                const HOST_ID hostid)
 {
 	// nothing to do
 }

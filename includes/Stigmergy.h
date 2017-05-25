@@ -42,8 +42,6 @@ public:
 	int sendTask(const HOST_ID &to, const JOB_ID &job_id, const TASK_ID &task_id);
 	int sendTaskList(HOST_ID to);
 	int sendResultList(HOST_ID to);
-    int sendResult(const HOST_ID to,
-                   const std::pair<JOB_ID, TASK_ID> &task_uid);
 	int addTask(std::pair<JOB_ID, TASK_ID> &task_uid,
 				const BYTE *data,
 				const unsigned int data_size);
@@ -51,20 +49,26 @@ public:
 
 	int addResult(const Result &result);
 
-	int sendTaskFin(HOST_ID to);
+    int sendTaskFinToIF(const Stigmergy::SGYContext &context,
+                                   const Result &result);
+
+    void setIFAID(const HOST_ID hostid);
 
 private:
 	CmcAdapter *mCmc;
 
 	std::map<std::pair<JOB_ID, TASK_ID>, TASK_INFO *> mMapTasks;
 	std::map<std::pair<JOB_ID, TASK_ID>, Result *> mMapResults;
+
+    HOST_ID ifa;
 };
 
 class Stigmergy::SGYCallbackListener
 {
 public:
 	virtual void onRecvTask(const SGYContext &context,
-							const BYTE *task);
+							const BYTE *task,
+                            const HOST_ID hostid);
 	virtual void onRecvReqTask(const Stigmergy::SGYContext &context,
 							   const JOB_ID &job_id,
 							   const TASK_ID &task_id,
