@@ -77,7 +77,7 @@ int Stigmergy::sendTaskList(HOST_ID to)
 	int pos = sizeof(TASKLST_PKT_HEADER);
 	for (auto task : this->mMapTasks){
 		std::pair<JOB_ID, TASK_ID> task_uid = task.first;
-		std::cout << "\t" << task_uid.first << "-" << task_uid.second << std::endl;
+		// std::cout << "\t" << task_uid.first << "-" << task_uid.second << std::endl;
 		TASK_INFO *task_info = task.second;
 
 		if (task_uid.first != 1){
@@ -123,7 +123,7 @@ int Stigmergy::sendResultList(HOST_ID to)
 	std::cout << "******* building result list *******" << std::endl;
 	for (auto result : this->mMapResults){
 		std::pair<JOB_ID, TASK_ID> task_uid = result.first;
-		//std::cout << "\t" << task_uid.first << "-" << task_uid.second << std::endl;
+		std::cout << "\t" << task_uid.first << "-" << task_uid.second << std::endl;
 
 		((RESULTLST_PKT_BODY *)&data[pos])->job_id = task_uid.first;
 		((RESULTLST_PKT_BODY *)&data[pos])->task_id = task_uid.second;
