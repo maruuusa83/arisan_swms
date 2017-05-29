@@ -99,6 +99,7 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 
 	msg.get_data(&data, size_data);
 
+#undef ___DEBUG_TRANS_TASK_IFA2SGY___
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 	std::cout << "CmcAdapter::CmcCallbackListener::onMessage - recv msg : TYPE-" << (int)msg.get_msg_type() << std::endl;
 #endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
@@ -216,6 +217,7 @@ void CmcAdapter::CmcCallbackListener::onMessage(const CmcContext &context,
 #ifdef ___DEBUG_TRANS_TASK_IFA2SGY___
 		std::cout << "CmcAdapter::CmcCallbackListener::onMessage - MSG_RET_TASK" << std::endl;
 #endif /* ___DEBUG_TRANS_TASK_IFA2SGY___ */
+#define ___DEBUG_TRANS_TASK_IFA2SGY___
 		TaskProcessorAPI::TPCallbackListener *tpCL = context.getTPCallbackListener();
 		TaskProcessorAPI::TPContext *tpCTXT = context.getTPContext();
 
