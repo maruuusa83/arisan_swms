@@ -83,11 +83,13 @@ int Stigmergy::sendTaskList(HOST_ID to)
 		if (0 >= task_uid.first && task_uid.first >= 10){
 			((TASKLST_PKT_BODY *)&data[pos])->job_id   = 0;
             mMapTasks.erase(task.first);
+            pos += sizeof(TASKLST_PKT_BODY);
 			continue;
 		}
 
 		if (task_info == nullptr){
 			((TASKLST_PKT_BODY *)&data[pos])->job_id   = 0;
+            pos += sizeof(TASKLST_PKT_BODY);
 			continue;
 		}
 
