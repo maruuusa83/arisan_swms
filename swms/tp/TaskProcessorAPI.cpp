@@ -82,10 +82,6 @@ int TaskProcessorAPI::startWorker()
 			std::cout << task_req_count << std::endl;
 		}
 
-		usleep(TP_SPAN_POLLING);
-	}
-
-	return (0);
 }
 
 int TaskProcessorAPI::sendTaskFin(const Result &result)
@@ -166,8 +162,8 @@ int TaskProcessorAPI::checkDoTask(JOB_ID &job_id,
 
 		// decide execute or reject task
 		double random = std::generate_canonical<double, std::numeric_limits<double>::digits>(mt);
-		std::cout << "\t" << info->job_id << "-" << info->task_id;
-		std::cout << " rand:" << random << ", prob:" << cons_prob << ", age:" << (tv_age.tv_sec * 1000.) + (tv_age.tv_usec / 1000.) << ", th:" << this->mTheta << std::endl;
+		// std::cout << "\t" << info->job_id << "-" << info->task_id;
+		// std::cout << " rand:" << random << ", prob:" << cons_prob << ", age:" << (tv_age.tv_sec * 1000.) + (tv_age.tv_usec / 1000.) << ", th:" << this->mTheta << std::endl;
 		if (random < cons_prob){
 			job_id  = info->job_id;
 			task_id = info->task_id;
