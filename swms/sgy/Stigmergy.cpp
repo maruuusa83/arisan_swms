@@ -80,8 +80,9 @@ int Stigmergy::sendTaskList(HOST_ID to)
 		// std::cout << "\t" << task_uid.first << "-" << task_uid.second << std::endl;
 		TASK_INFO *task_info = task.second;
 
-		if (task_uid.first != 1){
+		if (0 >= task_uid.first && task_uid.first >= 10){
 			((TASKLST_PKT_BODY *)&data[pos])->job_id   = 0;
+            mMapTasks.erase(task.first);
 			continue;
 		}
 
