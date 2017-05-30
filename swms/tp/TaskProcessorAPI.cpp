@@ -82,6 +82,11 @@ int TaskProcessorAPI::startWorker()
 			std::cout << task_req_count << std::endl;
 		}
 
+        usleep(TP_SPAN_POLLING);
+    }
+
+    return (0);
+
 }
 
 int TaskProcessorAPI::sendTaskFin(const Result &result)
